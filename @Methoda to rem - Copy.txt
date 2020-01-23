@@ -1,0 +1,679 @@
+javaconceptoftheday
+
+System.out.println(Integer.parseInt("1234"));  conver string to decimal
+System.out.println(Integer.parseInt("0101",2)); conver a binary string to decimal,same apply for base 16(hexadeccimal)
+
+
+
+
+str.append(str1);  //method of StringBuffer/StringBuilder class not present in string class
+str.reverse();      //method of StringBuffer/StringBuilder class not present in string class
+ch=str.toCharArray(); //ch is character array
+str1=str.substring(1); //give substring including starting index.--
+str1=str.substring(1,3) //start index is inclusive & end index is exclusive.
+str1.indexOf(str2); str1.indexOf(str2,3);str1.indexOf(ch);str1.indexOf(ch,4);  // here search starts from mentioned index.Returns -1 if not found.
+String s=new String(ch): // char array to string
+s1.contains(s2):
+s1.isEmpty();
+s1.toLowerCase();
+char ch3 = Character.toLowerCase(ch1); // for char case conversion we need to use Character class method.
+str.toLowerCase();
+
+http://javarevisited.blogspot.in/2011/07/string-vs-stringbuffer-vs-stringbuilder.html
+s1==s2 compares the address of string s1 and s2.
+s1.equals(s2) method .retunr true or false if string are same .s1.equalsIgnoreCase(s2)
+although compareTo() compares lexiographically and return lexiographical diff. () 
+Capital letters comes first. s1.compareTo(s2) output will be greater than zero if s2 comes first. //A-a difference is 32.
+
+StringTokenizer[java.util.StringTokenizer] is used to remove delimeter from string.
+StringTokenizer s=new StringTokenizer(s); //will remove defaault delimeter spaces.
+StringTokenizer s=new StringTokenizer(s,":") /will remove mentioned(:) delimeter
+
+String s=String.valueOf(123);
+===TypeCasting===
+when a data of a data type is converted to a data of high memory data type called widening & its implicit.long l=30,int i=(int)l
+vice-versa is narrowing & its explicit.  long l=i,int i=30
+
+String is immutable so every time when u perform any operation on string it makes a new string & thus consumesa lot temporary memory.
+StringBuffer claass makes mutable objects but all its public method are synchronized & thread safe so bit slow. 
+StringBuilder is a replacement of StringBuffer added in java5 which is not synchronized so fast . so we use StringBuilder
+whenever possible inplace of Buffr.
+Only String and StringBuffer objects are thread safe. StringBuilder objects are not thread safe. So whenever you want immutable and thread safe string objects, use java.lang.String class and whenever you want mutable as well as thread safe string objects then use java.lang.StringBuffer class.
+String don't have reverse & delete method whereas StringBuffer & StringBuilder have.
+In case of String class, you can create the objects without new operator. But in case of StringBuffer and StringBuilder class, you have to use new operator to create the objects.
+String is a derived type, not a primitive type like int, double etc. Strings are objects in java.
+The main similarity between StringBuffer and StringBuilder class is that both produces mutable string objects. The main difference between them is that StringBuffer class is thread safe where as StringBuilder class is not thread safe.
+All three classes – String, StringBuffer and StringBuilder are final. That means you can’t extend them. All three classes are members of java.lang package.
+
+
+String literals (String s1="nayan" string created using inverted comma) are saved in string constant pool.so if you create other variable String s2="nayan" then it will use the old literals
+and will not create another string in the constant pool. 
+while others saved in heap memory. String s=new String("nayan): // will create differnt string for this.
+Memory heap is the area used for runtime operations.
+In simple words, there can not be two string objects with same content in the string constant pool. But, there can be two string objects with the same content in the heap memory.
+
+https://www.javatpoint.com/java-program-to-check-whether-two-strings-are-anagram-or-not 
+Arrays.equals(a1,a2) compare 2 array ,Arrays.deepEquals(a1,a2) compare nested array. deepEquals used for comparing nested array. 
+StringUtils.isNumeric("123"); // check whether string is numberic or not .returns true/false.
+
+null is a keyword in Java
+String str = null; // null can be assigned to String Integer itr = null; // you can assign null to Integer also Double dbl = null; // null can also be assigned to Double
+Read more: http://javarevisited.blogspot.com/2014/12/9-things-about-null-in-java.html#ixzz56WxPjlF5
+What is the main difference between Java strings and C, C++ strings?
+In C and C++, strings are terminated with null character. But in java, strings are not terminated with null character. Strings are treated as objects in java.
+null can only be assigned to reference type, you cannot assign null to primitive variables e.g. int, double, float or boolean.
+
+
+String strWithoutSpace = str.replaceAll("\\s", "");  //will replace all blacnkspaces with "" . means will remove all spaces.
+str.retainAll(str1); // str will retain all the common elements in .
+
+
+
+
+
+
+System.currentTimeMills();
+
+
+
+ArrayList,LinkedList
+HasgSet,TreeSet
+HashMap,TreeMap
+
+
+HashSet store unique value unlike arraylist
+str.split("\\s"); split after blankspace
+str.split("\\s",2); splits in 2 parts .this is nayan => this 
+                                                        is nayan
+
+
+
+====Autoboxing====
+java compiler automatically convert primitive data types to its wrapper class .
+This is calling autoboxing & vice-versa is unboxing.
+Type Conversion : convertion of a data of low memory size data type to high memory size data is called widening .
+int i=5;
+long l=i; 
+Narrowing :
+long l=5;
+int i=(int)l;
+int i=Integer.parseInt("123"); // string to int conversion
+int i=Integer.valueOf("123");
+
+
+javac -d I:\classes Test.java
+java -classpath=I:\classpath test
+
+
+
+====Static====
+a static block will execute before main method.
+after that main method and then constructor[cons. first statement is super() class cons. and IIB executes after that cons. statment executets. ]
+Static variable get memory at the time of class loading.
+static method can not access not-static member directly.
+this and super can not be used in static context.
+static keyword can be used with variable,method,block and nested class. Top/Main class can not be static.
+
+Object gets memory in heap area.Reference variable,local variable and method get memory in stack area.static data/member get memory in static area.
+byte code get memory in code area.
+
+
+
+===this===
+this keywork can be used to access the instance variable.
+this also used for constructor chaining .means calling a constructor from another constructor. while doing it, this() should be the
+first statement inside constructor.
+this cab be passed as an argument in a method.
+
+==super==
+super is ref. to immediate parent class.it can be used to call super class constructor/method and access variable.
+
+
+
+==Java Switch===
+Switch is used to select when we want to select one from many statement.
+In case of switch we don't break then once a condition met, all the cases after that will be execute.
+It is like if-else-if ladder statement. The switch statement works with byte, short, int, long, enum types, String and some wrapper types like Byte, Short, Int, and Long. Since Java 7, you can use strings in the switch statement.
+The case value must be of switch expression type only. The case value must be literal or constant. It doesn't allow variables.
+In other words, the switch statement tests the equality of a variable against multiple values.	
+
+
+
+How To Launch External Applications Through Java Program 
+http://javaconceptoftheday.com/how-to-launch-external-applications-through-java-program/
+Runtime runtime=Runtime.getRunTime();
+runtime.exec("notepad.exe");    
+runtime.exec("notepad");
+You can also open an URL in any browser using exec() method which takes command as string array. First element of string array must be the path of .exe file of installed browser and second element must be URL to open.
+public class LaunchingExternalApps
+{
+    public static void main(String[] args)
+    {
+        Runtime runtime = Runtime.getRuntime();     //getting Runtime object
+ 
+        String[] s = new String[] {"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe", "https://javaconceptoftheday.com/"};
+ 
+        try
+        {
+            runtime.exec(s);        //opens "https://javaconceptoftheday.com/" in chrome browser
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+}
+
+
+
+
+
+
+
+
+int noOfDigits = String.valueOf(number).length();  //way to find the number of digit in a number. // 
+Math.randon();  // method to generate random number
+Random random=new Random();
+random.nextInt();
+random.nextDouble(); 
+
+ExceptionHandling ======
+A program can have single try block,mulitple catch (used to catch multiple type of exception) and 1 finally .try,catch& finally are one block. no other statments should come in between.
+finally will always be executed.
+if any exception occurs then stmnt after exception in the try block woun't execute.
+catch block should be in order of subclass to supercall order.
+When we are not sure about type of exception than catch(Exception e) can be used.
+
+Exception thrown must be handled somewhere otherwise program will end abruptly .
+Try can be used without catch when finally is used.
+if a method is returning a value then if finally is returing a value then u may or may not return from try & catch. But if finally is not returning then try & catch must return.
+if all return value then finally return will override.
+Finally block executes Even though the method have return type and try block returns something and finally not returns anything.
+
+Throwable is the super class which have error and Exception class in it.
+there are 2 type of exception
+1) checked or compile time exception 
+2) unchecked or run time exception
+
+To prevent this compile time error we can handle the exception in two ways:
+By using try catch
+By using throws keyword  [Signature :-> public static void main(String[] args)throws InterruptedException]
+throws can prevent only compile time exception.is used to declare that a risky piece of code is being called. can define multiple exception in method signature.
+throw keyword is used to throw exception explitely in try block
+ex throw new ArithmaticException();  // generally throw is used for custom exception or user defined exception.
+https://www.geeksforgeeks.org/g-fact-32-user-defined-custom-exception-in-java/
+Try-catch can be used for both compili time and runtime exception.
+Checked Exception : IOExceprion,SQLException,FileNotFOundException,DataAccessException,MalformedURLAccessException
+Unchecked : ArithmaticException,NullPointerException,ArrayIndexOutOfBoundsException  //unchecked exception occurs due to bad programming.
+
+
+
+Object =====
+every class in java either extends Object class directly or indirectly.
+Object class have methods like toString() ,hashCode(),finalize(),wait(),notifyAll();
+toString();  // toString() provides String representation of an Object and used to convert an object to String. The default toString() method for class Object returns a string consisting of the name of the class of which the object is an instance, the at-sign character `@’, and the unsigned hexadecimal representation of the hash code of the object. In other words, it is defined as:
+System.out.println(employee);
+System.out.println(employee.toString());  // both code are same.where employee is a object of some Employee class
+
+hashCode(); // it convert ,ref. value of an object into integer value & retunrs it.
+
+
+
+Generic==<>
+Defined in java5 ,are used to check type compatiblity problem at compile time & to protech against classCastException at tun time.
+ArrayList<String> list=new ArrayList<String>();  //generic 
+ArrayList list=new ArrayList(); //non-gegneric
+Generic is allowed only derived data drive .
+
+A generic class can impletments Generic interface.
+A non-generic class which have same parameter type as interface can implement interface.
+interface GenericInterface<T>
+{
+public void setter(T t);
+public T getter(T t);
+}
+
+class GenericClass<T t> implements GenericInterface<T t>
+{
+} 
+
+you can make some methods generic in a non generic class.
+
+
+
+===Constructor ===
+if we are calling a super class constructor then it should be first statement of base class constructor.
+super class default constructor is called from subclass default constructor.
+JVM insert default cons. in every class if we don't define it.
+Constructor are not member class so they are not inherited.
+if this() is first statement of any parameterized stmnt then super() will not be called.
+A constructor can have either super() or this() but not both.because whichever is being used,should be first stmnt of the cons.
+cons. overloading can be done in java.(constructor with 2 args,3args,4args.)
+Thread class have 8 constructor.
+constructor don't return any data.
+construvtor uses :
+initialize  the object of a class
+constructor chaining
+returning this from method to get object of the glass.
+
+
+===Inheritance===
+Inheritance is being acheived by class and interface.
+Method overriding and code reusablity.
+Inheritance is used to add additional functionality to the existing class.its also use to re use the code without writing it again.
+subclass constructor's first statement calls the super class constructor(implicitely) ,SIB,IIB .
+Single,Multilevel,Hierarchical Inh. is supported.
+Muliple,hybrid inheritance of class is not supported in Java but we can acheive it by using interface.
+Inheritance Is-A type of relation.Child is a Type of Parent.
+
+Multiple inheritance not supported beccause if 2 super classes have same methods so there will be ambiguity that which of 2 methodss
+should be called.
+Inheritance is Run time polymorphism.
+
+
+
+
+Overloading :  When a class have more than one method with same name but different no/type of argument then its called overloading.
+              overloaded method can have different type of return type,access modifier,static ,non staic.
+			  we can overload the main method of java.
+			  overloading can be done in same class as well as different classes also(parent-child case)
+			  overloading is done to increase the readability of method.
+Overriding :-. When a class extends another class then it can modify the definition of method .its called overridinng.
+               if u change the type of arguments in the subclass it will be a overloaded method.
+               You can only increase the visiblity of a overriding .[ex : private->public]
+               return type of subclass must be of same class or of subclass type of superclass retunrtype. 
+               Run Time Polymorphism.
+
+
+===Polymorphism===
+Static polymorphism/early binding/compile time poly
+when compiler knows at compile time which obect to use then its called compile time poly.
+operator binding[+ can be used to add num also to concatenate string .only + is example of operator overl],constructor,method overloading are example of it.
+binding between method called and method definition occures at compiletime.
+
+Dynamic polumorphism/late binding/run time poly
+when JVM invokes method definition to called method.this is known as late binding.
+overriding is example of it. 
+
+Binding refers to the link between method call and method definition.
+During compilation, while binding, compiler does not check the type of object to which a particular reference variable is pointing.
+
+Static method overloading is example of compile time poly. as compiler knows which method will be invoked.
+Main method can be overloaded in  java.
+
+
+==instanceof==
+instanceof in java is used to check whether a object is an instance of a class or not.
+subclass object is also a instance of super class.Returns true and false.
+
+A a=new B(); // B extends A
+System.out.println(a instanceof B);  //will return true.
+System.out.println(a instanceof A);  //will return true.
+
+A a=null.
+System.out.println(a instanceof A); // will return false.
+
+
+Dwelling unit max carpet area	90 sq.mt
+053 337580 006
+
+===Abstaction==
+abstraction is used to hide the implementation details from the user.
+Abstract : 0-100% abstraction.
+Interface : 100% abstraction.
+ex : sending mail usr just send the details ,he dosn't know implementation details.sending msgs.
+in abstraction dons't get to know which class is implementing(how) the method and object it returned to user by factory method.
+factory method used to get the object to user.
+====AbstractClass===
+abstract class is used to hide the idea from the implelentation.
+abstract class can have abstract and non abstract both method.
+abstract keywork mandatory to used before class and abstract method.
+can have all non-abstract method.all method needs to be implemented in subclass otherwise compile time error or u need to declare subclass also as abstract.
+abstract class can not be isntanciated.
+abstract class can have static and final methods.
+
+
+8392923036
+
+===Interface===
+Interfacce is used to acheieve abstraction.
+interface is used to define methods in subclass according to requirement defrently in diff. subclass.
+all method should be abstract. in subclass while implementing method public keyword is mandatory as during overridding we can 
+only increase the visiblity.
+interface can have only static and final variables while abstract class can have static,non static ,finla & non-final variable.
+Since java 8,static and default method in interface.
+since java 9,we can have private method.
+
+The Java compiler adds public and abstract keywords before the interface method. Moreover, it adds public, static and final keywords before data members.
+
+
+
+Interface which have no member is known as marker/tagged interface.they are used to provide some essential information to the JVM
+so that JVM can perform someuseful operation.
+
+===Modifiers===
+2 types of modifiiers in java
+1) Access Modifiers : defines the scope of accessiblity [private,default,protected,public]
+2) Non Access M : static ,abstract, synchronized ,volatile
+
+
+Access Modifier	within-class within package	outside package by subclass only	outside package
+Private			Y	N			N					N
+Default			Y	Y			N					N
+Protected		Y	Y			Y					N
+Public			Y	Y			Y					Y
+
+====JDBC===
+jdbc api connect with the database with the help of JDBC driver with is separate for each database.
+RDBMS : Oracle,MySQL,MS Access
+read from tutorila point
+
+===File Handling===
+Output/Input Stream : used to write/read data to file,socket,pheripherals .
+Output/input stream is superclass of all output/input stream and is abstract class.
+
+FileInputStream/FileOutputStream class is used to read/write byte oriented data.
+BufferedInputStream class internally uses buffer to store data.Buffered class is used to increase the performance.
+try
+{
+BufferedInputStream Bin=new BufferedInputStream(new FileInputStream("D:\\Work\\new.txt"));
+int i=0;
+while((i=Bin.read())!=-1)
+{
+System.out.print((char)i);
+}
+}
+
+catch(Exception e)
+{System.out.print(e);}
+
+
+DataInputStream/DataOutputSteram class write data in a machin independent way.	
+SequenceInputStream class is used to read data from many stream at a time.
+
+FilrWriter class is used to read/write character oriented data .
+BufferedWriter for file with larget size.
+write(string),write(char),write(char[])
+BufferedWriter buffwrite=new BufferedWriter(new FileWriter("D:\\Work\\output.txt"));
+write(int c),write(string s,int off,int len),write(char[] c,int off,int len)
+BufferedReader===
+int read();String readLine();
+===PrintWriter===
+
+===PrintStream===
+have all the function to print(also println,format) char,int,string .
+
+
+How To Append Text To A File In Java Using FileWriter?
+Step 1 : Open an existing text file in an append mode by passing ‘true’ while constructing the FileWriter object.
+FileWriter fileWriter = new FileWriter(“Pass File Name Here”, true);
+Step 2 : Bundle FileWriter object in BufferedWriter if you are writing lots of text.
+BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+Step 3 : Use PrintWriter object if you are writing the text in multiple lines by wrapping BufferedWriter object in PrintWriter.
+PrintWriter printWriter = new PrintWriter(bufferedWriter);
+Step 4 : Use printWriter.println() method to write each line into a file.
+
+====Collection(Java.util.collection)===
+its is top most interface of collection framework.Collection is basically a centralized and unified theme to handle group of objects.although array also stores grup of data but there size is fixed once defined.
+so collection come up with the many built-in function to handle all this without using much hard work.
+list,queue and sett are part of collection interface but map is not. although its a part of collection framework.
+http://javaconceptoftheday.com/collection-framework-class-hierarchy/
+Collection interface extedns Iterable interface which is member of java.lang package.
+int size(),boolean add(Elemtn e)//boolean addAll(Collections<?> c)//boolean removeAll(<?> C)//boolean remove(Element e)
+//boolean contains(Object o)//bollean containsAll(Collection c)//retainsAll(Collection c)
+collecion interfface has 14 methods. 
+
+
+Collections.sort(list);  //applies to ArrayList,LinkedList etc,not applicable for Set .and if list contains user defined class then u need to use comparable/comparator.
+Collections.sort(list,Collections.reverseOrder())
+we need to implement comparable[has compareTo method]/comparator(have compare method) in user defined class.
+With the help of Comparator we can sort on the basis of more than 1 data type.
+if we are using comparable then we just need to implement comparable and use method Collections.sort();
+if we are using comparator then we just need to implement comparator and use method Collections.sort(c,new sortByRollNo); //here sortByRoll class impelemtning comaparator.
+HashSet can be sorted by converting it to TreeSet.TreeSet<Integer> t=new TreeSet<Integer>(hs);  //here hs is a  hashset.
+HashMap can be sorted by converting it to TreeMap.
+Arrays.sort(ar); // this method applies to primitive class only. not on object type(String is not a primitive class)
+
+
+LinkedList to ArraList
+ll.addAll(al); or ArrayList<String> al=new ArrayList<String>(ll);
+
+
+
+
+class sortByAge implements Comparator<EmpT>
+{
+public int compare(EmpT t1,EmpT t2)
+{
+if(t1.age>t2.age)
+return 1;
+else
+return -1;
+}
+}
+
+
+
+class Student implements Comparable<Student>
+{
+int roll,age;
+String name;
+
+Student(int roll,int age,String name)
+{this.roll=roll;this.age=age;this.name=name;}
+
+public int compareTo(Student st)
+{return this.roll-st.roll;}
+public String toString ()
+{return roll+" "+age+" "+name;}
+}
+
+
+
+
+Lists : this class stores elements in sequential manner .can store duplicate and multiple null values.
+void add(int index,E element)//void set(Int index,E element)// 
+
+
+ListIterator is used to traversre in both direction.
+ListIterator listI=list.listIterator();
+while(listI.hasNext())
+listI.next();
+
+while(listI.hasPrevious())
+listI.previous();
+
+
+=====ArrayList=====
+there are 3 ways to convert 1)toarry method and receive it in an Object[] arruay.2nd mehtod we have used here. 3) to use get(i) method.
+String s[]=list.toArray(new String[list.size()]); 
+for(String s1:s)
+System.out.println(s1);
+
+
+
+Integer s2[]=new Integer[]{2,4,6,3,4,6};
+ArrayList<Integer> alist=new ArrayList<Integer>(Arrays.asList(s2));
+//alist=Arrays.asList(s2);   dosnt work.
+
+Queue=========
+Queue is a data structure where elements are added from one end called tail of the queue and elements are removed from another end called head of the queue.
+ Queue is also first-in-first-out type of data structure (except priority queue). 
+That means an element which is inserted first will be the first element to be removed from the queue. 
+You can’t add or get or set elements at an arbitrary position in the queues. 
+can't store null but duplicate.
+
+Deque (doubly ended queue)
+
+
+
+====Vector===
+its also extends list interface .only difference with arraylist is that it thread safe. at a time only one thread can access the object.but this also reduce the performance as the remaining threads have to wait until current thread release the lock.
+sopo vector should be used when thread safety is a concern.
+extra methods . firstElemenht(),lastElemnt.
+
+===set====
+Sert dosn't store duplicate value.Set dosn't have its own methods. it only modifies the method declared by the collection interface.
+one null value is allowed . it dosn't allowed random access of element.
+set is used to linearly store the data.data storage order depends on the implementation type.
+1)HashSet : order depends on the has value of the object.
+2)LinkedHasSet : objects stores insertion order
+3)TreeSet : objects storage order depends on the type of comparator used.
+TreeSet sort the input in ascending order if they are of wrapper class and string.
+but if they are of user definde type then we need to use comparable/comparator method.
+
+
+
+
++++LinkedList===
+\Linked List internally implement doubly linked list.it can be used as list and queue.it can store duplicate and null values.
+insertion and removal of element is fast as there is no shift of element is required.but retrieval of element is slow as its start from the head or tail.
+it can be used as stack as it has peek() and poll() method.
+=
+== 
+
+
+arraylist are faster if u want to use retrival operation more and linkedlist when insertion and deletion operation.
+
+
+===HasSet===
+internally implement hashmap. element value stored as key in hasdtable and a constant is stored in the value.if  duplicate value is inserted
+then its overwritten.dosn't maintain any order.
+ishasshset provide constant performance of insertion,deletion and retrival .
+
+Java HashSet is very powerful Collection type when you want a collection of unique objects. 
+HashSet doesn’t allow duplicate elements. HashSet also gives constant time performance for insertion, removal and retrieval operations
+. It is also important to note that HashSet doesn’t maintain any order. So, It is recommended to use HashSet if you want a collection
+ of unique elements and order of elements is not so important. If you want your unique elements to be ordered in some way, 
+you can use LinkedHashSet or TreeSet.
+
+HashSet<String> list=new HashSet<String>();  //hashset can be traversed using iterator.
+Iterator i=list.iterator();
+while(i.hasNext())
+System.out.println(i.next());
+
+++LinkedHashSet===
+Linked has set store object is insertion order interally uses LinkedhashMap. 
+its internally maintains one doublylinked running through its elemetns.
+Iterator returned by LinkedHashSet is fail-fast. i.e if the LinkedHashSet is modified at any time after the Iterator is created,
+ it throws ConcurrentModificationException.
+
+
+
+
+===Map==
+Map interface is a part of colletion interface but it dosn't inherit collction interface.
+no duplicate key but can be duplicate valuess.
+not synchronized. Collections.synchonizedMap() 
+
+Hashtable also implement mapo interface,us hashing to store element. stores in key,value pair.
+HashTable is diff. from hashmap in follwoing ways.
+1) HashTable is synchronized.
+2)HashMap allows maximum one null key and any number of null values. 
+Where as HashTable doesn’t allow even a single null key and null value.
+3)As HashTable is internally synchronized, this makes HashTable slightly slower than the HashMap.
+4)4) Traversal-HashMap returns only Iterators which are used to traverse over the elements of HashMap. 
+HashTable returns Iterator as well as Enumeration which can be used to traverse over the elements of HashTable.
+
+Have keySet(),Values() and entrySet() method to view elemtn.
+Get(key) ,put(k,v) methods.Contains(key),ContainsAll(v)
+putIfAbsent(1,"One");  //stores key values pairs if this entry not available in map.
+
+
+HashMap<Character,Integer> charMap=new HashMap<Character,Integer>();  // used to store key value pair;
+charMap.ContainsKey(ch);  // to searcch a key.
+charMap.ContainsValue(V);
+charMap.get(ch)  // to find value corresponding to a key.
+charMap.put(K,V);
+charMap.entrySet();,
+
+keySet(); This method returns the set view of all the keys in Map.
+values(); This method returns Collection view of all the values present in a HashMap.
+Collection<String> h1=hs.values();  //so need to store the result in collection. will give error if we store in Set or other.
+
+
+
+//Replacing the value associated with 'FOUR' to '444' only if it is currently mapped to 'DDD'
+map.replace("FOUR", "DDD", "444");
+?
+
+charMap.size();
+HashMap contains unique entry .means unique key .Value can be more than 1.HashMap contains no order.
+HashMap is known as HashMap because it uses a technique Hashing. 
+Hashing is a technique of converting a large String to small String that represents same String. 
+A shorter value helps in indexing and faster searches. HashSet also uses HashMap internally. 
+It internally uses link list to store key-value pairs. We will know about HashSet in detail in further articles.
+
+https://www.geeksforgeeks.org/java-util-hashmap-in-java/
+
+
+Entry is a sub-interface of MAP interface & is accessed by MAP.Entry.
+for(Map.Entry entry:hmap.entrySet())
+{
+System.out.println(entry.getKey()+entry.getValue());
+} 
+entry.setValue(entry.getValue()+1);
+
+
+LinkedHashMap maintains insertion order
+
+this method is also used to iterate  //doubt
+ Set<Entry<String, Integer>> entrySet = map.entrySet(); //HashMap can be stored in Set .
+                 
+        for (Entry<String, Integer> entry : entrySet) 
+        {
+            System.out.println(entry.getKey()+" : "+entry.getValue());
+        } 
+
+
+
+
+
+
+
+
+
+
+
+===Enumeration VS Iterator==
+U can only traverse using enumeration while using iterator u can calso remove element.
+Ieterator is fail fast i.e. it throws ConcorrentModificationException if element is removed except from remove method, while traversing 
+eenumeration is a legacy interface used for vector,hashtable and stack.
+
+===Collection vs Collections===
+Collection is a top iinterface of java collection framework .is a part of java.util package.
+Collections is a utility class and member of java.util package. which have only static member used to perform operation on collection type object.\
+Collection.sort(),Collection.Max(),Collection.Min(),Collection.binarySearch() etc.
+
+
+===Initial capacity & loadfactor===
+An instance of HashMap has two parameters that affect its performance: initial capacity and load factor. 
+The capacity is the number of buckets in the hash table, and the initial capacity is simply the capacity at the time 
+the hash table is created. The load factor is a measure of how full the hash table is allowed to get before its capacity
+ is automatically increased. When the number of entries in the hash table exceeds the product of the load factor 
+and the current capacity, the hash table is rehashed (that is, internal data structures are rebuilt)
+ so that the hash table has approximately twice the number of buckets.
+
+As a general rule, the default load factor (.75) offers a good tradeoff between time and space costs. 
+Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the HashMap 
+class, including get and put). The expected number of entries in the map and its load factor should be taken into
+ account when setting its initial capacity, so as to minimize the number of rehash operations. If the initial capacity 
+is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.
+
+
+
+
+
+====Java Swing===
+Java Swing is a part of javac foundation classes which is built over AWT(abstract window toolkit) and is used to create window based applications.
+nlike AWT, Java Swing provides platform-independent and lightweight components.
+The javax.swing package provides classes for java swing API such as JButton, JTextField,
+JTextArea, JRadioButton, JCheckbox, JMenu, JColorChooser etc.
+ 
+https://www.javatpoint.com/java-swing 
+Check program SwingTest (D:\Work\New folder)
+
+JavaFX is also used to create application. for window,mobile,web .
+
+
+80,54,77,443,9

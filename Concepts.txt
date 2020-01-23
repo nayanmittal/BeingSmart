@@ -1,0 +1,24 @@
+When set of processes or threads are said to be deadloced when each thread are waiting for resource held by other in the set.
+ways to handle it 
+1)Deadlock prevention : DO not let the system enter into dealock state.
+2)Deadlock detection & recovry : Once deadlock occur then doing premption 
+3) Ignore the problem all together : When deadlock is very rare then let it happen & reboot it .This approach is used by windows and unix.
+
+Cp scheduling is a process of determining which process will be execcuted next while othres processes are on hold.
+fcfs,shortest jf,round robin, priority scheduling.
+
+
+host file is a file which is used to map host names with there IP addresses. Its used to control websit access. its needs to be edit at the time of attack or to control
+web access.
+#127.0.0.1 localhost
+for ex we can block facebook by setting 0.0.0.0. www.facebook.com .Now if you try to  open facebook,it woun't happen.
+ They were used to resolve hosts names before DNS. hosts files would be massive documents used to aide the network name resolution.
+
+IN operating system which implement the concept of virtual memory,Programs gets mapped to very large memory the actual physical ram.
+When a page of a process doesn't get[got mapped to] the memory in ram[page fault	] then page swapping occurs. IN which a page goes out of Ram n new page loades in memory.
+Sometime swapping occurs to very  higher rate resulting more cpu time waste in swapping rather then actual page execution .This condition is called thrashing .
+SOmtimes the pages which will be needed in near future is being swapped out.
+It makes SYstem slow. n little progress occures.
+A process which spends more time in swapping then execution is said to be thrashing.
+
+

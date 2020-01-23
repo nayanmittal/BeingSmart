@@ -1,0 +1,232 @@
+JAVA POINT
+JVM is java virtual machine. Basically its a specification of JRE implementation.
+JVM does 3 tasks.
+1) class laoder ; Bootstrap loader,extention loader,APPLICATIO LAODER
+2)Memory Allocation
+3) Execution ; virtaul processor,interpreter,JIT
+
+
+JAVA have uninary operator(x++,--x etc),airthmatic(x+y,-,*,/,%),logical(&&,||),bitwise(|,&),assignment(a=a+5 etc),comparison(a==b) operator.
+
+
+
+Program :
+a matrix is sparce matrix if number of zero's are greater then (number of element/2)
+A matrix is said to be an identity matrix if it is a square matrix in which elements of principle diagonal are ones, 
+and the rest of the elements are zeroes.
+
+
+(9-i-j)%4==1
+*
+
+
+
+Type of testing on the basis of objective ;
+!)Functional Testing - To validate behaviour of system is as per the functional specification and is to verify that product is ready to be
+delivered in the market.
+Steps in fun. testing : understanding the requirement,clearing the doubts,writing TC,Identifying test input ,expected output,testing,comparing output with expected output.
+2) Non-Functional Testing : Performance,Security,Compability,usability.
+
+
+
+Type of testing on the basis of testing method
+1)Manual 2) Automated Testing
+
+
+based on design technique:
+
+whiteBox Testing/glass box testing/structural based testing
+In it tester have acceess to internal architectur/design/code of the system.its purpose is to enusre code coverage,resualbity and code optimisation.
+ 
+
+black box Testing(Specification based testing)
+In it tester does not have access to internal implementation/architectur of system.
+User validate the system on the basis of it requirement.
+
+Grey Box Testing
+in it tester have limited access to interal architecture.its helps the tester in performing the testing better.
+
+
+Type of testing on the basis of testing level.
+1) Unit Testing : its a level of testing in whihc indivual unit/component is tested.Unit  is smallest executable component.
+its first level testing.
+Unit testing is done to check each unit is working as per design.
+we should try to make component which are less dependable on other.
+Unit testing is done with the help of unit testing framework,stub,driver,data.
+
+its done by devlopers.
+in procedurabl language ,program ,function,procedure are unit.
+in object oriented ,methods are units.
+
+benifits :
+1) earlier detection of error
+2) when ever changes done ,we execute the test and find the error in the indiviual module and correct it.we don't need to run whole system(fire GUI)
+which take time to run.
+3) as we need to test units so we make less dependable units which led to take less time to test units.
+4)the cost of fixing defect is faster.
+5) error detection is easy.
+
+ 
+2)Integration Testing : in this integration of related module is tested .here integration issue is focused.
+  big bang  testing{checcked after all module are testing}
+  top down approach : In this upper level module is testing first and stubs are needed to simulate lower level of moduls.
+  bottom up approach :
+  hybrid approach :
+
+  
+ball-pen example to describe testing type.  
+  
+3)System Testing : in this testing, complete integrated moduel is testing to valaidate if it as per the requirement.
+black box testing;
+
+
+4)Acceptance Testing : this testing is done to check whethe system is acceptable.
+this is done by user.and after that sw is released for production.
+1) alpha testing(or internal acceptance testing): here testing is done by user at the devloper's site.
+2) Beta testing : here testing is done by the end user and they provide reviews .
+
+
+Smoke Testing :
+During smoke testing,we check the core,main fuctionality is working or not,so that we can proceed with testing .
+its save time and effort.
+Eg : device Call,message is going on.
+
+Sanity Testing : Sanity testing is done to check to check fix the of bug has been applied (if not then reject the build)and new feature
+functionality()working roughly as expected or the dev. have applied some logic or not in the new feature.
+ex : 2+2=5 in case of calculator.
+Sanity testing is done on a component on which changes has been done.
+Sanity testing dosn't have defined test cases.
+
+Regression Testing : Regression testing is done to checck where recent changes/fix effecting the other functinlity of the system.
+Regression Testing method : -Retest all,
+                            -priority based Regression
+                            -regression plan		
+In it already executed test cases are being run.							
+
+
+Monkey Tesing  : In monkey Testing, whole system is tested wihtout predefined test case.
+                 Anything can be tested in it. Performed to find new kind of bugs.
+				 
+				 
+Gorrilla Testing : In it some modules being tested again and again in same manner to enusre the system is working correcctly.
+				 
+				 
+				 
+Ad hoc Testing does not follow any structured way of testing and it is randomly done on any part of application.
+ Main aim of this testing is to find defects by random checking.
+ Adhoc testing can be achieved with the Software testing technique called Error Guessing. 
+ Error guessing can be done by the people having enough experience on the system to "guess" the most likely source of errors.
+Usually adhoc testing is performed after the formal test execution. 
+This testing requires no documentation/ planning /process to be followed. 	
+
+In Monkey Testing testers may not know what is the system is all about and its purpose			 
+In Ad-hoc Testing tester must understand the system significantly before performing testing				 
+
+
+Iterator which throws ConcurrentModificationException(CME) when they are iterating a collection and parallely another thread tries to update them.
+Java 1.4 most of the collections are fail fast .eg. ArrayList,HashSet,HashMap.
+
+Iterator which allow to do modification on collection while iterating them are called fail safe iterator.
+these works on copy of origional collection . But in this case you don't get the updated data as you work on the copy.
+Java 1.5 ConcurrentCollections are fail safe. eg. ConcurrentHashMap,CopyonwriteArrayList. etc....
+
+when we use Collection remove() method while traversing the collection using Iterator then it will through CME.so for this
+we need to use Iterator remove method.
+
+HashTable,SynchronizedMap,Vector are thread safe & can be used in multithreaded application but when the size of data increases
+then they becomes very slow as they take lock on whole collection compare to ConcurretnHashMap(Concurrent Collection intorduted from java1.5)
+which take partial lock .
+
+Iterator vs Enumeration
+Itertor can modify the colleciton as it got remove method whereas legacy class Enumeration is read only. no method to remove or 
+add .
+Iterator is more safe.
+
+
+=>How does HashSet is implemented in Java, How does it use Hashing? (answer)
+This is a tricky question in Java because for hashing you need both key and value and there is no key for the store it in a bucket,
+ then how exactly HashSet store element internally. Well, HashSet is built on top of HashMap.
+ If you look at source code of java.util.HashSet class, you will find that that it uses a HashMap with same values for all keys,
+ as shown below:
+
+private transient HashMap map;
+private static final Object PRESENT = new Object();
+When you call add() method of HashSet, it put entry in HashMap :
+
+public boolean add(E e) {
+ return map.put(e, PRESENT)==null;
+}
+
+Since keys are unique in a HashMap, it provides uniqueness guarantee of Set interface.
+
+
+8. What do you need to do to use a custom object as a key in Collection classes like Map or Set? (answer)
+The answer is: If you are using any custom object in Map as key, you need to override equals() and hashCode() method,
+ and make sure they follow their contract. On the other hand if you are storing a custom object in Sorted Collection 
+ e.g. SortedSet or SortedMap, you also need to make sure that your equals() method is consistent to compareTo() method,
+ otherwise that collection will not follow there contacts e.g. Set may allow duplicates.
+
+ 
+HashMap is a general purpose Map (hash table based data structure), 
+which should be used whenever you need a hashing-based data structure for storing your mappings (key-value pairs).
+while TreeMap is red black tree base Navigable Map which provide sorting apart from hashtable.
+LinkedHashMap is a compromise bw these two.
+All these are not synchronized so faster compare to HashTable which is synchronized.
+Map can be made sync. by Collections.concurrentMap(c) but its better if we use ConcurrentHashMap.
+One null key and multiple null values allowed in HashMap and LinkedHashMap but not in Tree and HashTable.
+
+
+
+ In Summary use ArrayList if you are using ArrayList in Single threaded environment and use Vector if you need a
+ thread-safe collection. ArrayList is anytime faster than Vector in case thread-safety is not a concern.
+ 
+ HashSet vs HashMap
+ Implements Set Interface    Map 
+   No duplicates             duplicate value but not key
+   single null value       one duplicate value and mulitple key values
+   slower compare to HashMap
+   add method                put 	
+ 
+
+ adobe flash player : for steaming audio/video 
+       Acrobat reader : for creating,editing,viewing ,printing pdf(portable document file) .
+     Photoshop : for editing audio/video
+    spark video : its a video story telling application for ipad/iphone	 video.	 
+	
+	
+	
+=>Prioroty(Visibility) : How import/urgently issue needs to be fixed
+Urgent,high,medium,lower
+
+Severeity(Impact) : How severly bug is effecting the system.Degree of impact.
+Critical,major,minor,trivial
+
+High Priorty and Low Severeity : If Company's logo is wrong on the home page.
+H P H S : Website is showing error on home page. Mobile is not makeing to able call. Device is getting crash after bootup.
+L P HS : if the device/web getting crash in a corner scenario. Scenario is not used by many customers.
+LPLS : text is not getting display in any corner scenario.
+
+
+
+=>Build is an executable file which refers to that part of an application which is handed over to a tester to test the implemented 
+functionality of the application along with some bug fixes. The build can be rejected by the testing 
+team if it does not pass the critical checklist which contains the major functionality of the application.
+
+There can be multiple builds in the testing cycle of an application.
+Release refers to the software application which is no longer in the testing phase and after completion of testing
+ and development, the application is handed over to the client. One release has several builds associated with it.
+
+=>Important point that should be consider while while writing test cases:
+Full undetstanding of the system/requirement,nothing should be assumed.
+All features should be covered.Nothing should left.User traceblity matrix is being used to check that every requirement is implementted and being tested.
+All the functional and non functional requirement should be covered.
+Tc Prioritasation ,Checking that all the , No redundancy ,simple language.
+
+=>Stress vs Load Testing
+In stress testing ,system is bound to tested in excertion/stress i.e to exeecute the system beyond the threashold limit of break to determinewhen
+does the system crashes. Its also check that when does the system recover once the load reduces.
+this condition generally occur when user or data size increases.
+
+L.T - In load testing system is checked with diff. load to find the peak performance of the server,throughput,responce time.
+
+

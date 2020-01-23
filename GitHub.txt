@@ -1,0 +1,22 @@
+GitHUb is a version control system/source control of the file stored on system and on multipli users working paralelly.
+basically a online repository where multiple user can work together onsame project and be insync.
+cmds : 
+
+localpath git clone "git project url "   //used to copy file in local path.
+localpath git status // to see the changes or things not in sync
+localpath git add "index.html"      // used to add file on github
+git add -A //will add all the file.
+localpath git commit -m "changed mortar" // used to commit changes.
+localpath git commit -m "made mortar more specific" //
+
+
+localpath git commmit //submit changes without message .now u need to used escape :wq to get out of it.
+  
+
+
+localpath git push //finally stores file on hub.
+git pull //to get the changes.
+
+
+** before statring new task first need to pull to get aal the changes done by others.
+*whenever u change a file ,save it after that.

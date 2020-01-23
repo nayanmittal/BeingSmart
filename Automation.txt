@@ -1,0 +1,87 @@
+Jenkings helps in scheduling the test suppose you want to run it everynight or at 3am daily or everyweek or everymonth.
+Jenkings keeps on pulling the code from GIT(version management tool/central repository) after defined time (like after every 30m) and as soon as any team member commit/save
+the code on GIT it automatically start running the build(running the code) and if any error comes it mails to all the members.
+so its help to find out the error/problem at the time of code change.
+
+
+https://www.youtube.com/watch?v=bpHTwO26HFc
+
+maintain right versions of jar files.
+packaging
+Mvn also helps in executing from cmds line(helpfull in unix like OS where we don't have id like eclipse)
+mailing the results
+
+
+ <plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-surefire-plugin</artifactId>
+<version>2.19</version>
+<configuration>
+<suiteXmlFiles>
+<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
+</suiteXmlFiles>
+</configuration>
+</plugin>
+ 
+ 
+ surefire
+ 2.12.4
+ 
+ 
+ 
+ ==>To get testng in run configuration,Download it first from help->market place->Search testng.
+ then convert .java file to testng file using "convert to testng file" option.
+ then in run ,you will find run as testng
+ 
+ 
+ 
+ 
+ 
+ rahulonlinetutor@gmail.com   // mail ur level learning,already working 
+ 
+ driver.findElementByXpath("/andorid.widget.textview[@id='1A']");
+ driver.findElementById
+ driver.findElementByClassName
+ driver.findElementByAccessibility(); //its in IOS 
+ 
+ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+ //  driver.findElementsByAndroidUIAutomator("new UiSelector().property(value)");  
+	 System.out.println(driver.findElementsByAndroidUIAutomator("new UiSelector().clickable(true)").size());  // this not working properly . Bug reported by udemy guys .
+	 
+	 
+	 
+	 
+ when 2 or more element have same package,class and no text or that tym we use xpath to use them.
+ driver.findElementByXpath("//andorid.widget.textview[2]").click(); //if we want to click 2nd element out of elements which have same details.
+or
+ driver.findElementsByClassName("android.widget.textview").get(1).click();  //first index is 0 and second is 1.
+ 
+ driver.findElementByUIAutomator("attribure(\"value\")");  //
+ 
+ 
+ if tagname have any special character then xpath won't work then we can use UIAutomator function or we can use * in place of tagname in xpath.
+driver.findElementByXpath("//*[@text='value']"); //
+
+
+For Gestures we need to use Touch class.
+TouchAction t=new TouchAction(d); // here d is driver.
+t.tap(webelement).perform();
+
+============swiping gesture=====
+t.longPress(LongPressOptions.withElement(element(webelement)).withDurations(ofS	econds(2))).moveTo(element(webelement)).release().perform();
+
+//long press //on element// 2 sec// move to another element and you release
+	WebElement first=driver.findElementByXPath("//*[@content-desc='15']");
+	WebElement second=driver.findElementByXPath("//*[@content-desc='45']");
+	
+
+t.longPress(longPressOptions().withElement(element(first)).withDuration(ofSeconds(2))).moveTo(element(second)).release().perform();
+
+
+========sroll To=========
+for this we need to use Android code inside appium code (using androidUIAutomator)    //use andorid code when we want to android property like scroll,clickable
+driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView("text(\"WebView\"))");
+
+
+Appium server show 200 success when code executed succesfully.
+
