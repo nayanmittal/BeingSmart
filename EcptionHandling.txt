@@ -1,0 +1,110 @@
+Eceptio are the event/condition which breaks the normal flow of eecution and can be recovered.
+checjed.
+
+
+
+1)
+CheckedEcetion : For checkedEeption, compiler tell us that there may be or not a eception.Like if file is not present at mentioned path.
+So either declare[thorws] or handle eception[try-catch] .
+And if have declared[throws] the eception and if eception occur then eception details will be printed[and program stops]. and if not occur program will eecute normally.
+and if we have handled[try-catch] then eception occur or not ,program will eecute normally.if eception occur then mentioend details in catch will be printed.
+
+checked are IOEeception,FileNotFoundEception,SQLEception
+its alwasys better to caught eceeption at compile time then run time. becaue we are caughting it early and no problem at run time.
+
+Whenever a eception occur ,JVM(Runtime system) creates a object of Eception Class which store information about the type and location of eception in the program.
+JVM now check whether eception is handled by any method in call stack or not. 
+If not handled then JVM print the info. about the eception using object created. and ewcution breaks at that point.
+If eception handled by any method in the call stack then related info. is printed and eecution goes on normally after that.
+Whenever built-in(defined eception) occues then JMV throws itself and if we define our eception then we need to throw it using "throw" keyword and hanlde it.
+
+
+
+2)
+Uncheck eception or RunTimeEception are those which are checked at run time.not detected by compiler.
+These class etends RunTimeEception class.
+NullPointerEception,ArrayIndeOutOfBoundEception,AirthmeticEception,NumberFormatEcveption,ClassNotFoundEception,ClassCastEception,NoClassDefFoundError 
+
+3)
+Error the condition which are unrecoverable and mostly happens due to enviorment.Whenerror occurs then we have to terminate the program.
+e: OutOfMemoryError,AssertError,VirtualMachinError,StackOverflowError
+doubt :Error are runtime Eception
+
+
+Checked Exceptions are not forwarded in calling chain (propagated).checked eception can be forwarded using thorws.
+By default Unchecked Exceptions are forwarded in calling chain (propagated).
+
+
+
+Which exception should be declared
+Ans) checked exception only, because unchecked ecption are due to programer fault(like trying to devide by zero and access out of bound index) and can be removed by correcting the code.
+
+
+
+throw is used to throw user defined eception[both checked and Unchecked.] 
+throw new Exception(java.io.IOEeception); //
+Built eception are thorws by system itself.
+
+we can rethrough ecption by thowing the same eceeption in catch block.
+
+
+Merge and Quick sort from Geeksfor geeks
+
+
+
+===Methods ===
+Always think that there may be white spaces while writing program for string handling . String s="nayan mittal is".
+Character.isLowerCase(ch),Character.toLowerCase();
+s.isLowerCase();
+s.replace(ch,ch),s.replace(str1,str2),s.replace(regep,str);
+
+
+s1.indeof(s2);s1.indeof(ch); method works for both string and char.
+In palindrome string,character should be same .case dosn't matter.so change case in program.
+
+character array don't have any method to directly search an character so need to do it manually like linear search.
+google guava library have methods Chars(ch[],ch) method to search.
+
+int arr[]={5,3,4,2,1};
+Arrays.toString(arr); it will return list view of string like[5,3,4,2,1] & can be added in a list<String>.
+this method appiles for all int,char,object.
+Math.pow(2,4)=16
+
+if we rigth shift[>>] any number[shift number towards right ],then it equal to num/2 .
+5=>    				 0101
+right shift          0010 which is equal to 2.
+
+and if do(num&1==1) then it means num%2=1 .
+
+Binary rep. of negative number.
+first find 1's complement of binary rep. of number ,then add 1 ,
+4->  				0100
+1's compliment 		1011
+now add 1011		1011
+					   1
+so -4->				1100
+
+
+In tree,there are Depth first traversal and Breadth first traversal.
+in DFT (in,pre,post order traversal)
+in BFT ,we traverse each level nodes first then go to next depth.traverse can be done using Queue<Node> Q=new LinkedList<Node>();
+Array to binary Tree. for this we will add 2i+1,2i+2 will be left ,rigth child of current node. arrya to tree is reverse of tree's BFT traversal.
+public void arrTTree(int[] ar,pos)
+{
+if(pos>len-1 || arr[pos]=-1)
+return null
+Node newNode=new Node();
+newNode.data=arr[pos];
+
+newNode.left=arrTTree(ar,pos*2+1);
+newNode.right=arrTTree(ar,pos*2+2);
+
+
+for LinkedList sorting,we just need to change data of current and next node if current is less than net node. ,no need to change addresses.
+for linkedList reversal, take 3 node, previous,current and net.
+
+retunr newNode
+
+
+
+}

@@ -1,0 +1,25 @@
+Start appium as : appium --relaxed-security
+
+This will allow you to execute adb shell input text ‘ANY STRING’ command from your script.
+
+Find the element locator for Recipient text box.
+Example :MobileElement element=driver.findElement(By.id(“com.google.android.apps.messaging:id/recipient_text_view”));
+
+Below is the Custom Method which tap on recipient(To text box) and enter multiple String(Contact Numbers) one after another
+
+public void enterTextMethod(MobileElement element,String inputText){
+element.click();
+List enterText = Arrays.asList(“text”, inputText);
+Map<String, Object> cmd = ImmutableMap
+.of(“command”, “input”, “args”, enterText);
+driver.executeScript(“mobile: shell”, cmd);
+((AndroidDriver) driver).pressKey(new KeyEvent(AndroidKey.ENTER));
+}
+
+
+
+////https://developer.android.com/reference/android/view/KeyEvent 
+
+
+
+

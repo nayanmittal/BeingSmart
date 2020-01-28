@@ -1,0 +1,51 @@
+driver.findElement(By.id(“com.android.calculator2:id/digit5”)).click();
+driver.findElement(By.xpath(“//android.widget.Button[contains(@resource-id,'digit5') and @text='5']”)).click();
+driver.findElementByAccessibilityId(“plus”).click();
+driver.findElement(By.xpath(“//android.widget.Button[@text='5']”)).click();
+
+
+
+
+import java.net.MalformedURLException;
+import java.net.URL;
+ 
+
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+ 
+public class CalculatorTest2
+{
+	
+	public static void main(String[] args) {
+
+		
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+		capabilities.setCapability("BROWSER_NAME", "Android");
+		capabilities.setCapability("VERSION", "8.0.0"); 
+		capabilities.setCapability("deviceName","Galaxy S9");
+		capabilities.setCapability("platformName","Android");
+	 
+	   
+	   capabilities.setCapability("appPackage", "com.sec.android.app.popupcalculator");
+	// This package name of your app (you can get it from apk info app)
+		capabilities.setCapability("appActivity","com.sec.android.app.popupcalculator.Calculator"); // This is Launcher activity of your app (you can get it from apk info app)
+
+
+		capabilities.setCapability("udid", "1bd557b4640c7ece"); //Give Device ID of your mobile phone
+	
+		capabilities.setCapability("noReset", "true");
+		
+		//Instantiate Appium Driver
+		try {
+				AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"),capabilities);
+			
+		} catch (MalformedURLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+ 
+}

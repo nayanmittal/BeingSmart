@@ -1,0 +1,135 @@
+================Maven=======================
+Build is a process which includes all the steps to create the deliverables of your software.
+1)Generating sources(somteimes)
+2)compiling sources
+3)compiling test sources
+4)Running test(Unit,Eecution tests)
+5)packaging
+6)Running health checks (static analyzers like Checkstyle, Findbugs, PMD, test coverage, etc).
+7)Generating reports.
+
+Inn Java: Build is a Life cycle contains sequence of named phases.
+
+for example: maven it has three build life cycles, the following one is default build life cycle.
+◾validate - validate the project is correct and all necessary information is available
+◾compile - compile the source code of the project
+◾test - test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed
+◾package - take the compiled code and package it in its distributable format, such as a JAR.
+◾integration-test - process and deploy the package if necessary into an environment where integration tests can be run
+◾verify - run any checks to verify the package is valid and meets quality criteria
+◾install - install the package into the local repository, for use as a dependency in other projects locally
+◾deploy - done in an integration or release environment, copies the final package to the remote repository for sharing with other developers and projects◾validate - validate the project is correct and all necessary information is available
+◾
+
+mvn test
+mvn build
+mvn install
+
+=======================================
+https://www.youtube.com/watch?v=sPqf4ujbc0g
+We are using java language in our framework as most of the developers uses java for selenium .
+
+Always eplain base class better.
+Type of framework: Data driven,keywork drivern,hybrid framework
+BaseClass : Generally create driver,connection, implicite waits, generating reports.
+
+Where do you keeps the elements locators : Id,path,css
+Mentions if you are using it .Generally we uses POM model for separating the locaters from tests.
+we can also use properties file for storing locaters.
+
+Every framework has some generic functions[utility functions-: calling data from file etc] and project specific function
+property file : which mentions the browser which you are using ,url etc.
+testNg : tell about the testng annotations which you are using
+how you capture error screens and how you make the reports and send them.
+version control tool if you are using : git/perforce
+Continuous intergration tool if you are using : Jenkins/hedson
+
+in properties file ,static information like url,browers ,credentials are stored,screenshots path.
+
+
+we are using page object model. we have made separate class for each page[HomePage.java,LoginPage.java] which has functionality and member of that page. src/main/java- page folder
+we have separate class for each test cases which uses [LoginTest.java,TestBase.java].
+we have separate packages for pages and tests.
+all the pages class come under -src/main/java- page package and the test classes come under src/test/java- tests package
+LoginTest class calls methods from HomaPage and LoginPage class.
+TestBase class contains common functions uses by all the pages.This class is responsible for loading the configurations from properties file,initialiing the driver,
+implicit waits,creating reports also creating fis[fileinputstream] object which is responsible for pointting towards file from which data should be read.
+Login test[mostly all test classes] etends TestBase class.
+
+Util classes :In this class,we kepts the functions which are repeatatively used being kepts here.
+waits,actions such as capturing screenshots,accessing ecels sheets,sending emails.
+
+test data are kepts in separate folder src/main/java-testdata folder (.apk files,excel files)
+
+Screensshots are kept in a separate folder FailTestsScreenshots and also added in extent reports.
+
+
+we use testng for assertions,grouping and parallel eections.
+we are using maven for test build,dependency resolution and eecution'
+we integrate testng in pom.ml fiel and running it via jenkins.
+In out project we use git as a repository to store the scripts
+we use jenkins for continuous integration ,daily eeuction and night eecution based on the schedule and results being sent to peers using jenkins.
+For reports,we use Etent reports it generates beautifule html reports ,also screenshots gets added for the fail cases in it.
+https://www.softwaretestingmaterial.com/test-automation-framework-interview-questions/
+
+
+
+
+
+===================
+Appium prpblem faced ;
+1)Yes while locating elements when element have class,package etc same. [either use get method or path  ]
+ WebElement source=driver.findElementsByClassName("android.view.View").get(0);  //here 0 is inde
+ 
+
+2)Change in script when OS Version changes /UI automator ver. changes
+
+	  //[Drag and Drop function]longpress(source)/move(destination)//release
+	 //  t.longPress(longPressOptions().withElement(element(source))).moveTo(element(destination)).release().perform();
+	  OR   t.longPress(element(source)).moveTo(element(destination)).release().perform();
+
+	  
+=============	  
+findElementById,Class,Xpath,Accessibility and findElementByUIAutomator are only allowed in Appium. 
+driver.currentActivity();
+driver.getContext();
+driver.getOrientation();
+driver.isLocked();
+driver.pressKeyCode(AndroidKeycode.Back);
+driver.hideKeyboard();
+
+Pl give inputs about appium resume .
+ask method f
+
+
+driver.findElementByClass("---").getName(); //will returnt the name of the AndroidElement.
+driver.findElementBypath("//*[@ ='']").getAttribute(class); //will return the class or any other attrbute passed
+
+=======================
+To open a web inside any browser in mobile,we first need to locate element.
+for this,we need to go to chrome in PC,change it to mobile view ,click on model nnumber,open a web ,then corresponding mobile website link will appear.clcik 
+on that now open website in pc is mobile site. u can normally check found the element like u check in desktop browser.
+Webapp(websites) which support web compatiblity,have same objects  in mobile and desktop.
+
+=======================
+if ur app is  hybrid(means it will change from nataive view to web view or vice-versa) then we need to write context switching code to tell appium that it has 
+switched form native view to web view. and after that in web view ,u will use selenium library.
+Set<String> cnt=driver.getContxetHandles();
+for (String s:cnt)
+System.out.println(s);
+
+driver.context(cnt.toArray()[1]);  //to set web view
+driver.context("Native") //to set native view .we need to use exact name of native view.
+
+=========================
+to scroll inside chrome or anyother browser(web app), we need to use JavaScriptExecutor.
+JavaScriptExecutor je=(JavaScriptExecutor)driver;
+driver.scroll----------
+
+
+=====================================
+
+
+
+
+
