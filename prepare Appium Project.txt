@@ -1,0 +1,16 @@
+Step 1: New maven project --> 
+        group Id ---> com.samsung.metibot
+	artifact ID --> menutreegen
+        finish
+
+TestNG--- if we use @Test annotations, code automatically sugest t add junit or testNg, use testNG
+
+
+Before Truncation : Execl Name : A1
+ Current Depth  : 0 Current coveredCount : 2
+ After Truncation : Execl Name : A
+ MenuTrack Removed :  : [All memos, text]
+ Before Truncation : Execl Name : A12
+ Current Depth  : 0 Current coveredCount : 2
+ After Truncation : Execl Name : A1
+ MenuTrack Removed :  : [All memos, text]
