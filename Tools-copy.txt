@@ -1,0 +1,273 @@
+===TestNg==
+Either u can download eclipse jar and set at build project path/we can download plug-in which will we available for all the projecs.
+cross check : window-prefences-check testng.
+
+TestNg use java compiler in background to run the code.
+
+
+We can run multiple cases from 1 class.we can group test cases.Report creation.
+
+To create TestNg.ml or converting the java files to testng, simply right click on java file/package-testng-convert to test testng.
+
+We keep related test cases inside one test name tag and other module test cases inside othe.
+We can skip test cases related to modules just by commenting that module in xml file or removing it from xml file.[module=smoke,regression,login cases etc]
+we can skip particauler test cases or eecuting particular testcases.] also by using exlclude tag inside method tag of that class tag in xml file.
+We can use include tag to include particular methods. 
+
+While writing the test cases related to a module, we should use a common keyword in them(consistent name) so that while automating ,we can include,eclude those
+that cases.[or follow proper test cases name convention]
+
+<exclude name="Mobile.*"/>  //all tcs starting with Mobile will exlclude
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Loan Department" >
+  <test name="Personal Loan">
+    <classes>
+      <class name="test.Day2"/>
+      <class name="test.Day1">
+          <methods>  
+              <include name="demo2"/>
+              </methods>
+      </class>    
+    </classes>
+  </test> <!-- Test -->
+  
+  <test name="CarLoan">
+     <classes>
+     <class name="test.Day3">
+      <methods>
+          <exclude name="mobile.*"/>
+      </methods>  
+     </class>
+     </classes>
+  </test>
+  
+    <test name="HomeLoan">
+     <classes>
+     <class name="test.Day4"/>
+     </classes>
+  </test>
+  
+  
+</suite> <!-- Suite -->
+
+TO run ,a package named "test"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Loan Department" >
+ <test name="personal loan">
+  <packages>
+      <package name="test"/>
+  </packages>    
+     
+ </test>
+  
+</suite> <!-- Suite -->
+
+
+@BeforeTest : Is generally used to launch driver,preconditions etc.
+Its scope is till test folder/module/shell(ex-Personal loan).
+it will eecute before test cases of currnet test folder start eecuting.
+
+
+@BeforeSuite : Is generally used to set global envioremental parameter to ur frameworks.
+Its scope is complete suite.
+
+
+@Beforemethod : this method will run before every method in class. Its scope to the class file.
+can be used to delete cookies before login case.
+if there are 4 tc in class ,then it will run 4 times.
+
+@BeforeClass: it will eecute at the starting of the class in which it is written.
+
+
+By default test cases run in alphabetical order.
+
+
+=====gropus====
+if client wants to run some partiaular test cases from differents class(like smoke cases) or wanna run some cases on daily basis.or wanna run 40 out of 100 daily.
+then we use groups tag. If it is from same class then we would have used include/eclude.
+
+<suite name="Loan Department" >
+    <groups>
+        <run>
+            <include name="smoke"/>
+        </run>
+    </groups>
+       
+    <test name="Personal Loan">
+    <classes>
+      	   <class name="test.Day1"/>
+            <class name="test.Day2"/>
+            <class name="test.Day3"/>
+            <class name="test.Day4"/>
+    </classes>
+  </test>
+</suite> <!-- Suite -->
+
+we can use eclude here also. meaning skipping all cases with metnioned gropus tags
+
+==============Helper Attributes============
+if want to create dependencies amoung test cases that once case runs after one particular tc then add below attributest.
+@Test(dependsOnMethods={"WebLoginCar"})    //we can depends on multiple methods .Just need to add , .
+
+if our appilication has some error which we already know.but want to execute the other part then we can use parameter (enabled=false).
+
+if we want to set timeout to some method.In case of RestAPi sometime server responds slow then we can use arribute timeout (timeOut=4000).
+
+==========Parameteriation============
+In 2 ways in testng 1)xml file 2) data provide annotation
+we can parameterie the value and driver the value from testng file.
+if we have common enviornmental parameter which is common acroess entire test cases.like api key in restapi testting,package,activity name in appium,URL in selenium
+
+
+
+<parameter name="URL" value="nayan.com"/>
+<parameter name="Username" value="nayan12345"/>      // if we write just below suite then we can use anywhere in the code and if write below any test module then can only use in methods of that module.
+
+
+@Parameters({"URL","Username"})              
+
+===>if we have 20 data sets and you want to run ur tc for all the data set
+@DataProvider          
+public data[][] getData()   // this method willl provide data
+{
+----------------
+-----------
+
+}
+
+@Test(dataProvider="getData")
+public void test (String username,String pwd)
+{}
+============================
+another way is to derive it through code using porperties file
+
+
+
+===Maven====
+Maven is a software project management and build management tool which have following functionalities.
+1) Resolving the dependencies : 
+it will automatically download the dependencies and will update them once new available/or required just by changing the ver. in pom file.
+Suppose if you share project with 50 people in ur organ. then normally all of them has to make build path manually same as you(and download dependencies ver. used by you).
+so it will be very tedious task to do. while sharing maven file will automatically do that.
+2) Maintaingn Common Project Structure across the organisation
+maven provide default project strurctures(skeletons) for projects. so all member can should one default sturcture . 
+3) maven plus-in 
+
+
+4) Integrattiom with CI Tool.
+Jenkins recognises some maven commands .so maven can be integrated with it.	
+	
+
+cmd to create maven project from cmd prompt:
+mvn archetype:generate -Dgroupid:""   -Dartifactid:"" -Darchetype:ArtifacyId =mavne-archetype-quickstart  -DinterativeMode=false
+
+maven create src fodler+pom file while creating from command prompt so we need to create .project and .classpath files.
+can be done by this cmd.
+mvn eclipse:eclipse    
+
+
+Maven surefire plugin is used to eecute all the test cases.wheather you use testng or junit we need to use surefirepath plugin.
+and when u run mvn test cmd on any other cmd from command prompt it will eecute all the methods.
+But if u want to eclude some methods only. then first create a test file(by using "convert to testng option") and put its details in pom file.
+then mvn test will perform according to the testng file.
+Whenever you add any dependency/update pom file then right click->maven->update project to update/download dependencies.
+
+mvn clean     //used to remove temp files and if you have made multiple build of the project.its recommended to do before compile.
+mnv compile  // checked for synta error and compile the code(all the files.)
+mvn test    // it will clean,compile and run the test cases.
+
+Maven first check dependency in local repos. folder and if not found then download it from central repo.
+
+If you want maven to eecute all the testcases in Test folder then use Test at the end of class name.
+
+ <profiles>
+  <profile>
+  <id>Regression</id>
+  
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.20.1</version>
+           <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>testng2.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  </profile>
+  <profile>
+  
+   <id>Smoke</id>
+  
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.20.1</version>
+           <configuration>
+          <suiteXmlFiles>
+            <suiteXmlFile>testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
+        </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  
+  </profile>
+  </profiles>
+  
+  we can have mulitple testng file accoding to our requirement(smoke,regression etc) which we can run from maven by giving name from cmd prompt.
+  
+  
+  
+  
+  
+  ==========Jenkins========
+  Suppose you haves thousands of test cases and it would take 6-7 hrs to eecute. and you want when u come morning in the office you want yr results.
+  so you need to trigger it and 2Am in the mrng(also if you want it to eclude daily.)
+  
+  Whenever developer pushes a new code,jenkins sees it and automatically pushes the test cases.
+  
+  Jenkin run java & testng on its own server so we need to mention the version of these.
+  
+  Manage jenkins->global tool configuration
+  
+  ==Source code management====
+  you can manage ur code from from GIT or submersion or local machine.
+  
+  
+  =>Post Build Actions : Mailing and all
+  
+  
+  http://localhost:8080
+  
+ In Company , Jenkins is hosted on server which setup generally done by DevOps guys.
+ 
+ 
+ 
+ 
+ =======Page Object Pattern======
+ if you have 500 scripts then if any vaiable changes then you have to do changes in 500 scripts and that's not a proper way of devloping framework.
+ so for this ,we keep the variable stored in diffl file.
+ In data driven,keyword driven we need to depend .xlx file and if this file crashes then that's a problem.
+ 
+ 
+ we should declare all the objects in 1 java files. so different java file for different pages in application.
+ 
+ 
+ 
+ ======Framwork============
