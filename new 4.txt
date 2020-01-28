@@ -3,6 +3,19 @@ Greet in a gud way(first impression is last impression)
 prepare about your work.(Bring eample of your work')
 
 
+Generally we have multiple projects(5-6) together.So whenever the release for a project comes.
+All the skateholder meets and make test plan according to the changes,issue fixed, new implementation. 
+and then we perform some tests like smoke tests,andorid os confi test.
+some test we perform by the tools and other are being eecute manually.[manully-keypad and input test,FTR test,Mps test]
+all test items being start after smoke testing . if its pass then proceed otherwise reject the build.
+For new app,feature ,scope of automation is checked. the part which could be automated is being done n other part is being ecuted manually.
+
+
+Recenetly i maid a project using appium frameworrk in which we compare the modes,setting of one device with another .
+it etract all the setting ,saves in a ecel file and compare the ecel of two devices . and give result as pass ,fail with color code.
+camera,setting.
+
+
 I am nayan.I have done my B.Tech in Computer Science from Galotia College. I am working with samsung since 2012.
 I am into testing .Tell about your project
 .

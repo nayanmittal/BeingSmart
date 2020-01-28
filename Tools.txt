@@ -233,7 +233,10 @@ If you want maven to eecute all the testcases in Test folder then use Test at th
   we can have mulitple testng file accoding to our requirement(smoke,regression etc) which we can run from maven by giving name from cmd prompt.
   
   
-  
+  ====Git===
+  Git is version control system which is used to track changes during software project development.Multiple developer can work parallely with the help of it.
+  it also helps in getting the latest version of the software. ALso we can create other branches & test them and if its correct then we can add it to master branch.
+  Every dev has the copy of the project. and they made changes in there local copy and then commit on git. So every other dev got to know about the changes.
   
   
   ==========Jenkins========
