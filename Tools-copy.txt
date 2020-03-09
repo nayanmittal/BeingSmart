@@ -249,6 +249,25 @@ If you want maven to eecute all the testcases in Test folder then use Test at th
   
   
   ==========Jenkins========
+  Jenkings helps in scheduling the test suppose you want to run it everynight or at 3am daily or everyweek or everymonth.
+Jenkings keeps on pulling the code from GIT(version management tool/central repository) after defined time (like after every 30m) and as soon as any team member commit/save
+the code on GIT it automatically start running the build(running the code) and if any error comes it mails to all the members.
+so its help to find out the error/problem at the time of code change[early stages]
+
+Jenkins is a Opens source automation server used for continuous integration and deployment.
+It serves us all the task of software development building,testing,report generation and deployment 
+
+what's continuous integration/deployment:
+In continuous Ingegration whenever there is commit, software is build and tested immediately is. In A large project,Multiple developers works together,commits are done
+many times a day,so whenever a commit is made ,jenkin build and test it. If test is pass then it check it for deployment.If deployment is success then pushed for production. So commit,build,test,deployment is a continuous process.
+
+The trigger for execution for time or event based.
+A Continuous Integration Pipeline is a powerful instrument that consists of a set of tools designed to host, monitor, compile and test code, or code changes, like:
+
+Continuous Integration Server (Jenkins, Bamboo, CruiseControl, TeamCity, and others)
+Source Control Tool (e.g., CVS, SVN, GIT, Mercurial, Perforce, ClearCase and others)
+Build tool (Make, ANT, Maven, Ivy, Gradle, and others)
+Automation testing framework (Selenium, Appium, TestComplete, UFT, and others)
   Suppose you haves thousands of test cases and it would take 6-7 hrs to eecute. and you want when u come morning in the office you want yr results.
   so you need to trigger it and 2Am in the mrng(also if you want it to eclude daily.)
   
