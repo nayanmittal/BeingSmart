@@ -111,6 +111,17 @@ then we use groups tag. If it is from same class then we would have used include
 we can use eclude here also. meaning skipping all cases with metnioned gropus tags
 IF we want to keep groups tag inside any tests instead of suite then we can also do that. then it will applied to that test.
 
+Syntax : 
+    @Test(groups = { "bonding", "strong_ties" })	
+    public void tc01LaunchURL() {	
+        webDriver.manage().window().maximize();	
+        webDriver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);	
+        webDriver.get("http://www.demo.guru99.com/V4/");	
+    }	
+
+
+
+
 ==============Helper Attributes============
 if want to create dependencies amoung test cases that once case runs after one particular tc then add below attributest.
 @Test(dependsOnMethods={"WebLoginCar"})    //we can depends on multiple methods .Just need to add , .
