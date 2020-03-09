@@ -109,6 +109,7 @@ then we use groups tag. If it is from same class then we would have used include
 </suite> <!-- Suite -->
 
 we can use eclude here also. meaning skipping all cases with metnioned gropus tags
+IF we want to keep groups tag inside any tests instead of suite then we can also do that. then it will applied to that test.
 
 ==============Helper Attributes============
 if want to create dependencies amoung test cases that once case runs after one particular tc then add below attributest.
@@ -246,8 +247,11 @@ If you want maven to eecute all the testcases in Test folder then use Test at th
   
   Manage jenkins->global tool configuration
   
-  ==Source code management====
-  you can manage ur code from from GIT or submersion or local machine.
+  
+  ===Source code management====
+  you can manage ur code from from GIT or submersion or local machine.To do it from local machine go to Advanced options
+  ${JENKINS_HOME}\E2EProjects 
+  Copy ur project inside .jenkins folder [c/user/nayan/.jenkins]
   
   
   =>Post Build Actions : Mailing and all
