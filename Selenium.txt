@@ -1,0 +1,654 @@
+Selenium is a suit which is used for web browsers automation.which have selenium ide and selenium webdriver.
+Selenium Webdriver is the succsessor of selenium remote control.
+
+
+Once you run the code, complete code will be converted to json format and sent to browser driver over http protocol.Browser driver then execute that command on respective
+browser after interpreting it .Browser driver 
+
+its supports many platforms[windows,mac,linux],many browsers,many langugaes and its open source.
+geckodriver for firefox 
+
+Selenium webdriver is much faster than RC because it directly make calls to the browser whereas RC make call to selenium server.
+WebDRiver have built in implemention for Firefox(gecko) driver.for others we need driver.
+Selenium 1(RC) is still actively supported (in maintenance mode). It relies on JavaScript for automation.
+
+There are four basic components of WebDriver Architecture:
+1)Selenium Language Bindings
+ 2)JSON Wire Protocol : JSon is an open standart format for exchanging data over web. this protocol support transport mechanism of json object.
+ 3)Browser Drivers : driver creates a secure connection with the browser without revealing the internal logic of the browser.
+ Http request is send to driver for each selenium cmd and cmd is received at driver by http server ,interpret it and server execute the step to be done on browser.
+ execution status is send back to http server and then subsequently to the script.
+ 4)Real Browsers
+ 
+ Driver uses http server to received http request.browser driver=http server
+ Once you click on Run, every statement in your script will be converted as a URL with the help of JSON Wire Protocol over HTTP. The URL’s will be passed to the Browser Drivers. (In the above code, we took FirefoxDriver). Here in our case the client library (java) will convert the statements of the script to JSON format and communicates with the FirefoxDriver. URL looks as shown below.
+
+http://localhost:8080/{"url":"https://www.softwaretestingmaterial.com"}
+Every Browser Driver uses a HTTP server to receive HTTP requests.  Once the URL reaches the Browser Driver, then the Browser Driver will pass that request to the real browser over HTTP. Then the commands in your selenium script will be executed on the browser.
+
+If the request is POST request then there will be an action on browser
+If the request is a GET request then the corresponding response will be generated at the browser end and it will be sent over HTTP to the browser driver and the Browser Driver over JSON Wire Protocol and sends it to the UI (Eclipse IDE).
+
+
+===========Grid========
+distributed test execution environment to speed up the execution of a test pass
+Grid architecture is based on master-slave architecture. Master machine distributes test cases to different slave machines.
+the central machine from where u will triger your test cases is called hub.
+Node : machine where tst will be run .Selenium instances on which test will run.
+
+if u want to run in ie 11 but local machine have ie 9,parallel testing
+java -jar selenium-server-stadalone.jar -role hub   [hub is basically server]
+node should register to http://192.168.1.175:4444/grid/register/
+Go to browser : http://192.168.1.18:4444/grid/console
+
+java -jar selenium-server-stadalone.jar -role webdriver -hub http://192.168.1.175:4444/grid/register/ -port 5566
+[driver exe file should also be there in node]
+java -D"webdriver.chrome.driver="C:\\driver.exe" -jar selenium-server-stadalone.jar -role webdriver -hub http://192.168.1.175:4444/grid/register/ -port 5566
+
+after that on hub cmd ,you will see logs showing that node has been registered on http://192.168.1.152:5566
+
+import this jar in ur project.
+caps.setBrowserName("chrome");
+caps.setPlatform(Platform.WINDOWS);
+WebDriver driver=new RemoteWebDriver(url,caps);
+
+https://www.softwaretestinghelp.com/selenium-grid-selenium-tutorial-29/
+
+java -jar selenium-server-standalone-2.41.0.jar -role webdriver -hub http://localhost:4444/grid/register -port 5556 -browser browserName=iexplore -browser browserName=firefox -browser browserName=chrome
+java -jar selenium-server-standalone-2.41.0.jar -role webdriver -hub http://localhost:4444/grid/register -port 5556 -browser browserName=chrome,maxInstance=3 -browser browserName=firefox,maxInstance=3 –maxSession 3
+==========================================
+if the website is hecked then u can redirect to another url.so security purpose u can validate the actualurl.[driver.getCurrentURL]
+getPageSource[in some website u can not see pagesource by clicking rigt key,right click disabled in banking app] so there u will use this method.
+driver.navigate().back():forward(); to navigate to the next web page with reference to the browser’s history
+refresh();driver.navagate.to("http://facebook.com");
+driver.manage().deleteAllCookies();
+driver.manage().deleteCookie(arg);
+driver.manage().getCookies();
+
+What is the difference between driver.get() and driver.navigate.to(“url”)?
+driver.get(): To open an URL and it will wait till the whole page gets loaded
+driver.navigate.to(): To navigate to an URL and It will not wait till the whole page gets loaded
+
+
+driver.close()[will close  only current window] driver.quit(){it will close all browser window opened by script}[sometime clicking on alink closes another window]
+if there are multiple element matched to ur query then first matching element will be selected.
+
+
+Locators : id,ClassName,Name,linkText,xpath,css
+
+chrome : Elements tab,Firefox : Inspect tab
+Alpha numeric id may vary on every refresh.
+class with spaces can not be used.Compound class exception is thrown. [but it can be used inside xpath or css without removing spaces with class as attribute]
+By.cssSelector("div[class=`title_bar bar ng-sss`]");
+By.cssSelector("div.title_bar.bar.ng-sss`]");
+// or
+By.cssSelector(".title_bar.bar.ng-sss`]");
+
+If the element have anchor tag <a> then its a link n we can use linkText method to identify object.
+Xpapth/css given by browser are not 100% correct so its better to write your own xpath.Xpath starting with html/ / are not correct so dont use it.
+so if dosn't get proper xpath in one browser then can use xpath from another browser.
+sometime firefox 
+chropath from chrome[] to find xpath/css 
+Firefox firebug plugin have been removed in latest version to be consistent with other browsers.
+
+Validating Xpath and CSS
+Consider you have 40 pages n chanes done in 38th page so u have to make changes for 38th page element n then run n come to 38th page to check that u have correctly written new xpath.
+Instead of this browser have direct xpath validation technique.
+
+Go to Console tab,next to element or inspect tab in browser,insert below query,scroll on the output n it will highligh the element if the xpath/css is correct.
+$x("xpath") in chrome ,output will have length as 1. 
+$("css")
+
+<input type="email" class="inputtext login_form_input_box" name="email" id="email" data-testid="royal_email">
+here input is an attribute ,type,class,Name,,, are attributes n "email" & "inputtext login_form_input_box" are values
+//tagname[@attribut='value']
+//input[@type='email']   //here it will search only element with tag name input n then attribute type with value=email.
+or //input[@class='inputtext login_form_input_box'] or //input[@name='email']
+//tagName[text()='value']
+
+
+css :   tagname[attribute='value']
+1) input[type='email'] or [type='email']   //We can skip tagName anytime in css.
+3) tagName#id ->input#email or #email
+
+4) tagName.classname->input.inputtext login_form_input_box 
+  
+
+
+xpath regular expression       //input[contains(@type,'email')]
+css regular expression         tagName[attribute*='value']
+
+ 
+If an element has no unique id,class or any locator then how to identify the element.
+[Parent-Child]Then find its parenet or grant parenet or  grant grant  parent which can be identify uniquely then traverse to child
+//div[@class='RNNXgb']/div/div[2]/div/input
+
+when we reach to element direly using an identifier without traversing parent then it call relative xpath
+In absolute xpath ,we traverse to element starting from top.
+Relative xpath is preferred because if dev changes the element while refactoring,updating then it will break.But relative will directly jump to element wherever it is present.
+ 
+Sibling n Accessing Parent
+When one element is changing continuouly then u can access it via its sibling if sibling is static.
+//input[@id='adfs']/following-sibling::li[2]   //here li is the    
+
+==========================
+In xpath we can traverse back to parent from child but we can not do this in css.its major diff. in xpath vs css.
+//input[@id='adfs']/parent::ul  //
+
+css is faster[10 times ]than xpath.
+driver.findElement(By.cssSelector("#Login"));     //#id or tagName#id  or .classname
+Although CSS selectors perform far better than Xpath and it is well documented in Selenium community. It has following advantages over XPath as:
+Xpath engines are different in each browser, hence make them inconsistent
+IE does not have a native xpath engine, therefore selenium injects its own xpath engine for compatibility of its API. Thus losing the advantage of using native browser features.
+Xpath tend to become complex and hence make hard to read
+
+
+if the the classname have space then remove it & place . inplace of space.[name wbbb bsddf] wil change to name.wbbb.bsddf
+
+When you spy dropdown & you find "Select" tag then its a static dropdown.[in static, all the options are preloaded.]
+Select s=new Select(driver.findElement(By.id("dafd"))); //it will contain the DropDown.now u can perform operattion on dropdown.
+s.selectByValue("USD");s.selectByIndex(6);s.selectByVisibleText("2 Adults");s.getOptions().size();
+s.deselectALl();  select.deselectByIndex(1); deselect can be used only when multiselect is supported. isMultiple()
+* Select class generally gets used in static dropdowns.
+Dynamic Dropdown :IF the drop down element are loaded once you have selected some other options.
+then there may be more than one options get selected from xpath for one element.
+
+When you have writen correct xpath & u find elementnotvisibleexception then chances are that there is more than 1 element getting selected.(xpath)[index]
+Tutorial 50 : Handling dynamic dropdowns.
+driver.findElement(By.xpath("//div[@id='glsctl00_mainContent_ddl_destinationStation1_CTNR'] //a[@value='MAA']")).click();  
+if we wanna select child inside parent then parent xpath//spacechaildxpath  //[parent// child]
+
+Autosuggestive dropdown :[Dropdown in which on typing some chr. automatically related city,place gets highlighted.]
+In that case,you need to press enter to select the highlighted dropdown.   [Keys.Enter][Keys.DropDown to scroll down .simulate down arrow key]
+destination.sendKeys(Keys.ARROW_DOWN);  //here destination is a webelement.
+//if you want to sroll down & then select .
+desti.sendKeys(Keys.ARROW_DOWN);then dest.sendKeys(Keys.Enter) 
+String clicklinktab=keys.chord(keys.CONTROL,keys.ENTER);
+sendKeys(clicklinktab);
+
+
+Checkbox and raido button are normally gets selected just by clicking on them.NO spetial method.
+isSelected() to check if any check box is selected or not
+isEnabled() to check whether an element is enabled or not. It doesn't work with some sites.So look for the value which is getting changes when element getting enable and disable.
+and then get that attribute value using we.getAttribute(attributeName) and compare to check whether get enabled or not.
+
+
+Assert.assertTrue(2>1); it will fail the test case if inside condition is false and execution will stop,will not continue.
+Assert.assertFalse(1>2); it will fail the test if inside condition is true.
+ 
+
+				
+	wb1.switchTo().alert().getText();
+	wb1.switchTo().alert().accept();		
+	wb1.switchTo().alert().dismiss();
+	getText(): To get the text which is present on the Alert.
+sendKeys(): To enter the text into the alert box.
+
+	
+debugging :  ctrl+shift+F to format the code,add breafkpoint to debug the code .dubug as java application and code will run to breakpoints.you can now step over to execute step by step
+resume to jump to next breakpoint .step into to go inside a method.	
+	
+Add vegetable scenario on rahulshettyacademy.
+search vegeable name you want to search out of vegetable list & get its index & click on "add to kart" corresponding to this indext.
+list.contains(s)  //s string will be searched inside list. 	
+ss.contains(SS)   //here SS string will be searched inside ss string.
+
+section :9
+Genearll don' use name to create xpath as sometime name of the element changes[use text only if remains same ].[like on clicking to "add t kart" button will change to added for some time].
+so use class .if you don't find class then take parent element xpath[just immediate parent,] then use [xpath/childtagName].Clicking on parent[when parent also just had add to card] we don't where
+it will get clicked as parent have some extra space. 
+
+or wait for some time so that element turn back into origional name.
+
+
+====waits in selenium/handling synchronization====
+implicit wait,explicite wait,Thread.sleep(),fluent wait
+
+
+===Actions===
+org.openqa.selenium.interactions.Actions;
+Actions a=new Actions(driver);
+Actions class is used to simulate keyboard & mouse event in selenium.like rightclick,mouse over,double click,press shift key to send data in capital letters,drag-drop etc.
+a.moveToElement(driver.findElement(By.cssSelector("#nav-link-accountList"))).contextClick().build().perform();
+Its also used to perform composite action like performing multiple action in one time.
+a.moveToElement(driver.findElement(By.cssSelector(".nav-search-field "))).click().keyDown(Keys.SHIFT).sendKeys("hello").keyUp(Keys.SHIFT).doubleClick().build().perform();
+
+amazon example.
+
+a.dragAndDrop(source, target); //where sourcce & target are source & target webelement.
+example query to drag and grop inside a frame. : https://jqueryui.com/droppable/
+
+Ajax stands for Asynchronous java script and xml.
+AJAX allows the Web page to retrieve small amounts of data from the server without reloading the entire page.
+
+===ChildWindow==
+Sometime clicking on a link in a webpage opens a new page[child winodw].but by defaults driver have control on parent window.
+so if you want to switch to child winodw or back to parent from child .
+
+Set<String> windowIds = driver.getWindowHandles();
+		Iterator<String> it = windowIds.iterator();
+		String window1=it.next();String window2=it.next();
+		driver.switchTo().window(window2);   //control switched to child window.
+		driver.switchTo.wiindow(window1);  //parent window
+		
+		
+
+===Frames====
+https://www.guru99.com/handling-iframes-selenium.html#:~:text=iFrame%20in%20Selenium%20Webdriver%20is,with%20the%20tag.
+HTML frames allow developers to present documents in multiple views, which may be
+independent windows or subwindows. Multiple views offer developers a way to keep certain
+information visible, while other views are scrolled or replaced. For example, within the same
+window, one frame might display a static banner, the second a navigation menu, and the third
+the main document that can be scrolled through or replaced by navigating in the second frame.
+driver.switchTo.frame(id/number or name or locator webelement); // in total 3 methods.
+
+
+we can find total number of frames using locator
+driver.findElements(By.tagName("iframe")).size();  // generally its tagName are iframe or frameset.
+
+Working with Iframe and page content
+IFrame Is another web element and you can not locate Its element directly In selenium webdriver. To work with IFrame element In selenium webdriver, first of all you need to select that IFrame using syntax like bellow.
+//switch to frame1. frame1 Is ID of frame.
+driver.switchTo().frame("frame1");
+
+Now you can work with any element which Is Inside frame1. Now supposing you wants to switch back to page content then you need to use syntax like bellow.
+//Switch back to page content.
+driver.switchTo().defaultContent();
+After above syntax execution, You can work with page elements.
+
+Working with multiple frames on same page
+If there are multiple Iframes on single page then you can not directly navigate from Iframe1 to IFrame2. For that, You need to select page In between as bellow.
+//switch to frame1
+driver.switchTo().frame("frame1");
+driver.findElement(By.xpath("//td[contains(text(),'Cow')]/preceding-sibling::td/input[@type='checkbox']")).click();
+  
+//Switch back to page content  driver.switchTo().defaultContent();  
+//switch to frame2            driver.switchTo().frame("frame2");
+driver.findElement(By.xpath("//input[@value='Boat']")).click();
+
+How to count total number of tolal links on page.All links have common tag name "a" .
+driver.findElements(By.tagName("a)).size();
+links inside a block[parent]
+System.out.println(driver.findElements(By.xpath("//div[@id='gf-BIG']/table/tbody/tr/td/ul/li/a")).size());
+
+limiting the scope of driver to a block
+WebElement we=driver.findElement(By.id("gf-BIG")); //element locating footer.now you can apply all method on we which we can apply on driver.
+we.findElements(By.tagName("a")).size();
+
+
+
+Interviw Question
+That there were scenario where we were need to check all the link[around 30 links] are working .so earlier we were clicking on link,getting title,come back then again clicking
+so coming back & then opening new link this were taking time .
+so i changed it to open link in separate tab so all link can be opened parallelly.
+then traversing each window [getWindowHandles] saved time from 15m to 1m.
+
+For calender ,just get the month name & scoll[click on >] till you don't find expected month & select date out of date list.
+driver.get("https://www.path2usa.com/travel-companions");
+//April 23
+driver.findElementByXPath(".//*[@id='travel_date']").click();
+while(!driver.findElement(By.cssSelector("[class='datepicker-days'] [class='datepicker-switch']")).getText().contains("May"))   ////In csss syntax to reach child from parent is  ""Parentcss childcss"  // because in css tagname not mandatory & // is not used.
+driver.findElement(By.cssSelector("[class='datepicker-days'] th[class='next']")).click();
+
+Handling Table// crickbuzz example
+css parent to child
+CSS		List<WebElement> list=table.findElements(By.cssSelector("div[class='cb-col cb-col-100 cb-scrd-itms'] div:nth-child(3)"));
+Xpath	driver.findElement(By.xpath("//div[text()='Extras']/following-sibling::div"))
+
+https://www.rahulshettyacademy.com/AutomationPractice/
+Assignment go get number of rows and col
+total number of rows  :  $("#product tbody tr")   or  $("[id='product'] tbody tr") or $x("//table[@id='product']/tbody/tr")
+getting column : $x("//table[@id='product']/tbody/tr[2]/th")
+
+
+
+
+====Javascript Executor[section 13-tutorial 102-102]===
+Its a api developed by selenium guys to identify hidden elements.
+
+===Selenium Grid=====
+mentor@rahulshettyacademy.com
+rahulonlinetutor@gmail.com
+
+======Log4j=====
+Log4j is fast,reliable logging framwork for java.
+
+if client wants only fail cases logs , or want all success and failure logs [filtering the logs.]
+if you want to log time stamps logs.
+if issue comes in production so if client wants logs for last week to verify that if it ws really pass while testing or automation team is lieing.
+
+Define log4j2.xml file which have configuration info.
+Appenders -used to decide where to log  [console,file] and format of the message.
+Loggers-used to defined log level [error,fatal,debug,infor]
+
+save to the resource folder & set its path in configure buildpath->resource folder.this step will tell system to execute this file.
+By default ,Log4j takes its default configuration which allow only error,fatal messages to the output.
+
+public static Logger log=LogManager.getLogger(base.class.getName());
+log.info("Driver is initialized");
+if using maven,You need to mention it inside pom.xml also to tell maven to consider this.
+<build>
+<resources>
+<resource>
+<directory>src/main/java/resources</directory>
+<filtering>true</filtering>
+</resource>
+</resources>
+</build>
+
+List<LogEntry> logEntries = driver.manage().logs().get("logcat").getAll();
+
+Set<String> logTypes=driver.manage().log.getAvailableLogTypes(); //it returns [logcat, bugreport, server, client]
+LogEntries logs=driver.mamage().log.get("logcat");
+
+StreamSupprot.stream(logs.spliterator(),false).limit(10).forEach(System.out::println);
+StreamSupport.stream(logs.spliterator(), false).skip(logs.getAll().size() - 10).forEach(System.out::println);
+
+Consuming logs before everycase to delete old logs.
+@Before
+public void consumeIrrelevantLogs() {
+    driver.manage().logs().get("logcat");
+}
+
+driver.setCapability("clearDeviceLogsOnStart", true);
+
+
+=========IOS logs===========
+LogEntries logEntries = driver.manage().logs().get("driver");
+
+https://www.appdome.com/no-code-mobile-integration-knowledge-base/obtaining-ios-device-logs/
+
+===Global parameterization===
+gloabal parameterization can be acheived by defining properties file.
+Properties p=new Properties();
+p.load(fis); //where fis connectss to properties file.(ex : data.properties,in this file we can define parameters like,browser,url,username,pwd etc.)
+p.get(browser) .
+so if want to change all the test cases on different browser ,we just need to change the browser value in properties file[or configuration file].
+System.getProperty("browser") is used to get parameter from cmd when using maven or jenkins.
+
+If you have 100 test cases than if 100 browser opens than 100 browser will open & then it will be closed[closing in aftertest] after all execution if you have kept them in single test inside testng
+so you can do it by keeping it different test inside testng.xml
+
+driver=null; in aftertest annotation is gud to free it from heap memory.
+All the class in one test will execute in the order mentioned in the testng xml.
+if you want to run test sequentially than you can make webdriver static.[provided one class in one test] 
+putting this attribure in testng xml parallel='tests' will run all test parallely but than dont make webdriver static ,otherwise it will make problem.because webdriver initialize by one 
+one test will be overwritten by another class in another tag. 
+
+
+==Optimizing Framework===
+
+Parametring jenkin build : for that configure->go to parameter options ->give it name [browser] & enter choices [firefox,chrome,ie]
+& set parameter in build options .
+test -Dbrowser="$browser" ,where $browser tells jenkins that a parameter is defined with this name. -Dbrowser depicts that there is a variable defined in the script which is treated 
+as system varaiable & can be accesses as System.getProperty("browser") inside the script.
+Now non technical team can also run/build script on different browser just by changing browser inside "build with parameter" option.
+
+
+=====Achiving encapsulation statdard in framework======
+defining variable as private & getting it by getterMethod(or wrapping private variable inside public methods) so that no one can access variable  directly it will maintain coding standard , n will other to use that method to access
+variable ,n u can also print logs in that method. so that if anyone uses that methods. logs will print automatically.
+Also if anuyone tries to change it from the script ,it wount happen & script will succesfully at everyplace whereever it is being used
+
+
+====4 basic principles of Oops programming====
+Encapsulation,abstraction,inheritance,polymorphism==
+Encapsulation a mechanism to hiding the implementation of the data by restricting the access to public methods.can be acheived by making variable private & allowing its access through public methods only. 
+ex : keeping variable private in our PageObjectClasss & accessing them with getter methods.
+
+
+==Removing hardcoded paths===
+making dynamic by constructing path according to the system on which it is presnet.getting the location of the project in every project.
+ex : Hardcoded -> 	System.setProperty("webdriver.chrome.driver","C:\\Users\\nayan\\eclipse-workspace\\E2EProject\\chromedriver.exe");
+
+===Headless Browser execution===
+Its a browser that willl not launch GUI of the browser.
+In headless browser,Browser UI will not launch but execution will occur & you will get ur result.it will make fast execution plus test won't be interrupted if you doing something on browser.
+ChromeOptions c=new ChormeOptions();
+c.addArguements(headless); 
+c.addArguments("disable-infobars");//handle browser (chrome) notifications in Selenium?Notification Popup
+WebDriver driver=new ChromeDriver(c);  
+Doubt-Headless browser is used to simulate programs even though there is no browser installed on your local system
+
+Headless Browser Testing Using Selenium WebDriver:
+Headless browser testing using Selenium WebDriver is done to test the application without any visual interruption.
+Two widely used headless drivers with practical examples.
+HtmlUnitDriver
+PhantomJSDriver
+Headless drivers are typically used in continuous integration (CI) setups,run in cmd line,based on cmd line tools.
+
+===Implement Inheritance====
+we have implemented by creating Base class in utility and initializing driver there .
+and we are extending this in our actual test cases classes .
+also we are using interfaces in our framework by implementing ITestLister interface.
+and implementing its method public void onTestFailure() where we are capturing screenshot on failure.
+extending base class in Lister class also to give driver to getSchreenshot method.
+
+===Running multiple test cases from single classs=== 
+We should in same classes either related to same module or same webpage. it should not be liking going back/forward to execute another cases.it should be of one page at time
+
+
+
+===Git=====
+git plugin comes in eclipse by default generally.right click->team.
+read atlassian site for it
+git config global user.name rahul-----
+git config global  
+git init
+git add * or git add filename [this is called staging which is commit number 1]
+git status  [to check changed files]
+git commit  -m "first commit"  [commit level 2]
+git remote add origin http://github.com/scat2
+git push origin master 
+
+
+git clone address [to copu ]
+git pull origin master
+
+git checkout -b develop [to create new bracnch with name develop]
+git branch  [to see all bracnch & active branch]
+
+git checkout develop to switch branch in eclipse.
+
+
+GitHUb is a version control system/source control of the file stored on system and on multipli users working paralelly.
+basically a online repository where multiple user can work together onsame project and be insync.
+cmds : 
+
+localpath git clone "git project url "   //used to copy file in local path.
+localpath git status // to see the changes or things not in sync
+localpath git add "index.html"      // used to add file on github
+git add -A //will add all the file.
+localpath git commit -m "changed mortar" // used to commit changes.
+localpath git commit -m "made mortar more specific" //
+
+
+
+
+** before statring new task first need to pull to get aal the changes done by others.
+*whenever u change a file ,save it after that.
+
+===scrolling==
+Although selenium does not require scrolling as it manipulatest DOM of the page still in some situation element apperas only when we scoll to them .
+so 
+Javascript js=(Javascript)driver;
+js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+or js.executeScript("window.scrollBy(0,1000)");//if you want to scroll up then mention 2nd parameter negative 0,-1000 //or (1000,0)
+or js.executeScript("arguments[0].scrollIntoView(true);",element);
+
+
+ driver.findElementByXpath("/andorid.widget.textview[@id='1A']");
+ driver.findElementById
+ driver.findElementByClassName
+ driver.findElementByAccessibility(); //its in IOS 
+ 
+ driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+ 
+	 	 
+ when 2 or more element have same package,class and no text or that tym we use xpath to use them.
+ driver.findElementByXpath("//andorid.widget.textview[2]").click(); //if we want to click 2nd element out of elements which have same details.
+or
+ driver.findElementsByClassName("android.widget.textview").get(1).click();  //first index is 0 and second is 1.
+ driver.findElementByUIAutomator("attribure(\"value\")");  //
+ 
+ 
+if tagname have any special character then xpath won't work then we can use UIAutomator function or we can use * in place of tagname in xpath.
+driver.findElementByXpath("//*[@text='value']"); //
+
+
+For Gestures we need to use Touch class.
+TouchAction t=new TouchAction(d); // here d is driver.
+t.tap(webelement).perform();
+T.tap(tapOptions().withElement(element(ae))).perform();
+
+============swiping gesture[apidemo clock example]=====
+Longpress= >some menu displays after long press t.longPress(longPressOptions().withElement(element(webElement)).withDuratons(ofSeconds(2))).release().perform();
+Swiping=> t.longPress(longPressOptions().withElement(element(webelement)).withDurations(ofSeconds(2))).moveTo(element(webelement)).release().perform();
+//long press //on element// 2 sec// move to another element and you release
+
+	WebElement first=driver.findElementByXPath("//*[@content-desc='15']");
+	WebElement second=driver.findElementByXPath("//*[@content-desc='45']");
+tapOptions(),longPress() are methods of tapOptions & longPress() static class.	
+
+DragandDrop is also same as swiping just there we don't need to pass the time.API Demo example
+ t.longPress(longPressOptions().withElement(element(source))).moveTo(element(destination)).release().perform();
+or t.longPress(element(source)).moveTo(element(destination)).release().perform();
+tap,longpress,moveTo,release,perform[performs chain of action] are the methods of TouchAction class.
+tap or longpress  return this of TouchAction class for chaning[executing multiple method from a single line using this] purpose.
+
+
+=======Multitouch====
+		//Multitouch action. zoom in photo
+		//TouchAction action1 = new TouchAction((PerformsTouchActions) driver).longPress(x1, y1).waitAction(1500);
+		//MultiTouchAction m=new MultiTouchAction(driver);
+		//m.add(action1).add(action2).add(action3).perform();
+
+========sroll To=========
+new UiSelector() all this is andorid code[Android API].
+for this we need to use Android code inside appium code (using androidUIAutomator)    //use andorid code when we want to android property like scroll,clickable
+driver.findElementByAndroidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"WebView\"));");
+//At some place above dosn't work then u this =>  driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().textMatches(\"" + containedText + "\").instance(0))"));     
+driver.scroll() dosn't work in appium .Its deprecated long back.
+
+Appium Lecture 56 : When scrolling to item ,add to card option was not displaying completely then we given parent id that it should be visible completely.
+ driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector().resourceId(\"com.androidsample.generalstore:id/rvProductList\")).scrollIntoView(new UiSelector().textMatches(\"Jordan 6 Rings\").instance(0))"));
+
+andorid.widget.Toast is class name generally even if its not displayed.
+Appium server show 200 success when code executed succesfully.
+
+    driver.findElementByXPath("(//android.widget.RelativeLayout)[2]").click();
+     driver.findElementByClassName("android.widget.EditText").sendKeys("hello");
+     driver.findElementsByClassName("android.widget.Button").get(1).click();
+
+	https://kobiton.com/book/chapter-4-appium-locator-finding-strategies/ 
+	
+When you switch from native to webview then u need to tell Appium to switch context to webview so that it will inject selenium library.
+With Appium on webview there will instability and you won't find much object.	
+	
+Id,ClassName,Xpath,AccessebilityId[For iOS, the default Accessibility ID=name of the UI element. For Android,Accessibility=“content-desc”.]	
+AndoridUIAutomator will not work in case of browser.its for Native app only.
+when u run chrome then u can use selenium other locator also like cssSelector.its like web automation only.
+driver.findElementByAndroidUIAutomator("attribute("value")");
+//  driver.findElementsByAndroidUIAutomator("new UiSelector().property(value)");  
+System.out.println(driver.findElementsByAndroidUIAutomator("new UiSelector().clickable(true)").size());  to check available clickable element on the page
+driver.findElementsByAndroidUIAutomator("new UiSelector().index(0)");
+driver.pressKey(new KeyEvent(AndroidKey.BACK));
+
+
+
+
+===Data Driven Framwork==
+DATA DRIVEN TESTING is a test automation framework that stores test data in a table or spreadsheet format.
+ This allows automation engineers to have a single test script that can execute tests for all the test data in the table.
+ Advantages
+ Ddt (Data Driven testing) enables building both positive and negative test cases into a single test.
+ Allows to test application with multiple sets of data values during Regression testing
+ Any changes in the test script do not effect the test data
+ Test data and verification data can be organized in just one file, and it is separate from the test case logic
+ Actions and Functions can be reused in different tests.
+ 
+ Consider you want to Test Login functionality of an application.
+
+Step 1) Identify the Test Cases
+
+Input Correct username and password – Login Success
+Input incorrect username and correct password – Login Failure
+Input correct username and incorrect password - Login Failure
+Step 2) Create detailed est Steps for above 3 Test Cases
+
+Test Case#	Description						Test Steps					Test Data											Expected Results
+1		Check Login for valid credentials	Launch the application  	Username: valid password: valid						Login Success
+											Enter Username 
+											passwordClick 
+											Okay 
+											Check Results 
+										
+
+2	Check Login for invalid credentials	
+Launch the application
+Enter Username password
+Click Okay
+Check Results
+Username: invalid password: valid	Login Fail
+
+
+3	Check Login for invalid credentials	
+Launch the application
+Enter Username password
+Click Okay
+Check Results
+Username: valid password: invalid	Login Fail
+
+===Keyword driven framework=============
+https://www.guru99.com/creating-keyword-hybrid-frameworks-with-selenium.html
+
+
+A Metric is a quantitative measure of the degree to which a system, system component, or process possesses a given attribute. 
+
+Metrics can be defined as “STANDARDS OF MEASUREMENT”.
+Why Test Metrics?
+Generation of Software Test Metrics is the most important responsibility of the Software Test Lead/Manager.
+
+Test Metrics are used to,
+
+Take the decision for the next phase of activities such as, estimate the cost & schedule of future projects.
+Understand the kind of improvement required to success the project
+Take a decision on the Process or Technology to be modified etc.
+
+Importance of Software Testing Metrics:
+
+As explained above, Test Metrics are the most important to measure the quality of the software.
+
+Now, how can we measure the quality of the software by using Metrics?
+
+Suppose, if a project does not have any metrics, then how the quality of the work done by a Test Analyst will be measured?
+
+For Example, A Test Analyst has to,
+
+Design the test cases for 5 requirements
+Execute the designed test cases
+Log the defects & need to fail the related test cases
+After the defect is resolved, we need to re-test the defect & re-execute the corresponding failed test case.
+In the above scenario, if metrics are not followed, then the work completed by the test analyst will be subjective i.e. the Test Report will not have the proper information to know the status of his work/project.
+
+If Metrics are involved in the project, then the exact status of his/her work with proper numbers/data can be published.
+
+i.e. in the Test Report, we can publish:
+
+How many test cases have been designed per requirement?
+How many test cases are yet to design?
+How many test cases are executed?
+How many test cases are passed/failed/blocked?
+How many test cases are not yet executed?
+How many defects are identified & what is the severity of those defects?
+How many test cases are failed due to one particular defect? etc.
+Based on the project needs we can have more metrics than an above-mentioned list, to know the status of the project in detail.
+
+Based on the above metrics, the Test Lead/Manager will get the understanding of the below mentioned key points.
+
+%ge of work completed
+%ge of work yet to be completed
+Time to complete the remaining work
+Whether the project is going as per the schedule or lagging? etc.
+Conclusion
+The metrics provided in this article are majorly used for generating the Daily/Weekly Status report with accurate data during the test case development/execution phase & this is also useful for tracking the project status & Quality of the software.

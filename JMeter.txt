@@ -1,0 +1,50 @@
+Jmeter simulates multiple user sending request to server & returns the statistics that show the performance of the target server/application via tables & graphs.
+A test plan can be considered as a container for running tests.. it contains  thread groups,logic controller,data generators ,listners ,
+
+Samplers are uses to create the request.You can define type of request(http,Ftp...)
+Listeners are the reports.[view results in table,view result in tree,assertion result,aggregate report,graph result,simple data writer]
+Assertions : is a check on the response. Check responce code, format,duration ,body,size [resiponse assertion,duration assertions,size assertion,html assertion,xml,xpath[api]]
+
+https://www.youtube.com/watch?v=8loLHbhfyh0&list=PLhW3qG5bs-L-zox1h3eIL7CZh5zJmci4c&index=3
+
+Recording UI test in Jmeter. 
+Badboy[need to export reocrded script to Jmeter ,works on windows.] & Blazemeter[it itself uses Jmeter in background & comes as chrome plugin -works on window,mac] can be used to record ui test & then do the performance testing 
+then add listeners & assertion to verify .
+
+
+
+
+GitHUb is a version control system/source control of the file stored on system and on multipli users working paralelly.
+basically a online repository where multiple user can work together onsame project and be insync.
+
+
+
+==========Jenkins=============================
+Jenkins is a Opens source automation server used for continuous integration and deployment.
+It serves us all the task of software development building,testing,report generation and deployment 
+
+Jenkins helps in scheduling the test suppose you want to run it every night or at 3am daily or every week or every month.
+Jenkins keeps on pulling the code from GIT(version management tool/central repository) after defined time (like after every 30m) and as soon as any team member commit/save
+the code on GIT it automatically start running the build(running the code) and if any error comes it mails to all the members.
+so its help to find out the error/problem at the time of code change[early stages]
+
+what's continuous integration/deployment:
+In continuous Integration whenever there is commit, software is build and tested immediately is. In A large project,Multiple developers works together,commits are done
+many times a day,so whenever a commit is made ,jenkin build and test it. If test is pass then it check it for deployment.If deployment is success then pushed for production. So commit,build,test,deployment is a continuous process.
+
+The trigger for execution for time or event based.
+A Continuous Integration Pipeline is a powerful instrument that consists of a set of tools designed to host, monitor, compile and test code, or code changes, like:
+
+Continuous Integration Server (Jenkins, Bamboo, CruiseControl, TeamCity, and others)
+Source Control Tool (e.g., CVS, SVN, GIT, Mercurial, Perforce, ClearCase and others)
+Build tool (Make, ANT, Maven, Ivy, Gradle, and others)
+Automation testing framework (Selenium, Appium, TestComplete, UFT, and others)\
+
+Suppose you haves thousands of test cases and it would take 6-7 hrs to execute. and you want when u come morning in the office you want yr results.
+so you need to trigger it and 2Am in the mrng(also if you want it to exclude daily.)
+  
+Whenever developer pushes a new code,jenkins sees it and automatically pushes the test cases.
+  
+Jenkin run java & testng on its own server so we need to mention the version of these.
+  
+Continuous feedback pertaining to things like coding or architectural issues, build failures, test status and file release uploads was missing due to which the quality of software can go down.

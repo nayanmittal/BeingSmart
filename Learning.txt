@@ -1,0 +1,120 @@
+Learning  : if getAttribute method dosn't find any value then it return null and if you perform any operation on that then null pointer excecption is thrown .
+
+
+Scrolling Method :
+If before scoll size is small (less than 12) then don't need to scroll . also it avoid condition where after click small drop down list opens.
+then compare last element & size before-after scroll .if same then dont scroll.
+
+then compare last element & size before-after scroll & if Slast size is zero or not. this condition made to traverse last 2 element in case last 2 element removed since not visible fully.
+
+//returing false when after scrolling last element is same && size is also same.this got fail in biometric and security ->install unkwon apps .[got fail once only during whole setting so not that critical]		
+	
+
+Depth Change Method :
+if first 3 element after click are same then depth changes 
+if number of elements are less than 3 than calculate no of element befoer and after clock ,then count is diff. then depth changed.
+
+Last Element Not Clickable Method :
+If list after scorlling is greater than 14 then remove last 2 element from the list[so these 2 wount get clicked]
+but problem will occur when we will reach end of page .
+so when you reach End of page and list is greater than 14 then return scroll true[if(s1.equalsIgnoreCase(s2) && (b_size==a_size) && slast.length()!=0) return true;] so that last 2 element will get clicked.
+ 
+Currently its applied for depth 0 only .it can be changed to all depth. 
+
+capabilities.setCapability("autoAcceptAlerts", true);   //it works only when no reset is set to false.Default is also false.
+noReset clear the catch settings.fullReset reinstalls the app.(we use it when we get the updated ver. frequently)
+so we will keep noReset true and for permissions use below code.
+	while(driver.findElementsById("com.android.packageinstaller:id/permission_allow_button").size()>0)
+			{driver.findElementsById("com.android.packageinstaller:id/permission_allow_button").get(0).click();
+			System.out.println("executed");
+			}
+
+
+if any of last 3 element contains timer...
+			
+To run 2 different appium server instance,Server port as well as bootstrap port should be diff.
+Allow session overwrite should be checked.[Advanced setting]
+
+1)Download & Install Andorid Studio
+ ANDROID_HOME -> D:\Drive E\Tools\sdk 
+ Path-> D:\Drive E\Tools\sdk  
+ D:\Drive E\Tools\sdk\platform-tools
+
+2)Install java
+JAVA_HOME ->C:\Program Files (x86)\Java\jdk1.8.0_161
+path : set it to bin folder of java.
+
+Java & Appium server should be installed
+Andorid ADT .
+
+adb 1.0.40 or above. 
+
+To get IMEI
+adb shell "service call iphonesubinfo 1 | grep -o '[0-9a-f]\{8\} ' | tail -n+3 | while read a; do echo -n \\u${a:4:4}\\u${a:0:4}; done"
+
+C:\Users\Ghazanfar>adb shell getprop ro.build.PDA
+A705GMDDU2ASF4
+
+While integrating Camera & setting module , there were some issues.like we have made the name of files dynamic according to the test item but Result file was 
+expecting it to be hardcoded as before.so change done.
+Last elements was not getting clicked although it was displaying.
+SomeTime u extract a list of element and suddenly some pop up comes then JVm will not be able to find the element and NoSuchElementException will come.
+Aur If you comeback from any submenu and before page loads,if it started searching for element then also NoSuchElementException comes.
+
+
+Ideally if your test case fails then you should take screenshot & logs and attach it in the report.
+Logs can be taken by Adb or otherways(Log4j- its a java utility(java based framework) for logging).
+Also you can scan for exceptions in the logs and print it in the report.
+
+Loggers-Class have generic methods for loggin .Log levels are defined in it.
+Appenders-used to deliver LogEvent to their destination. like writing to standard input or to a file.
+Layouts- used for formatting the output.
+io.appium.java_client.*;
+org.openqa.selenium.*;
+org.apache.log4j.Logger.
+
+Dynamic screen data[like camera preview screen ] data not getting directly.so used a trick lock,unlock then get data.
+Not able to detect whether its front camera or back camera because name of camera switch key was same (Switch camera), so applied logic that while traversing rear camera if switch key is preset then back camera is available for those OS.
+
+In some mode, video,hyperlapse ,list started from the middle so start from above.
+Comparison in other languages.
+
+
+123=Integer.parseInt("123");
+-123=Integer.parseInt("-123");
+123=Integer.valueOf("123");
+
+"123"=String.valueOf(123);
+"123"=Integer.toString(123);
+"123="String.format("%d",123);
+"00123="String.format("5%d",123);//it will keep total 5 digit ,adding zeros at starting.
+
+
+
+Use the Collator class. It allows you to set a strength and locale and it will compare characters appropriately.
+
+It should be something similar to this (NOTE: I have not tested the program)
+
+import java.text.Collator;
+import java.util.Locale;
+
+public class CollatorExp {
+
+    public static void main(String[] args) {
+        Collator collator = Collator.getInstance(Locale.FRENCH);
+        collator.setStrength(Collator.PRIMARY);
+
+        if (collator.compare("débárquér", "debarquer") == 0) {
+            System.out.println("Both Strings are equal");
+        } else {
+            System.out.println("Both Strings are not equal");
+        }
+    } 
+}
+
+You can easily change the default encoding to UTF-8 i.e. Unicode by setting below option.
+
+Sometime elements like on/off, mobile data[dynamic element] can cause problem as there values gets change at run time.
+
+At some places, click method is not working whereas tap options is working.[Issue was with Android 9 OS Camera.]
+In some application response is slow so instead of click,we need to use clickAndWait using tap options or any other way.

@@ -1,0 +1,567 @@
+======frequency of characters/complexity is n======
+import java.util.HashMap;
+public class CharCount {
+
+	public static void main(String[] args) {
+	
+		String str="nayanmittal";
+		int count=0;
+		HashMap<Character,Integer> map=new HashMap<Character,Integer>();
+		
+		for(int i=0;i<str.length();i++)
+		{
+			if(!map.containsKey(str.charAt(i)))
+				map.put(str.charAt(i), 1);
+			else
+			{
+				count=map.get(str.charAt(i));
+				map.put(str.charAt(i), ++count);
+			}
+				
+		}
+		System.out.println(map);	
+	}
+}
+======Frequency of characters using hashing====
+	public static void main(String arg[])
+	{
+		String str="nayanmittal";
+		int[] count=new int[26];
+		for(int i=0;i<str.length();i++)
+		{
+			count[str.charAt(i)-'a']++;			
+		}
+		
+		for(int i=0;i<26;i++)
+		{
+			if(count[i]>0)
+			{
+				//int j='a';
+				//int k=j+i;
+				char c=(char) ('a'+i);
+				System.out.println("frequency of letter "+c+"     "+count[i]);
+				
+			}
+			
+		}
+=======arrya to string=======
+		char[] ch= {'c','e','d','b','a'};
+		System.out.println(new String(ch));
+		String.valueOf(ch);
+		both method works.
+		Arrays.toString(arr)
+==========
+	Arrays.deepEquals(a1,a2); // to compare multi dimensional array.
+=======================
+String str="i.@like.this.program.very.@much";
+	System.out.println(str); 
+	String[] words=str.split("[.@]+");
+	=i 
+	like
+	this
+	progam
+	very
+	much
+	//here we have to use [.] for removing any other regular expression than space[not sure].if more than once than use mention + also  [.@]+
+	so that all the special character will remove in one go.
+=======Anagram[frequency of each char is same========
+		String str1="allergy";
+		String str2="allergic";
+		
+		char[] ch1=str1.toCharArray();
+		char ch2[]=str2.toCharArray();
+		Arrays.sort(ch1);
+		Arrays.sort(ch2);
+		
+		boolean t=Arrays.equals(ch1, ch2);
+		System.out.println(t)
+========Remove Duplicates from string=======
+		String str="geeks for geeks";
+		String str1="";
+		for(int i=0;i<str.length();i++)
+		{
+
+			if(!str1.contains(str.substring(i, i+1)))
+			str1=str1.concat(str.substring(i, i+1));
+		}
+		System.out.println(str1);	
+		Output=geks for
+================remove duplicate from Array======
+import java.util.Arrays;
+public class SumOfLeftArray {
+	public static void main(String[] args) {
+		 int arr[] = {10,20,20,30,30,40,50,50}; 
+		 removeDuplicate(arr);
+		
+	}
+	public static void removeDuplicate(int arr[])
+	{
+		int j=0;
+		for(int i=0;i<arr.length-1;i++)
+		{	
+			if(arr[i]!=arr[i+1])
+				arr[j++]=arr[i];	
+		}
+		arr[j]=arr[arr.length-1];
+		for(int i=0;i<=j;i++)
+		System.out.println(arr[i]);		
+	}
+	}
+=================
+public static void main(String[] args) {
+
+		
+		ArrayList<Integer> al=new ArrayList<Integer>();
+		al.add(5);
+		al.add(4);
+		al.add(5);
+		al.add(4);
+		al.add(7);
+		
+		System.out.println(al);
+		
+		LinkedHashSet<Integer> ls=new LinkedHashSet<Integer>();
+		ls.addAll(al);
+		System.out.println(ls);
+		
+		al.clear();
+		al.addAll(ls);
+		System.out.println(al);	
+		al.remove(2);
+		//al.remove(7); won't work as here index and object both are In
+		System.out.println(al);	
+		
+		
+        ArrayList<String> al1=new ArrayList<String>();  
+        al1.add("Ravi");    
+        al1.add("Vijay");    
+        al1.add("Ajay");   
+        al1.add("Anuj");  
+        al1.add("Gaurav");  
+		
+		System.out.println(al1);
+		al1.remove("Anuj");
+		al1.remove(3);
+		System.out.println(al1);}
+====Permutation of string==
+https://www.geeksforgeeks.org/print-all-permutations-of-a-string-in-java/
+public static void main(String args[])
+	{
+	String str="abb";
+		permutation(str,"");	
+	}
+	public static void permutation(String str,String ans)
+	{
+		if(str.equals(""))
+		{	System.out.print(ans+" ");
+			return;
+		}
+		for(int i=0;i<str.length();i++)
+		{	char ch=str.charAt(i);
+			String ros=str.substring(0, i)+str.substring(i+1, str.length());
+			permutation(ros,ans+ch);
+		}
+	}
+=============binaryToDecimal===============
+	public static void binaryToDecimal(int[] n)
+	{
+		int len=n.length;
+		int sum=0,val=1;
+		for(int i=len-1;i>=0;i--)
+		{	sum=sum+n[i]*val;
+			val=val*2;			
+		}
+		System.out.println(sum);
+	}
+
+
+====Counting the words in a string==========
+		String str="nayan is a gud";
+		String[] words=str.split("\\s+");
+		System.out.println(words.length);
+		
+		StringTokenizer stn=new StringTokenizer(str);
+		System.out.println(stn.countTokens());
+
+
+======Segregate 0s and 1s in an array======
+You are given an array of 0s and 1s in random order. Segregate 0s on left side and 1s on right side of the array.
+solution : count number of 0 in the array n then fill zero in the array from[0 to count-1] and then 1 for the remaining position.
+
+====how-to-find-the-missing-number-in-a-given-array-from-number-1-to-n-in-java======
+n-1 length array ,sum=(n*(n+1))/2, missing number=sum-sumofArray
+=============Encapsuation Advantages====================
+123) What are the advantages of Encapsulation in Java?
+There are the following advantages of Encapsulation in Java?
+
+By providing only the setter or getter method, you can make the class read-only or write-only. In other words, you can skip the getter or setter methods.
+It provides you the control over the data. Suppose you want to set the value of id which should be greater than 100 only, you can write the logic inside the setter method. You can write the logic not to store the negative numbers in the setter methods.
+It is a way to achieve data hiding in Java because other class will not be able to access the data through the private data members.
+The encapsulate class is easy to test. So, it is better for unit testing.
+The standard IDE's are providing the facility to generate the getters and setters. So, it is easy and fast to create an encapsulated class in Java.
+
+================Exception=====================
+In Java, an unwanted or unexpected event that disrupts the normal flow of the program. It is an object which is thrown at runtime.
+
+System generated exception is automatically thrown by the system and we can handle it using try-catch block.
+We can throw exception using throw keyword.
+if an exception occur, handler is lookup in that methods and if handled then okay otherwise it check for calling method[reverse call stack] if caller methods handle it then okay.
+in this way it goes to main method and if not found then JVM throw exception.
+"https://www.javatpoint.com/exception-propagation"
+Rule: By default, Checked Exceptions are not forwarded in calling chain (propagated).We need to use throws to propogate checked exception.
+All catch blocks must be ordered from most specific to most general, i.e. catch for ArithmeticException must come before catch for Exception.
+
+Exception Handling is mainly used to handle the checked exceptions. If there occurs any unchecked exception such as NullPointerException, it is programmers fault that he is not performing check up before the code being used.
+Which exception should be declared
+Ans) checked exception only, because:
+unchecked Exception: under your control so correct your code.
+error: beyond your control e.g. you are unable to do anything if there occurs VirtualMachineError or StackOverflowError.AssertError
+
+Que) Can we rethrow an exception?
+Yes, by throwing same exception in catch block.
+
+===Unchecked exception propagation=====
+class TestExceptionPropagation1{  
+  void m(){  
+    int data=50/0;  
+  }  
+  void n(){  
+    m();  
+  }  
+  void p(){  
+   try{  
+    n();  
+   }catch(Exception e){System.out.println("exception handled");}  
+  }  
+  public static void main(String args[]){  
+   TestExceptionPropagation1 obj=new TestExceptionPropagation1();  
+   obj.p();  
+   System.out.println("normal flow...");  
+  }  
+}  
+Test it Now
+Output:exception handled
+       normal flow...
+
+
+====Checked exception propagation /need to use throws=======
+import java.io.IOException;  
+class Testthrows1{  
+  void m()throws IOException{  
+    throw new IOException("device error");//checked exception  
+  }  
+  void n()throws IOException{  
+    m();  
+  }  
+  void p(){  
+   try{  
+    n();  
+   }catch(Exception e){System.out.println("exception handled");}  
+  }  
+  public static void main(String args[]){  
+   Testthrows1 obj=new Testthrows1();  
+   obj.p();  
+   System.out.println("normal flow...");  
+  }  
+}  
+Test it Now
+Output:
+
+exception handled
+normal flow...
+
+Error indicateds to the problems that occur due to lack of system resources.Some of the examples of errors are system crash error and out of memory error.
+Errors mostly occur at runtime that's they belong to an unchecked type. It is irrecoverable
+=====Custom Exception====
+class InvalidAgeException extends Exception
+{
+	InvalidAgeException(String s)
+	{
+		super(s);
+	}
+}
+
+class SumOfLeftArray
+{
+	public static void vote (int age) throws InvalidAgeException
+	{
+		if(age<18)
+			throw new InvalidAgeException("less than 18");
+		else
+			System.out.println("eligible for voting   ");
+	}
+	
+	public static void main(String args[])
+	{
+		try {
+			vote(15);
+		} catch (InvalidAgeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("main class");
+		}
+	}
+
+}
+=============================================
+an object is a real world entity which has attribute and behavior .its an instance of class.
+Class is a blueprint/template from which object is created.Its a grp of objects which have common properties.its a logical entity.
+An interface is blueprint of class . It can have static constant & abstract method.it is used to achieve abstraction and multiple inheritance.
+why we have abstract class and interface both for abstraction
+abstract class achieves partial abstraction (0 to 100%) whereas interface achieves fully abstraction (100%).
+We can not achieve multiple inheritance with abstractc class whereas interface can.
+
+ JVM. It contains classloader, memory area, execution engine et
+ The JIT compiler aids in improving the performance of Java programs by compiling bytecode into native machine code at run time.
+ And caching it so that its dosn't need to be compiled again.
+ It can chose the code on the basic of multiple factor such that [frequemtly used code] 
+
+Just-In-Time(JIT) compiler: It is used to improve the performance. JIT compiles parts of the byte code that have similar functionality at the same time, and hence reduces the amount of time needed for compilation. Here, the term "compiler" refers to a translator from the instruction set of
+ a Java virtual machine (JVM) to the instruction set of a specific CPU. 
+ 
+============listToArray=================================
+		public static void listToArray(ArrayList<Integer> al)
+		{
+			al.size();
+			Integer[] lia=al.toArray(new Integer[al.size()]);  //this method reutrn array of type which we pass as an argument.
+			System.out.println("Inside listToArray method ");
+			for(int i=0;i<lia.length;i++)
+				System.out.print(lia[i]+"   ");	
+		} 
+
+ArrayList<Integer> al1=new ArrayList<Integer>(Arrays.asList(arr));
+System.out.print(al1);
+=====LinkedList to array===================		
+ArrayList<Integer> al=new ArrayList<Integer>(ll); //where ll is linked kist
+=======================================		
+hs.isEmpty();
+======sorting hasgmap by key=============
+HashMap<Integer,String> hm=new HashMap<Integer,String>();
+TreeMap<Integer,String> tm=new TreeMap<Integer,String>();//TreeMap sorts by Key
+tm.putAll(hm);
+System.out.println(tm);		
+HashMap<Integer,String> hm=new LinkedHashmap<Integer,String>();
+hmm.putAll(tm);
+===========Removing duplicate from ArrayList========================
+ArrayList<String> list = new ArrayList<String>();
+	    LinkedHashSet<String> hs=new LinkedHashSet<String>(list);
+		or hs.addAll(list);
+		list.clear();
+		list.addAll(hs);
+
+=======Tree PreOrder=====
+public void preOrdere(node root)
+{
+if(root==null)
+return;
+System.out.println(root.value);
+preOrder(root.left);
+preOrder(root.right);
+}
+
+array to tree -insertLevelOrder [2*i+1],[2*i+2]
+========================
+stack can be implemented using Array .
+int arr[]=new int[1000];
+int top=-1;
+
+add(int val)
+{
+if(top>(1000-1))
+return;
+
+int[++top]=val;
+}
+
+
+pop()
+{
+if(top==-1)
+print(already empty);
+return
+
+--top;
+}
+int Peek()
+{
+return arr[top];
+}
+===============pairedElements====================
+	First sort array.
+   public void pairedElements(int arr[], int sum) 
+    { 
+        int low = 0; 
+        int high = arr.length - 1; 
+  
+        while (low < high) { 
+            if (arr[low] + arr[high] == sum) { 
+                System.out.println("The pair is : ("
+                                   + arr[low] + ", " + arr[high] + ")"); 
+            } 
+            if (arr[low] + arr[high] > sum) { 
+                high--; 
+            } 
+            else { 
+                low++; 
+            } 
+        } 
+    } 
+	
+Another solution is run 2 loops and check sum	
+=CountOfN digit numbr with sum s===========
+	public static void main(String[] args) {
+		int count=CountOfNDN(3,6);
+		System.out.println(count);
+		
+	}
+	public static int CountOfNDN(int n,int sum)
+	{int ans=0;
+		for(int i=1;i<9;i++)
+		{
+			if((sum-i)>=0)
+				ans+=countSum(n-1,sum-i);	
+		}
+		return ans;	
+	}
+	
+	public static int countSum(int n,int sum)
+	{		if(n==0)
+			return sum==0?1:0;
+		
+		if(sum==0)
+			return 1;
+			
+		int ans=0;
+		for(int i=0;i<=9;i++)
+		{
+			if((sum-i)>=0)
+				ans+=countSum(n-1,sum-i);
+		}					
+		return ans;	
+	}	
+=============continuos subarray's sum equal to given number=========================
+	public static void main(String[] args) {
+
+		int arr[]={12, 5, 31, 9, 21, 8};
+		int sum=31;
+		int start=0,end=0,currentSum=0;
+		  for(int i=0;i<arr.length;i++)
+		  {
+			  currentSum=currentSum+arr[i];
+			  while(sum<currentSum && start<i)
+			  {
+				  currentSum=currentSum-arr[start];
+				  start++;
+			  }  
+			  if(sum==currentSum)
+			  {
+				  end=i;
+				  break;
+			  }
+		  }
+		  for(int j=start;j<=end;j++)
+			  System.out.print(arr[j]+" ");		  
+	}
+
+======strings are rotations of each other or not===========	
+if((str1.length() == str2.length()) && ((str1 + str1).indexOf(str2) != -1)) 
+    System.out.println("Strings are rotations of each other"); 
+else
+    System.out.printf("Strings are not rotations of each other"); 	
+=====common elements between two arrays/intersection==================================	
+        Integer[] i1 = {1, 2, 3, 4, 5, 4};
+         Integer[] i2 = {3, 4, 5, 6, 7, 4};
+         HashSet<Integer> set1 = new HashSet<>(Arrays.asList(i1));
+        HashSet<Integer> set2 = new HashSet<>(Arrays.asList(i2));
+        set1.retainAll(set2);
+or u can use double loop		
+==============third largest number================		
+int arr[] ={45, 51, 28, 75,75, 49, 42};
+		int lar=arr[0];
+		int slar=arr[0];
+		int tlar=arr[0];
+		for(int i=1;i<arr.length;i++)
+		{	if(arr[i]>lar)
+			{
+				tlar=slar;
+				slar=lar;
+				lar=arr[i];
+			}
+			else if(arr[i]<lar && arr[i]>slar)
+				{
+				tlar=slar;		slar=arr[i];
+				}
+			else if(arr[i]<lar && arr[i]<slar && arr[i]>tlar)
+				tlar=arr[i];
+		}
+		System.out.println(lar+"     "+slar+"    "+tlar);
+		
+or u can use sorting. just sort for 3 time.
+=================================================		
+ static void reverseString(String inputString)
+    {
+        //Converting inputString to char array 'inputStringArray'
+         
+        char[] inputStringArray = inputString.toCharArray();
+         
+        //Defining a new char array 'resultArray' with same size as inputStringArray
+         
+        char[] resultArray = new char[inputStringArray.length];
+         
+        //First for loop : 
+        //For every space in the 'inputStringArray', 
+        //we insert spaces in the 'resultArray' at the corresponding positions 
+         
+        for (int i = 0; i < inputStringArray.length; i++) 
+        {
+            if (inputStringArray[i] == ' ') 
+            {
+                resultArray[i] = ' ';
+            }
+        }
+         
+        //Initializing 'j' with length of resultArray
+         
+        int j = resultArray.length-1;
+                 
+        //Second for loop :
+        //we copy every non-space character of inputStringArray 
+        //from first to last at 'j' position of resultArray
+         
+        for (int i = 0; i < inputStringArray.length; i++)
+        {
+            if (inputStringArray[i] != ' ') 
+            {
+                //If resultArray already has space at index j then decrementing 'j'
+                 
+                if(resultArray[j] == ' ')
+                {
+                    j--;
+                }
+                 
+                resultArray[j] = inputStringArray[i];
+                 
+                j--;
+            }
+        }
+         
+        System.out.println(inputString+" ---> "+String.valueOf(resultArray));
+    }
+=====remove All Vowels From String=======
+		String str1="Java Concept Of The Day";
+		str1=str1.replaceAll("[AEIOUaeiou]+", "");
+		System.out.println(str1);	
+	below works but don't show ur skills.	
+		for(str1.char[i]!='a' && str1.char[i]!='b' )
+=======================================
+	public static void main(String[] args) {
+		Integer[] arr1= {3,6,2,4,5};
+		Integer[] arr2= {5,5,4,8,9,0};
+		HashSet<Integer> hs1=new HashSet<Integer>(Arrays.asList(arr1));
+		HashSet<Integer> hs2=new HashSet<Integer>(Arrays.asList(arr2));
+	
+		hs1.retainAll(hs2);	
+		int[] arr3= {3,6,2,4,5};
+		//ArrayList<Integer> al=new ArrayList<Integer>(Arrays.asList(arr3)); we need to take wrapper class	
+	}
+===================================

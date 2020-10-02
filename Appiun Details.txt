@@ -1,0 +1,1136 @@
+Appium is a Mobile automation cross platform tool[cross platforgm- works in android ,i os ] which works on client-server architectur.
+Client is basically laguage specific appium libraires .[java->io.appium.java_client,python,ruby] .
+Appium Server is http server which is written in Noda.js language ,expose restful api.
+Appium client send reuest to the server and server send the response to the client.
+Json wire protocol is used to convert client request in a format which is understand by server[Restful http requeest ,uses post method only.it convert client request in json format.
+Desired capabilities the combination of key-value pair which is send along with the request which describes about the platname ,version,device name,package ,activity etc.
+this request is send as Json object.
+Server understand the request using capabilities and send the reuest to platform specific framework[UI automation framework-UIAutomator for Andorid, XCUitTEst/UIAutomatoion provided by vendor andorid,ios]
+then this framework execute this request on Bootstrap.jar[Android]/bootstrap.js[IOS] in device which perform actions on the application.
+Bootstrap.jar/js are TCP server .
+Then response of this is send back to server which inturns send to client machine.
+
+Desired capability,logs,request are sends as json object.
+
+download node & set path to make npm cmd work.
+npm install -g appium [npm installer can install any node : appium,protractor etc] -g depicts that it would get installed globally. so after installation u can run appium in cmd propmt from any path
+open cmd -> appium [to launch appium as it installed globally]
+
+We can create emulator by studio [c/program file/andorid/studio 64]in studio->tools->avd manager->create emulator [AVD will show only once u create a project and that builds finished]
+once created we can re launch it from cmd prompt c\user\nayanmittal\appdata]local\android\sdk\emulator\emulator -avd  emulator-554 [emulator name] [emulator ]
+
+Appium session close after 60s generally.so before that if u run another case then it will fail.if u want it early then close close connection[ctrl+c or close UI].
+whie session is there, UIAutomatro won't be able to capture.
+
+
+=======
+appium is open source,cross platform ,dosnt require recompilation of apps and run on device/emulators both.
+Multiple lagnuage supports.
+
+Appium doesn’t perform testing on mobile devices support Android Version lower than 4.2.
+doesnt work well with hybrid apps ,Not possbile switching from native to web app & vice versa.
+parallel tsting on mac requires mutiple machines.
+u can not test IOS on windows. 	
+gesures are not that easy to write.
+
+===========================================
+Mandatory capability for mobile,rest other are as per the requirement.
+for Emulator : caps.setCapability("deviceName", "RahulShettyEmulator");//name of the emulator
+for driver : caps.setCapability("deviceName", "Galaxy Note"); //u can pass any name
+
+As per recent changes made at  Android side, You need to add include one more step in desired capabilities.
+cap.setCapability(MobileCapabilityType.AUTOMATION_NAME,"uiautomator2");
+Android updated its internal framework to uiautomator2 and through Appium code, we need to tell that we need to access uiautomator2 elements of Android.
+
+this also if you are want to install apps  : capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+	 File appDir = new File("src");
+     File app = new File(appDir, "ApiDemos-debug.apk");
+	 
+or otherwise appPackage,appActivity.	 
+
+(newCommandTimeout,60) : how long appium will wait for next command before assuming that cleint has ended the test.
+cap.setCapability("noReset", "true"); (it will stop and clear the data/fastreset)	//Default : False
+cap.setCapability("fullReset", "true");//(it will uninstall and then install the app.) //Default : False
+
+>Appium comes with a default capability to accept, dismiss alerts
+capabilities.SetCapability("autoAcceptAlerts", true);
+capabilities.SetCapability("autoDismissAlerts", true);	
+	
+	
+Class name also work as tagname in android.	 
+===Web Apps in Mobile======
+when doing web automation in mobile then these 2 are also mandatory
+caps.setCapability("browserName", "Chrome");
+caps.setCapability("chromedriverExecutable","D:\\Drive E\\Tools\\GIt\\Folder1\\OSUpgrade\\OSUpgrade\\chromedriver.exe");
+
+Inspecting Webapps in Mobile : connect mobile,chrome->more tools->dev option->remote device->the enter site & corresponding mobile web link will be shown->open that in pc browser.keep  mobile browser open then only it works.
+If any site is web responsive[same object for both mobile &web .Site will adjust size as per the screen] then no need to connect mobile .simply inspect in browser.Google.com
+facebook.com not web responsive.
+
+Xpath=when the mobile page opens in browser then go to xml page[inspect element] on right site then right click on any element->copy->copy xpath.
+//*[@id="u_0_4"]/button =>chnage inverted common with single cotes
+
+====Hybrid Apps===
+In hybrid apps when u move from native to web view then u need to tell appium about it to get stable results then Appium will inject selenium APIs.
+driver = new AppiumDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+
+Set<String> contextNames = driver.getContextHandles();
+for (String contextName : contextNames) {
+    System.out.println(contextName); //prints out something like NATIVE_APP \n WEBVIEW_1
+}
+driver.context(contextNames.toArray()[1]); // set context to WEBVIEW_1
+//do some web testing
+String myText = driver.findElement(By.cssSelector(".green_button")).click();
+driver.context("NATIVE_APP");
+
+once in webview, u can inspect element using chrome[using connect mobile if not web responsive otherwise without connecting device]
+
+
+
+==========IOS=============
+Xcode is used to develop IOS software.we can create simulator using it.[doubt:its like studio for android]
+Works on Macos
+Open downloaded apps in XCode. UICatalog.app file for IOS .Simulator are already created in IOS.
+	
+Appium inspector is used to Inspect element .nothing like UIAutomatorViewer in IOS.Inspector works for both.
+first start server->new->start new session->give capabilities->now we can inspect element.
+
+In IOS ,FindByAccessibilityId becomes more powerful. 
+DesiredCapabilities capabilities = new DesiredCapabilities();
+capabilities.setCapability(deviceName, "Iphone6");
+capabilities.setCapability(platformName, "IOS"); //we need to give platform name on MAc as its support both andorid and IOS.
+capabilities.setCapability(automationName, "XCUITest");//from 10.2 earlier uiautomation  //AutomatioName.IOS_XCUI_Test
+capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+
+
+
+In Android class can be used as a tagname .
+if nothing given then tagName in the XML structure can be  used as classname.
+Dimention d=driver.manage().window().getSize();
+int widgth=d.getWidth()/2;int h=d.getHeight();
+int starty=(int)(h*60);
+Scolling in Ios. driver.swipe(x,starty,x,endy);
+
+picker : like scroll in clock. we can directly select by sending value in sendkeys() method. 
+
+for browser ,just add (broswerName,"safari") and remove app capability.
+In Firefox->change user agent to safari->now it will mimic safari->normally ger objects for webapps.
+
+for real device,first install brew by cmd on terminal
+brew install libimobiledevice
+bre install ios-deploy
+and then 4 more capability.
+("xcodeOrdId","")//its team id generated by apple. need to go to devloper/IOS.We can find it using dev. account.ign in to developer.apple.com/account, and click Membership in the sidebar.u can ask ur development team.	
+("xcodeSingingId",iPhone Developer)//its fixed value.
+("udid","")//connect phone with iTunes.
+("updateWDABundleId","")//Need to have provision id.u can ask ur team bundle id.
+
+Need to create app for ur device. using xcode./developer will provide this.
+
+=====================================================================
+Say i have worked on intial phase of framework development.
+Explain Framework:
+Language: Java
+Type : Test driven
+config.properties : file for storing broswer name,url,credentials,emulatorname, [device=emulator-555]
+[apk inform should come from ur testcase as u may have diff. apps in diff. TC].but if different apk ver. are releasing then u need to change into test case so there should be mapping b/w apk name with ver. [generalstoreapk=General-Store.apk]
+
+Starting emulator from code [Need to be started before every TC otherwise throw error.]: Make a batch file,store it in current project and run that using Runtime n in base class write a method that if devicename contains emulator than run startEmulator otherwise not.
+cd "path to emulator folder"
+cd emulator -avd emulator 555
+public static starEmulator()
+{ Runtime.getRunTime.exec(System.getPproperty()+"src/main/java"+emu.bat)
+  Thread.sleep(6000);
+}
+
+No need to close emulator , when new tc start emulator it will automatically refreshes. 
+
+Start server before every tc & close after every tc[class]
+AppiumDriverLocalService service=AppiumDriverLocalService.buildDefaultService();
+service.startServer();  
+service.stopServer();  //close once test case finished.
+
+AppiumServiceBuilder serviceBuilder = new AppiumServiceBuilder();
+server = AppiumDriverLocalService.buildService(serviceBuilder);
+builder.usingPort(appiumPort);
+	builder.withCapabilities(capabilities);
+	builder.withArgument(GeneralServerFlag.SESSION_OVERRIDE);
+	builder.withArgument(GeneralServerFlag.LOG_LEVEL, "error")
+
+make BeforeTest() method and run thid cmd directly from runtime .
+to kill all node from cmd pmt : taskkill /f/IM node.exe
+ 
+
+TestUtils.java[Utility/functions class] : for storing resuable functions like scrollling left,right ,up & down,Detect page change,Eo page, handling pop up,keyEvents,sccrollTOText,
+Excel Handle :
+
+TestBase : Loading configuration from config.properties file,initialize driver, implicit wait,extnet report, Creatiung object for Fis,Fos ,capturing scrreshot.
+starting server/emulatro
+we have used page object model for storing locaters related to pages.
+Separate classes for each test case.
+
+resource folder : Lister class, ExtentReport Class,startEmulator.bat,apks files.
+PageOBjects
+
+maven : Build,dependency resolution ,structure generation
+Apachi Poi : for storing data in excel
+Reporting : Exten report & attach the falure screenshot.
+
+Appium does not support testing of Android Version lower than 4.2
+Limited support for hybrid app testing. E.g., not possible to test the switching action of application from the web app to native and vice-versa
+Extract data of current page only.
+Xpath	 some dosnt work as mentioned in there official documentation.
+Id is best
+
+enable automation of both native & hybrid apps . We don't need to recompile.Open source.Cross platform .so  script written for Android will be reused for Ios without much change using same APi.
+
+
+Hence, before initializing the Appium Server, Node.js must be pre-installed on the system
+
+It responds back with HTTP responses. Again, to execute this request, it uses the mobile test automation frameworks to drive the user interface of the apps. Framework like
+Apple Instruments for iOS (Instruments are available only in Xcode 3.0 or later with OS X v10.5 and later)  XCUITest
+Google UIAutomator for Android API level 16 or higher
+Selendroid for Android API level 15 or less
+=============================================================================
+
+9) Explain what is APPIUM INSPECTOR?
+Similar to Selenium IDE record and Playback tool, Appium has an "Inspector" to record and playback. 
+It records and plays native application behavior by inspecting DOM and generates the test scripts in any desired language. 
+However, Appium Inspector does not support Windows and use UIAutomator viewer in its option.
+
+14) Mention what are the most difficult scenarios to test with Appium?
+The most difficult scenario to test with Appium is data exchange.
+
+6. : What is Node.js?	
+Answer : It is cross-platform runtime environment which is used to develop server-side software web applications. It is open-source so you can use it without any cost.
+
+
+Run command adb logcat.
+Open app in android phone. Immediately press CTRL + C in command prompt to stop logging in command prompt.
+
+
+24. : Can we run iOS automation test in windows using appium?
+Answer : No, You can not run iOS automation test in windows as Appium relies on OS X-only libraries to support iOS testing. 
+You can use Remote Server option to connect to appium server which is running on MAC.
+
+
+34. Can we test web application in mobile using appium?
+Answer : Yes. Appium support native mobile application, web applications and hybrid apps in mobile. We can use chrome browser in android and safari browser in IOS devices.
+
+LANDSCAPE to PORTRAIT :
+deriver.getOrientation();
+driver.rotate(org.openqa.selenium.ScreenOrientation.PORTRAIT);
+
+PORTRAIT to LANDSCAPE :
+driver.rotate(org.openqa.selenium.ScreenOrientation.LANDSCAPE);
+
+
+Private constructors are used so that any other class can not initialize the object.
+Singleton classes are used to control access to resources such as database or sockets.. or if you have a sinle licence for onlu one coonection to database or JDBC having problem with multithreading.
+class Singleton
+{
+private static Singleton ob;
+private Singleton(){}
+publuc static Singleton getObject
+{
+if(ob==null)
+ob=new Sinleton();
+return ob;
+}
+}
+In object-oriented programming, a singleton class is a class that can have only one object (an instance of the class) at a time.
+After first time, if we try to instantiate the Singleton class, the new variable also points to the first instance created.
+To design a singleton class:
+
+Make constructor as private.
+Write a static method that has return type object of this singleton class. Here, the concept of Lazy initialization is used to write this static method.
+Here, ClassicSingleton class employs a technique known as lazy instantiation to create the singleton; as a result, the singleton instance is not created until the getInstance() method is called for the first time.
+
+
+
+===========================================
+TouchAction used for Mobile apps(Appium).TouchActions is used for browser(Selenium)
+
+Elements can be identified using both Desktop browser and mobile browser
+The properties with which an element is identified might differ on desktop and mobile browsers
+In case of properties which are common in both desktop and mobile browsers, such as class name, the desktop based property takes precedence
+Sometime Some element[Google.com search button] is not present in desktop browser so we need to find it appium desktop inspector.
+
+=============IOS===============
+https://www.browserstack.com/guide/locators-in-appium#:~:text=Locators%20in%20Appium&text=Locating%20specific%20elements%20is%20the,both%20web%20and%20mobile%20apps.&text=The%20official%20documentation%20on%20Appium,by%20Xpath%2C%20find%20by%20class.
+IosNote: The iOS UIAutomation is deprecated and now the primary support for automating iOS apps is using the XCUITest Driver.
+Use this guide to migrate iOS tests from UIAutomation (iOS 9.3 and below) to XCUITest (iOS 9.3 and up)
+
+
+
+Apppackage & appactivity
+
+1)For Mac/Linux:
+adb shell dumpsys window | grep -E 'mCurrentFocus' 
+For Windows:
+adb shell dumpsys window | find "mCurrentFocus"
+adb shell dumpsys window | find "mFocusedApp" /it give little bit more info.
+
+or use apk info/you can also ask developer if not found
+
+In very basic terms, appPackage is the technical name of the app which is provided by its developers. It’s actually a top level package under which all the code for the app resides.
+For example, appPackage for ‘YouTube’ for Android is ‘com.google.android.youtube’. For Facebook, this name is ‘com.facebook.katana’ and for WhatsApp, the appPackage is – ‘com.whatsapp’.
+appActivity:
+Again, speaking in very basic terms appActivity refers to the different pages that are provided by the app.
+For example, WhatsApp provides multiple functionalities such as conversations, profile information, setting profile photo, setting status, notifications and a lot of other things. All these functionalities are represented by different appActivity.
+Together with these activities, every app has a main activity which is sort of the main screen you see when you launch the app. For WhatsApp, it is the Chats window, and for Facebook it would be the Wall. When you launch the app with Appium, it needs to know which activity has to be launched
+
+
+
+When call to method is resolved at runtime then it is calling run time polymorphism.Method overriding is example of run time poly.
+
+Static Binding: The binding which can be resolved at compile time by compiler is known as static or early binding. Binding of all the static, private and final methods is done at compile-time .
+Polymorphism in Java is a concept by which we can perform a single action in different ways. Polymorphism is derived from 2 Greek words: poly and morphs. The word "poly" means many and "morphs" means forms. So polymorphism means many forms.
+
+There are two types of polymorphism in Java: compile-time polymorphism and runtime polymorphism. We can perform polymorphism in java by method overloading and method overriding.
+
+If you overload a static method in Java, it is the example of compile time polymorphism. 
+
+During compilation, the compiler has no idea as to which print has to be called since compiler goes only by referencing variable not by type 
+of object and therefore the binding would be delayed
+ to runtime and therefore the corresponding version of print will be called based on type on object.
+ 
+What is aggregation?
+Aggregation can be defined as the relationship between two classes where the aggregate class contains a reference to the class it owns. Aggregation is best described as a has-a relationship. For example, The aggregate class Employee having various fields such as age, name, and salary also contains an object of Address class having various fields such as Address-Line 1, City, State, and pin-code. 
+In other words, we can say that Employee (class) has an object of Address class.Owns means there is no cyclic reference. Address class can not have Student classobjec.t
+
+Holding the reference of a class within some other class is known as composition. When an object contains the other object, if the contained object cannot exist without the existence of container object, then it is called composition. In other words, we can say that composition is the particular case of aggregation which represents a stronger 
+relationship between two objects.Aggregation represents the weak relationship whereas composition represents the strong relationship. For example, the bike has an indicator (aggregation),
+ but the bike has an engine (composition).
+ 
+Super class cons. is called by default if there is not super or this keyword in current class constructor.
+
+We can not overload method just by adding static,also can not overload just by changing return type. Number & type of arugment can be differ.
+
+Final keyword is used to restrict the user. Final variable value can not be changed .if a final variable is blank then it can be initialized by cons. only
+.Compile time exception. Final method can be inherited but can not be overriden.
+Final class can not be extended.
+
+Interface can not be final as we need to give implementation & inherit it.
+
+this keyword is final.
+
+There are various advantages of defining packages in Java.
+Packages avoid the name clashes.
+The Package provides easier access control.
+We can also have the hidden classes that are not visible outside and used by the package.
+It is easier to locate the related classes.
+
+ We can use access modifiers while declaring a constructor. It controls the object creation. In other words, we can have private, protected, public or default constructor in Java.
+ we can not make if final,abstract,static .We can not mentioned explicily return type.
+ 
+ No copy cons. in java.However we can copy the value of one object in other .
+ 
+ We can not execute program without main method since jdk1.7 earlier we can do it by having static block only.
+ this  & super can not be used inside static block & method.
+ 
+ Main method is kept static otherwise compiler need to make object & JVM has to call the constructor & there will be ambiguity whether the const. take arugement or not.
+ so to avoid.extra overhead. its static. and static method can be called directly with classname.
+ 
+  
+
+Q3. What happens if you remove static modifier from the main method?
+Program compiles successfully. But at runtime throws an error “NoSuchMethodError”.
+
+C++ vs Java
+Both are Object oriented language but 
+platform dependent  independent
+compiler only         compiler & interpreter
+call by value & ref.   call by value.
+support goto statement   dosnt support
+support pointer          uses internally.
+object allocated in heap object memory allocation done in heap memory only.
+& stack both 
+near to hw 				not near to hw
+
+cloning : cloning is done to make a exact copy of an object.need to implement clonable interface & override clone method.   return (Test)Super.clone() in clone method.
+
+While using class , remember that there can be multiple element with same class . so better use id if present.
+
+
+. For example lets say the ID for the login field which is for instance email_01, have the ending number which keeps changing every time the page is loaded. In this case using contains helps us locate element with constant names like in this case ‘email’. 
+Xpath=//*[contains (@placeholder, ‘Organization)]
+Xpath=//button[contains(text(),’ Signup’ )]
+Xpath= //button[text()=’ Signup for Free’]		Q~q`
+Xpath=//input[starts-with(@placeholder, ‘Organization)]
+parent/child
+Xpath= //div[@class= ’ col-sm-12 google-sign-form’]/input[2]
+Xpath=//ul[@class=’nav navbar-nav navbar-right’]//li[@class=’sign-in’]
+
+Xpath=//input[@name=’ organization_name’]//following::input[1]
+
+
+Xpath=//*[@type='submit']//preceding::input[1]
+Xpath=//*[@id='rt-feature']//parent::div[1]
+
+The ancestor axis selects all ancestors element (grandparent, parent, etc.) of the current node as shown in the below screen.
+Xpath=//*[text()='Enterprise Testing']//ancestor::div
+
+Xpath=//*[@type='text']//following::input[1]  //if u don't give number than it will return all matching following nodes.
+ xpath=//*[@type='submit']//following-sibling::input  //if will return nodes which have same parent.
+ Xpath=//*[@type='submit']//preceding::input[1]
+ 
+Operators in xpath: 
+Xpath= //input[@type= ‘email’ or @name= ‘email’]
+Xpath= //input[@type= ‘email’ and @name= ‘email’]
+=====================  
+How do you write a locator to identify paragraph elements that are the immediate child of a div element, or the descendent of a div element?
+Immediate child:
+An immediate child in XPath is defined indicated using “/”, while on CSS, it is indicated using “>”. For example, with XPath:
+
+//div/p  and with CSS div > p
+Descendent:
+To find paragraph elements that are descendent to any div element (i.e. the paragraph element appears in the subtree rooted at the div element), we can use “//” in XPath, and just a whitespace in CSS:
+//div//p  
+  
+Axes refer to axis/relation on which elements are lying relative to an element.4  
+  
+  
+  
+  
+What will happen if you put System.exit(0) on try or catch block? Will finally block execute?
+ 
+By Calling System.exit(0) in try or catch block, we can skip the finally block. System.exit(int) method can throw a SecurityException.
+If Sysytem.exit(0) exits the JVM without throwing that exception then finally block will not execute. 
+But, if System.exit(0) does throw security exception then finally block will be executed.
+
+What is finalize() method?
+ 
+Unlike c++ , we don’t need to destroy objects explicitly in Java. ‘Garbage Collector‘ does that automatically for us.
+ Garbage Collector checks if no references to an object exist, that object is assumed to be no longer required, and the memory occupied by the object can be freed. 
+ Sometimes an object can hold non-java resources such as file handle or database connection,[object ] then you want to make sure these resources are also released before object is destroyed. 
+ To perform such operation Java provide protected void finalize() in object class. You can override this method in your class and do the required tasks. 
+Right before an object is freed, the java run time calls the finalize() method on that object
+
+Can a top level class be private or protected?
+Top level classes in java can’t be private or protected, but inner classes in java can. The reason for not making a top level class as private is very obvious, because nobody can 
+see a private class and thus they can not use it. Declaring a class as protected also doesn’t make any sense. The only difference between default visibility and protected visibility 
+is that we can use it in any package by inheriting it. Since in java there is no such concept of package inheritance,
+ defining a class as protected is no different from default.
+Top level class can be public/default.
+
+Serialization is process in which object state is changed to byte stream. it is used when data is need to send over network. because bytestream is platform independent .so byte stream
+received can deserialized to object. 
+Trasient object can not be serialized.
+
+TestNg Groups
+<?xml version="1.0" encoding="UTF-8" ?>	
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">	
+ 	<suite name="Suite">	
+		<test name="Guru 99 Smoke Test Demo">	
+			<groups>	
+				<run>	
+   					 <include name="strong_ties" />	
+        		</run>	
+       		</groups>	
+			<classes>	
+					<class name="com.group.guru99.TC_Class1" />	
+           	</classes>	
+		</test>	
+  </suite>
+  
+  
+  
+ <suite name="Sample Test Suite" verbose="1" >
+  <test name="Method Test Cases" >
+    <classes>
+       <class name="com.easy.entry.AddTestCase">
+        <methods>
+        <include name="addLocationTestCase" />
+        <include name="addDepartmentTestCase" />
+        <exclude name="addEmployeeTestCase" />
+      </methods>
+       </class>
+    </classes>
+  </test>
+</suite>
+
+
+<include name="add.*"/>  //reg. exp used to include/exclude all starting with add.
+running a whole package 
+ <suite name="Sample Test Suite" verbose="1" >
+  <test name="Method Test Cases" >
+	<package name="test1"/>
+  </test>
+</suite>
+
+ 
+How to run Parallel Tests with Selenium
+There are situations where you want to run multiple tests at the same time.
+
+In such cases, one can use "parallel" attribute
+
+TestNG enables you to run test methods, test classes and test cases in parallel inside your project. By performing parallel execution, we can reduce the 'execution time' 
+as tests are started and executed simultaneously in different threads.
+<suite thread-count="1" verbose="1" name="Gmail Suite" annotations="JDK" parallel="tests"> here we can use methods,classes,tests.
+         
+  <test name="flipkart">
+	 <classes>
+	   <class name="com.suite1.Flipkart"/>
+	 </classes>
+   </test>
+   
+  <test name="Myntra">
+     <classes>
+       <class name="com.suite2.SnapDeal"/>
+     </classes>
+   </test>
+</suite>
+
+Parametrization can be done in 2 ways by Tesng 
+1) testng.xml 
+by this we can provide sinle value of one parameter. although we can provide multiple parameters.This is like passing global value as config file.
+
+ <suite name="Sample Test Suite" verbose="1" >
+  <test name="Method Test Cases" >
+  <parameter name="" value="">
+  <parameter name="" value="">
+    <classes>
+       <class name="com.easy.entry.AddTestCase">
+       </class>
+    </classes>
+  </test>
+</suite>
+
+@Test
+@Parameters({"author","searchKey"})
+public void testParameterWithXML(String author,String searchKey)
+
+2)Data Providers 
+Data providers can be used to provides multiple value of same parameters.
+
+
+Encapsulation is one of the four fundamental OOP concepts. The other three are inheritance, polymorphism, and abstraction.
+Encapsulation in Java is a mechanism of wrapping the data (variables) and code acting on the data (methods) together as a single unit. In encapsulation, the variables of a class will be hidden from other classes, and can be accessed only through the methods of their current class. Therefore, it is also known as data hiding.
+To achieve encapsulation in Java −
+Declare the variables of a class as private.
+Provide public setter and getter methods to modify and view the variables values.
+Benefits of Encapsulation
+The fields of a class can be made read-only or write-only.
+
+A class can have total control over what is stored in its fields.
+
+Difference between Abstraction and Encapsulation:
+
+
+ABSTRACTION	vs ENCAPSULATION
+Abstraction is the process or method of gaining the information.	While encapsulation is the process or method to contain the information.
+In abstraction, problems are solved at the design or interface level.	While in encapsulation, problems are solved at the implementation level.
+Abstraction is the method of hiding the unwanted information.	Whereas encapsulation is a method to hide the data in a single entity or unit along with a method to protect information from outside.
+We can implement abstraction using abstract class and interfaces.	Whereas encapsulation can be implemented using by access modifier i.e. private, protected and public.
+In abstraction, implementation complexities are hidden using abstract classes and interfaces.	While in encapsulation, the data is hidden using methods of getters and setters.
+The objects that help to perform abstraction are encapsulated.	Whereas the objects that result in encapsulation need not be abstracted.
+
+Likewise in Object-oriented programming, abstraction is a process of hiding the implementation details from the user, only the functionality will be provided to the user. In other words, 
+the user will have the information on what the object does instead of how it does it.
+
+
+An interface is an blueprint of a class. It is simmilar to class except it has abstract methods only.In other words, you can say that interfaces can have abstract methods and variables. It cannot have a method body.
+
+
+
+The main advantage of Encapsulation is; 
+It secure your data
+Code is easy to maintain & chances of huaman error reduces.
+Its easy to understand.
+As you know, encapsulation means hiding internal details of your class from the end user ( entity that uses your class).
+Now I will give you a real life example.
+Suppose a doctor John gives patient 3 different powders and tells him that very time he is supposed to mix 3 mg of white powder, 2 mg of red and 4 mg of green, combine them and then take them with glass of water.
+On other hand doctor Smith gives a patient a simple 'Capsule' that contains the same amount of medicines. But now its not botheration to patient to know what is actually inside the capsule or go through the hassle of measuring the content.
+So using a 'Capsule' made it really convenient to end user (here patient)
+in similar way, when writing a class, if you expose how you are storing data, which data structure you are using to end user (here end user is the class that uses your class), then it is just unnecessary details your are flooding the end user with. You should give him simple way to use your class without exposing the complex details.
+
+When writing large object-oriented applications, you will often come across scenarios where you want to perform validation on inputs, and scenarios where you might want a change made on one member variable to edit some other internal values (for caching etc).
+
+A simple example is one where you have a object for a user, defined as
+class User {
+	int age;
+	String name;
+}
+The user can enter a value of -10, which although is a valid number, is an invalid age. A setter method could have logic which would allow you to catch such things.
+For example
+you could implement the setter method as:
+void setAge(int age) throws IllegalArgumentException {
+	if (age > 0) {
+		this.age = age;
+	} else {
+		throw new IllegalArgumentException();
+	}
+}
+Hope this better helps you understand the practical uses of encapsulation :)
+
+
+All the three classes described by you are tightly Encapsulated .
+If a class is having only private variables and no other public variables then a class is said to be tightly encapsulated class.
+It does not depend on the getter or setter methods.
+if parent have non private and child have all private still child will be not tighly encapsulated.
+
+========File System======
+
+Definition - What does File System mean?
+A file system is a process that manages how and where data on a storage disk, typically a hard disk drive (HDD), is stored, accessed and managed. It is a logical disk component that manages a disk's internal operations as it relates to a computer and is abstract to a human user.
+naming file,logical storing for access
+A file system also includes a format to specify the path to a file through the structure of directories. A file is placed in a directory -- or a folder in Windows OS -- or subdirectory at the desired place in the tree structure. 
+Before A partition is a region of the hard disk or other storage that the OS manages separately.
+if a partition crashes then the data in other partition remain safe.
+
+File systems and the role of metadata
+File systems use metadata to store and retrieve files. Examples of metadata tags include:
+
+Date created,Date modified
+Last date of access,Last backup,User ID of the file creator,Access permissions,File size
+Metadata is stored separately from the contents of the file, with many file systems storing the file names in separate directory entries. Some metadata may be kept in the directory, whereas other metadata may be kept in a structure called an inode.
+
+File system access
+File systems can also restrict read and write access to a particular group of users. Passwords are the easiest way to do this.
+File permissions such as access or capability control lists can also be used to moderate file system access. 
+Encrypting files can also prevent user access, but it is focused more on protecting systems from outside attacks. An encryption key can be applied to unencrypted text to encrypt it, or the key can be used to decrypt encrypted text.
+
+Types of file systems
+There are a number of types of file systems, all with different logical structures and properties, such as speed and size. The type of file system can differ by OS and the needs of that OS.
+
+File allocation table (FAT) is supported by the Microsoft Windows OS. FAT is considered simple and reliable,  While efficient and compatible with most current OSes, FAT cannot match the performance and scalability of more modern file systems.
+Global File System :Global file system (GFS) is a file system for the Linux OS, and it is a shared disk file system. GFS offers direct access to shared block storage and can be used as a local file system.
+Hierarchical file system (HFS) was developed for use with Mac operating systems. 
+The NT file system -- also known as the New Technology File System (NTFS) -- is the default file system for Windows products from Windows NT 3.1 OS onward. Improvements from the previous FAT file system include better metadata support, performance and use of disk space. NTFS is also supported in the Linux OS through a free, open-source NTFS driver. Mac OSes have read-only support for NTFS.
+
+While a file system stores unstructured, often unrelated files, a DBMS is used to store and manage structured, related data.
+
+
+
+
+
+
+========JIRA===============
+JIRA setup
+localhost:8080
+B7UC-TMVH-HDG4-HWU8
+JIRA credentials : username : mittalnayan5 ,pwd : devil@12@,devil@123@
+In Jira ,u need to first get the session id then everytime(in every request) u need to pass this in header.
+lecture 45 done.
+
+path paramter : its re routes to sub resource. IN jira ,helps u to found particular issue.
+query parameter : its helps u in filtering/driling down in existing result.Like getting comment of an issue.
+
+given().header("Content-Type","application/json").pathParam("key","10001")
+path parametr needs to be defines when we send some paramter inside path. when.post(rest/api/2/issue/{key}/attachments)
+when we send JSON as body then we define content-type as application/json.
+we send file using multipart("file",new File("json.txt")) method inside given tag .3 then header to be used is (Content-Type,application/multipart).
+
+josneditoronline to convert json into readable mode.
+
+HTTP Certification:	
+
+Twitter uses oAuth 1.0
+Authentication :
+1) Google Api : simple authentication using query parameter.
+2) JIRA API : Cookie bases authentication.
+3) oAuth2.0 : its a protocol for authorization.
+
+OAUTH Grant type : ways to implement OAUTH protocol.[2 famous are authorization_code & client credentials.you can say you have worked on authorization_code]
+
+OAUTH Benifit : No headache of storing & Protecting credentials.
+				Richer websites.
+
+1)First we need to get the code by signing into google/facebook autorization server.		
+scope[what detauls we want],auth url(google server authorization server url),client id(it generateds first time when bookmyshow do integration with google/facebook),	redirect_url(like bookmyshow),state(u provide any random string & make sure u are getting back the same .used in security testing)
+In this step we create Autorization server url.
+		
+2)For we need to get TOken with other required detaisl(first name,last name,mailid etc).SO to get the token we need to send request to google/facebook with multiple details like 
+code(generated in step 1),client id(it generateds first time when bookmyshow do integration with google/facebook),client secret id,rediret url,grant_type
+
+There are library used in POJO which are Jackson,Jackson2 ....
+Serialization: In rest assured ,Converting java object into Request body(Json/xmlPayload) with the help of POJO(Plain old java object) classes.
+Deserializtion :In rest assured , Converting Json response into java object with the help of pojo claass.
+In it we receive the response as Pojo class object instead of as String.Then we apply getter methods of pojo class on this pojo class object to get different elements.
+ 	GetCourse gc=given().queryParam("access_token", accessToken).expect().defaultParser(Parser.JSON)
+		.when()
+		.get("https://rahulshettyacademy.com/getCourse.php").as(GetCourse.class);
+		
+		System.out.println(gc.getLinkedIn());
+		System.out.println(gc.getInstructor());
+		System.out.println(gc.getCourses().getApi().get(1).getCourseTitle());
+		
+		
+RequestSpecBuilder: here we can build the basic part of request.
+req=new RequestSpecBuilder().setContentType(ContentType.Json).setBaseUri().setQueryParam().build();
+given.spec(req).when().post().....
+
+as some part is common in every request/response ,so we will make object for that part and use in our queries so it make code more clearer and reusable.
+
+ResponseSpecBuilder:		
+
+
+Framework :
+1)io.cucumber,cucumber-junit,rest-assured ,eclipse marketplace-natural [its definations.feature file editor].
+2)Define feature file inside inside features package,stepDefination file inside Definations package & TestRunner insiude cucumber-Options[its name should be this only] package
+3)Create pojo package [it will have all pojo classes (seralization/deserialization)]inside src/main/java
+4)
+5)
+6)
+7)//Scenario need to be changed to ScenarioOutline when provide data from this file.	
+8)Data driven testing using cucumber example feature [In it we need to change secnario ->scenario outline]
+9)Tags can be used if u want to run particular test case/cases. Need to mention tagging in TestRunner.java [@CucumberOptions(features="src/test/java/feature",glue= {"stepDefinations"}),tags= {"@DeletePlace"}]
+10)Hooks are used to set precodition or when u want to run somme code before(like Before tags in Testng).
+11)if u want to run tags from mvn. mvn test -Dcucumber.options="--tags @Addplace"
+12)hwml reporting can be done adding mvn plugin [maven cucumber reporting]https://github.com/damianszczepanik/maven-cucumber-reporting
+u first need to crete json report by adding plugin="josn:target/jsonReprots/cucumber-report.json"in TestRunner 
+
+=================================API Questions==========================================================
+===========================================================================================================
+API 
+> API stands for application programming interface which is set of routines ,protocol & tools which enables the communication b/w 2 s/w /hw components.api is a collections of sw fucntions
+which can be executed by other sw.
+> In API Testing our main focus will be on Business logic layer of the software architecture.API testing is a type of software testing that involves testing APIs directly and also as a part of integration testing to check whether the API meets expectations in terms of functionality, 
+reliability, performance, and security of an application.
+API testing is a kind of software testing which determines if the developed APIs meet expectations regarding the functionality, reliability, performance, and security of the application
+We check buisness logic .
+
+
+
+> Some of the protocols using in API Testing are as follows:
+HTTP
+REST
+SOAP
+JMS
+UDDI
+
+>Webservices is a kind of api which is access over net.All web services need to be exposed over web(HTTP).Web service uses only three styles of use: SOAP, REST and XML-RPC for communication
+API uses multiple ways for communication e.g. DLL files in C/C++, Jar files/ RMI in java, Interrupts in Linux kernel API etc.
+
+>What is Soap?
+SOAP stands for Simple Object Access Protocol. It is an XML based messaging protocol. It helps in exchanging information among computers.
+
+REST stands for Representational State Transfer. It is a set of functions helping developers in performing requests and receive responses. Interaction is made through HTTP Protocol in REST API.
+
+>What are some architectural styles for creating a Web API?
+This is one of the fundamental Web API interview questions. Bellows are four common Web API architectural styles:
+HTTP for client-server communication
+XML/JSON as formatting language
+Simple URI as the address for the services
+Stateless communication
+
+>Web API can be consumed by any clients which support HTTP verbs such as GET, PUT, DELETE, POST. Since Web API services do not require configuration, they can be easily used by any client.
+
+Core functionality of the system can be tested long before the GUI has developed.This will help detect the minor issues which can become bigger during the GUI testing.
+API testing usually is less time consuming than functional GUI testing. The web elements in GUI testing must be polled, which makes the testing process slower
+n API testing, data is exchanged using XML or JSON. These transfer modes are completely language-independent, allowing users to select any code language when adopting automation testing services for the project.
+
+
+13. What must be checked when performing API testing?
+During the API testing process, a request is raised to the API with the known data. This way you can analyze the validation response. While testing an API, you should consider:
+
+Accuracy of data
+Schema validation
+HTTP status codes
+Data type, validations, order and completeness
+Authorization checks
+Implementation of response timeout
+Error codes in case API returns[4XX,5XX]
+Non-functional testing like performance[response time] and security testing[checkd when we do authorization]
+ 
+17. What are differences between API Testing and UI Testing?
+API enables communication between two separate software systems. A software system implementing an API contains functions or subroutines that can be executed by another software system.
+On the other hand, UI ( User Interface) testing refers to testing graphical interface such as how users interact with the applications, testing application elements like fonts, images, layouts etc. UI testing basically focuses on look and feel of an application.
+
+API testing is now preferred over GUI testing and is considered as most suitable because:
+
+It verifies all the functional paths of the system under test very effectively.
+It provides the most stable interface.
+It is easier to maintain and provides fast feedback.
+
+21. What are common API errors that often founded?
+Missing module errors
+Documentation errors
+Parameter validation errors
+
+API documentation templates Swagger
+Swagger
+FlatDoc
+API blueprint
+RestDoc
+
+What is a “Resource” in REST?
+REST architecture treats any content as a resource, which can be either text files, HTML pages, images, videos or dynamic business information.
+REST Server gives access to resources and modifies them, where each resource is identified by URIs/ global IDs.
+
+34. What are the core components of an HTTP request?
+An HTTP request contains five key elements:
+
+An action showing HTTP methods like GET, PUT, POST, DELETE.
+Uniform Resource Identifier (URI), which is the identifier for the resource on the server.
+HTTP Version, which indicates HTTP version, for example-HTTP v1.1.
+Request Header, which carries metadata (as key-value pairs) for the HTTP Request message. Metadata could be a client (or browser) type, format supported by the client, format of a message body format, cache settings, and so on.
+Request Body, which indicates the message content or resource representation.
+
+37. Is there any difference between PUT and POST operations?
+PUT and POST operation are quite similar, except the terms of the result generated by them.
+
+PUT operation is idempotent, so you can cache the response while the responses to POST operation are not cacheable, and if you retry the request N times, you will end up having N resources with N different URIs created on server.
+The PUT method is idempotent. An idempotent method means that the result of a successful performed request is independent of the number of times it is executed.Apr 28, 2013
+
+OPTIONS is used to describe the communication options for the target resource.
+HEAD asks for a response identical to that of a GET request, but without the response body.
+URI stands for Uniform Resource Identifier. It is a string of characters designed for unambiguous identification of resources and extensibility via the URI scheme.
+
+The purpose of a URI is to locate a resource(s) on the server hosting of the web service.
+
+A URI’s format is <protocol>://<service-name>/<ResourceType>/<ResourceID>. 
+
+40. What is payload in RESTFul Web services?
+The “payload” is the data you are interested in transporting. This is differentiated from the things that wrap the data for transport like the HTTP/S Request/Response headers, authentication, etc.
+
+41. What is the upper limit for a payload to pass in the POST method?
+<GET> appends data to the service URL. But, its size shouldn’t exceed the maximum URL length. However, <POST> doesn’t have any such limit.
+
+So, theoretically, a user can pass unlimited data as the payload to POST method. But, if we consider a real use case, then sending POST with large payload will consume more bandwidth. It’ll take more time and present performance challenges to your server. Hence, a user should take action accordingly.
+
+
+
+Challenges in api testing
+how to test proper Flow ,output of request as input to other request.
+validation of input value is alwasys questionable
+different type of parameters validation
+parameter categarition
+
+
+System.getProperty("browser"); //it takes from maven cmnd .  mvn test -Dbrowser=chrome 
+mvn test -Dbrowser="$browser"  //if we define like this then jenkins check if there is a variable in jenkins with name browser & its selected value.
+
+window autnetication 
+https://username:pwd@google.com
+
+f
+
+
+driver.findElement(By.id("")).sendKeys(Keys.F5);
+dest.sendKeys(Keys.DropDown),Keys.Enterprise
+
+
+
+
+read about javasccriptexecutor,frames
+//input[@id='']/folowing-sibling::div
+/parent::ul
+					
+
+				
+Collection is a group of api request that can be store and arranged in logical order.		
+Rest Assured is an API which is used to automate rest service/rest apis.we can get status code,status line		
+
+API insures that request/response should be in a format that can be understand by both client & server.
+why we used it =>platform independent communications .using it 2 different application(different implementation)can exchanges information.
+for exaple c++ over window platform using mysql database =>communicating with application written in java on linux platform using oracle database
+01202400222 fortis 
+
+SOAP uses POST method for all type of request.Webservices are the services/api which is accessed over web.
+WSDL: web services disription language is an xml based interface/doucment which describes all the functionality of the web. its in xml because xml is machine readable.
+it describes different componnent,return type,data type,parameter of request and response ,internal architectur 
+
+UDDI : Universal description descovery & identifcation .Its a online directory where a service provider publishes its wsdl & consumer can query it & can get hold of the wsdl.
+client uses wsdl to use webservices.
+
+Webservices can be implemented in 2 ways which is REST And SOAP.
+SOAP Web Services: a webservices which complies SOAP web service specifications is called soap web service.
+these specifications are : SOAP,WSDL,UDDI
+All message/communication should be in XML language.XML have a defined format which is SOAP Message.SOAP Message connsist of Envelope,Header,Body.Header is optional.
+
+Rest : a web services that communicates/exchagnes information b/w 2 application using rest architrcture /principles is called Restful services.
+REST is architectural style or design principles. So unlike SOAP, Rest is not a protocol/specifications ,no strict guidelines
+
+Principles/constraints of Rest
+1)Uniform interface:
+a)Resource : in rest everything is a resource.	you can define any information,module as resource .there is no strict guidelines for it.
+b)URI : Any resource/data can be accessd by URI
+c)HTTP : make exxplicit use of HTTP methods .(CRUD)
+
+2)Statelessness : Server dosn't maintain any state.means no session .so every request which client sends should be complete in itself.no previous details is stored in server.
+3) caching : Caching occur at client side. server send the response with some meta data(in header by using cache control & last modified value) which tell client to store or not the response to improve the performance by
+reducing the  number of request for duplicate resource.	
+4)Layering : there can be multiple layers b/w client & server .these are HTTP mediaries. it can be cahcing layer. which will check if request resoruce dosn;t change then send the response 
+to client without sending request to the server.
+5) Code on demand : this is optional. some time server send code[java script code] also with response 
+Representational state transfer
+So a reosurce may have representation in xml/json format & whenever there is request from clint ,current state of resource is transferred. 
+
+
+====BDD,Cucumber,Gherkin==========
+
+Cucumber : Cucumber is a tool which is used for behaviour driven framework development. its generally used in acceptance testing in web application .it support Native Junit
+In cucumber,It allow automation of functional validation in easily readable & understandable format(like plain english lagnuage) so that it can be understand by any stakeholders management,Buiseness analyst
+,Developers & testers.	
+
+#1) Feature Files:
+
+Feature files are the essential part of cucumber which is used to write test automation steps or acceptance tests. This can be used as the live document.
+#2) Feature:
+
+This gives information about the high-level business functionality (Refer to the previous example) and the purpose of Application under tes
+#3) Scenario:
+
+Basically, a scenario represents a particular functionality which is under test. By seeing the scenario user should be able to understand the intent behind the scenario and what the test is all about. Each scenario should follow given, when and then format. This language is called as “
+Given: As mentioned above, given specifies the pre-conditions. It is basically a known state.
+When: This is used when some action is to be performed. As in above example, we have seen when the user tries to log in using username and password, it becomes an action.
+Then: The expected outcome or result should be placed here. For Instance: verify the login is successful, successful page navigation.
+Background: Whenever any step is required to perform in each scenario then those steps need to be placed in Background. For Instance: If a user needs to clear database before each scenario then those steps can be put in a background.
+And: And is used to combine two or more same type of action.
+
+https://www.softwaretestinghelp.com/cucumber-bdd-tool-selenium-tutorial-30/
+5) Tags:
+
+Cucumber by default runs all scenarios in all the feature files. In real time projects, there could be hundreds of feature file which are not required to run at all times.
+Cucumber is a most favourite tool for many projects as it is easy to understand, readable and contains business functionality.
+
+feature file : basically describes behaviour.
+Behavior Driven Development gives us an opportunity to create test scripts from both the developer’s and the customer’s perspective as well. So in the beginning, developers, project managers, QAs, user acceptance testers and the product owner (stockholder), all get together and brainstorm about which test scenarios should be passed in order to call this software/application successful. This way they come up with a set of test scenarios. All these test scripts are in simple English language, so it serves the purpose of documentation also.
+
+we will need people from different community like developers, project managers, product owners, and testers while developing test scripts. As these people do not belong to the same category, there is a risk of not using the common language for test script conceptualizing. This was the evolution point for Gherkins.
+Gherkin provides the common set of keywords in English text, which can be used by people amongst the different community and yet get the same output in the form of test scripts.
+
+It is a Behavior Driven Development tool used to develop test cases for the behavior of software's functionality.It plays a supporting role in automated testing.
+
+
+==================The Best Definition===============================
+What is Abstraction?
+
+Abstraction is an OOPs concept which specifies that hide the implementation of object functionality from its utilization and provide an interface to access the functionality.
+
+Abstraction can be achieved using following steps:
+
+Provide all essential properties in an interface. (So, using interface we can achieve 100% abstraction. How? Where? When? will explain later.)
+Provide an implementation according to subclass.
+Refer(give access to) the implementation by using interface reference variable.
+Benefits of Abstraction
+
+Any change in implementation will not affect the utilization of object functionality
+We can achieve loose coupling in coding
+As implementation is hidden, complexity of implementation will not be worry for user
+
+https://www.quora.com/How-can-interface-achieve-100-abstraction-in-Java
+
+
+In real time ,the object of implementing class is provided by factory methods.
+
+
+===============POJO====
+POJO stands for Plain Old Java Object. It is an ordinary Java object, not bound by any special restriction other than those forced by the Java Language Specification and not requiring any class path. POJOs are used for increasing the readability and re-usability of a program. POJOs have gained most acceptance because they are easy to write and understand. 
+
+9212005599
+
+
+=====
+Call BY Value : An copy of the value[different memory location] is passed so changes made in copy[formal argument] wont change the actual value.
+Call By Ref. : Address of the value is passed so changes made in formal agrument changes the actual value. 
+
+ Automation Framework is not a single tool or process, but it is a collection of tools and processes working together to support automated testing of any application. It integrates various functions like libraries, test data, and various reusable modules.
+The framework should be scalable and maintainable.
+The advantages can be in different forms like the ease of scripting, scalability, modularity, understandability, process definition, re-usability, cost, maintenance etc. Thus, to be able to grab these benefits, developers are advised to use one or more of the Test Automation Framework.
+
+
+new TouchAction((PerformsTouchActions) driver).press(PointOption.point(x,top_y)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
+.moveTo(PointOption.point(x,bottom_y)).release().perform();		
+ta.tap(tapOptions().withElement(element(aaElement))).waitAction(waitOptions(Duration.ofMillis(200))).perform();
+t.longPress(LongPressOptions.element()).moveTo.Element.Durations.Release().perform()	
+
+
+
+   
+@Parameter({"url"})  
+@Test   
+public void test1(String url)
+
+
+
+<Suite name=suite1>
+
+<Test name=test1>
+<groups>
+	<run>
+		<include namee="sanity"/>
+	</run>
+</groups	
+	<classes>
+	<class name="test1.login"/>
+	<classes/>
+
+</test>
+</suite>
+
+@RunWith(Cucumer.clase)
+@CucymberOptions(features="",glue="',tags=)
+
+@Test(invocationCount=5)
+
+m105g 355546100007304 
+m317 351755890027893 
+M105G 355546100006165 
+
+
+========Adb Cmds==========
+adb install "C:\Users\nayan.mittal\Downloads\General-Store.apk"
+adb shell pm list packages >packagelist.txt     //packagelist.txt will be created ,no need to create it manually.
+adb shell getprop ro.build.PDA
+adb sheel getprop ro.build.version.release
+adb shell getprop ro.product.brand
+
+adb install "apk path"
+adb logcat -b radio //to view radio logs
+adb logcat -b main -b radio -b events
+adb logcat com.android.settings:I    //I denotes log level info, W warning,S Silent,E Error
+
+adb push "packages.txt" /sdcard/
+adb pull "/sdcard/packages.txt" C:\Users\nayan.mittal\Desktop\Dummy or adb pull /sdcard/packages.txt C:\Users\nayan.mittal\Desktop\Dummy
+adb pull /sdcard/ C:\Users\nayan.mittal\Desktop\Dummy  // will pull all file from sdcard folder.
+
+
+dumpsys is tool runs on android devices, get the details of system services.
+
+adb shell dumpsys window | find "mCurrentFocus"
+adb shell dumpsys package com.example.testapp.first //
+adb shell dumpsys batterystats 
+driver.pressKey(new KeyEvent(AndroidKey.BACK));	
+driver.pressKey(new KeyEvent(AndroidKey.ENTER));	 //sendKeys(Keys.Enter) it will work in webview.
+driver.startActivity(new Activity("com.sec.android.app.camera","com.sec.android.app.camera.Camera"));
+
+installing multiple apks. for %f in (C:\Users\nayan.mittal\Downloads\apps\*.apk) do adb  install %f
+====================================
+If u are not able to get activity by adb cmd and apk info then u can ise androidMenifest file
+apk file->unzip using winrar->andoridmenifest.xml->open in notepad
+searcg P a c k a g e and a c t i v i t y  /activity with .main .
+===============
+ITestListner
+Add Lister in testng.xml file.
+public static void takeScreenshot(String s)
+{
+File f=((TakesScreenshot)driver).getScreehshotAs(OutputType.FILE)
+FileUtils.copyFile(f,new File(System.getProperty("user.dir")+s+".png");
+}
+public void onTestFailure(ITestResult result)
+{
+base.takeScreenshot(result.getName()); // make takeScreenshot method static.
+}
+==============Extent Report[Lecture 129]=======================
+IReported interface belong to testng
+1)extentreport dependency in ur mvn. mentioned on extentreports.com [4.0.0]
+2)ExtentReports extent=new ExtentReports();
+ExtentHtmlReporter htmlReporteer=new ExtentHtmlReported("path"="htmlreport.html");
+extent.attachReporter(htmlReporteer);
+
+will store suite.getResult()
+we ITestContext context=getTextContext();using context we will get pass,fail,skipped status of each method and accordingly we will create node pass,fail,skip in t=html report. 
+3)Add ExtentReport as listener in testng. 
+==========================
+
+@DataProvider(name="InputData")
+public object[][] TestData()
+{
+Object[][] obj=new Object[][]
+{
+	{"50"},{"@34%"}
+	
+};
+
+return obj;
+}
+
+@Test(dataProvider="InputData",dataProviderClass="TestData.class")  //we need to provider dataProviderClass if method is in different class.In this case DataProviderMethod should be static.
+public void test(String data)
+
+we can also provide data to multiple methods.e 
+public object[][] TestData(Method m)
+{
+ if(m.getName().equalsIgnoreCase("method A"))
+ return something1
+ else
+ return something12 
+}
+
+An array of array of objects (Object[][]) where the first dimension's size is the number of times the test method will be invoked and the second dimension size contains an array of objects that must be compatible with the parameter types of the test method
+
+The reason is quite simple as we get test data in forms of rows and columns so that we need 2D object (object type because we are free to pass any type data String, int etc.) array.
+So it’s clear now that a DataProvider method can return other types as well not only Object. Return type as Object is preferred when we need to return heterogenous data. E.g Integer, String etc all from one method. Since Object class is super class of all other classes in Java so Object class can provide reference to subclass objects by following Upcasting concept of Java
+Integer[][] ,String[][] also.
+
+TestNG class method run serially by default in alphabetical order & if want to give priority then give it [1 has higher than 2]
+<Suite name="suite1" parallel="tests">  all the tests (tst1,test2...) will run parallely.but classes and methods inside them will parallely.
+<Test name="test1" parallel="classes">  classes inside test1 will run parallely.but method inside classes will run sequentially.
+<<Test name="test1" parallel="methods"> all the methods inside all classes in test1 will run parallel.
+===============================
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <test thread-count="5" name="Test" preserve-order="false">
+    <classes>
+      <class name="Nayan.TestNG1.CheckOne"/>
+      <class name="Nayan.TestNG1.CheckTwo"/>
+      <class name="Nayan.TestNG1.CheckThree"/>
+      <class name="Nayan.TestNG1.CheckFive"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
+
+By default preserve-order is set to true. and it will run in order mentioned in xml file. if set to false then it will run in unpredictable manner[doubt -alphabetically]
+
+===========
+time-out="3000" can be setas suite level also.
+================================
+
+https://www.guru99.com/parameterization-using-xml-and-dataproviders-selenium.html#:~:text=Data%20provider%20returns%20a%20two,with%203%20parameters%20each%20time.
+====================
+Native apps are developed for specific platform using specific programming language (obejtive C for IOS,Java for Andorid.).they are directly installed on the device
+and take advanced of features like camera,gps ,notifications and installed from application store.Native apps provide high performance and high degree of relaibility.
+
+Web Apps are the web portal that are design,customer & hosted for mobiles.THey are accessed on mobile via browser using url.
+when HTML 5 camer people releasized that they can obtain native like fucntionality in browser.
+
+Hybrid apps are the webapps embedded in native apps,runs on device and developed using web tech.[html,css & javascript.]Hybrid apps runs inside a native container
+and leverages the device browser enginge to render html and run java script locallly.Web to native abstraction layer help in accesing device capabilities like acc. meter,gps.
+ 
+Hybrid apps require little modification to run on diff. platforms.can use native feature also.
+ 
+A simulator provides a fast and easy way to set up a software environment for application testing purposes without mimicking actual hardware. An emulator takes things a step further by emulating software as well as hardware configurations 
+
+========================
+Test Plan is a document which describes scope,objective,effort required,estimation on the task whereas test strategy defines how to test.
+Test plan goal is to determine what to test ,who will test,when to test,finding bug whereas test strategy define what technique to follow.[what to automate,which tools to be used,risk analysis,What are your test entry and exit criteria	,Write down the test approach for your project. Clearly, mention what types of testing you are going to conduct?
+i.e. Functional testing, UI testing, Integration testing, Load/Stress testing, Security testing, etc.
+it deals with test coverage, features to be tested, features not to be tested, estimation, scheduling and resource managemen
+https://www.softwaretestinghelp.com/test-plan-sample-softwaretesting-and-quality-assurance-templates/
+
+https://www.guru99.com/what-everybody-ought-to-know-about-test-planing.html
+
+==========Breaking Test==========================
+Break Testing is more than just “force fail.” It is creating tests that will fail for various reasons such as latency, invalid responses, incomplete/unacceptable data… the list of what break testing should test is long.
+The surest way to find out what needs to be “break tested” is by first looking at the code and finding out what is “invalid”. Second, look at the requirements documentation and see what is “unacceptable.” If you test for proper handling of both invalid and unacceptable conditions, you will find your code much better accepted in UAT.
+As an aside (but an important one) be sure you have documented the type of responses that will occur in invalid and unacceptable circumstances. Make sure that documentation is in layman’s terms (simple, non-technical) and make sure the user community understands and approves of how the exceptions are handled.
+
+Uploading image of unsupported format,large size ,very small size, entering huge amount of text ,
+SQL Injecting is placing malicious[in sql cmds] code in the input filed pn the page ,which might destroy the web page.
+
+
+vikas sindhu
+xpath : indinaa 
+
+grid :
+testing process
+collection:
+oops:
+exception hand, design oattern
+object identifcationw
+webdriver architecture
+object syn,POM
+testng, initialization
+data parameterization,
+wrapper class to hide implemenation
+reporting meceha, listneres
+exten reporting
+automation test strategy,est ,plann,scope of 
+test auto solution integrateion with test maa ,
+BDD,API,
+CI-CD
+AWS

@@ -1,0 +1,360 @@
+When a website(Booking.com) want to reserve a hotel in hotel chain like(Matriot) then it can not directly access Matriot back end code.its not idle.
+so there comes api in middle & Company will expose there api to booking.com .
+
+Also if your front end is developed in one stack(Angular-TypeScript) & back end is in another stack(java) then also there is problem.API takes the command independent of language.
+So Api takes the command from front end & send it to backend.
+
+XML,JSON are basically representation of data in differen format.Java,javascript,python & other language have methods to parse/process data in these formats.
+API acts as a interface in between client & server.API hosts at server side.
+so APi is interface or communication protocol between client & server intended to simplify client side software development.
+its a set of rules & protocol which enables communication b/w 2 sw components.
+
+Rest api provides the standard[architechtural design] ,set of conditions ,to implement api.
+SOAP has many restriction & conditions.
+You need to hit an endpoint & get the response.
+
+EndPoint/Base URL :Address where API is hosted on server.
+HTTP methods used method to communicated with API.CRUD
+GET : get method used to get information from the server.
+POST : TO create new data/information
+PUT : is used to update already existing data.PUT inside used(delete & post)method to update.
+DELETE :
+Put is used to update resource whereas patch is used to update part of request.
+
+Resources :  REsources represent  api/collection which can be accessed on server.Server can have mulitiple api like google server can have images,maps,search .so to which api you want to access is represented by resource.
+Google.com/Images,Google.com/Maps [base url/resource]
+
+Parameter : 2 types 1) Path parameter: which helps u to narrow down to particular resource.https://www.google.com/Images/1123343
+					2) Query Parameter: it is used to make a query .always start with a ?.https://www.google.com/search?q=newyork&oq=newyork&aqs=chrome..69i57j0l7.2501j0j7&sourceid=chrome&ie=UTF-8
+																					  https://amazon.com/orders?sort_by=2/20/2020
+BaseURL/REsources/(resource/query)parameter
+
+Header/COokies : additiona details(meta data)send within api request/response 
+
+How to send input data in GET?
+Ans: Using Query Parameters
+How to send input data in POST?
+Ans: Using Form Parameters /Body Payload
+
+
+Contract : is the document shared by the Developer mentioneing details about the API.
+Header : header tell about the content type. ContentType/JSON
+
+
+
+
+Get request : In get request you don't need to mention the body.apart from get ,all http api will have body to send.
+Response recevied
+{
+    "location": {
+        "latitude": "-38.383494",
+        "longitude": "33.427362"
+    },
+    "accuracy": "50",
+    "name": "Nayan Mittal",
+    "phone_number": "(+91) 983 893 3937",
+    "address": "29, side layout, cohen 09",
+    "types": "shoe park,shop",
+    "website": "http://rahulshettyacademy.com",
+    "language": "French-IN"
+}
+
+
+POST : post is superset.] of all method except get.
+
+Validations : Response code. Responce server check. Messagne in responce[like when u update address so message like "address updated successfully."]
+JsonPath js=new JsonPath(response); it will take input as string n convert it to JSON. //for parsing json .
+
+
+CC69-3PSC-TAJT-4HAQ
+
+Json payload by providing parameter from test body.[pass agrument from method & get it getData method & return body from getData Method.]
+Json payload using TestNG data provider.
+Json payload from external .json file.	
+
+Jira is a project/issue tracking tool
+
+
+
+
+
+
+
+which tool, test data management,defect logs, which tool 
+PR approve,merge in release bnr, release job,aritfact bnati,nexus,
+core ver api-remove nexus, applica ver 
+slave machine,
+release,deploy j0b,exection job
+releasae team/fusion team
+cubernet
+consul server for test data
+
+
+========JIRA===============
+JIRA setup
+localhost:8080
+B7UC-TMVH-HDG4-HWU8
+JIRA credentials : username : mittalnayan5 ,pwd : devil@12@,devil@123@
+In Jira ,u need to first get the session id then everytime(in every request) u need to pass this in header.
+lecture 45 done.
+
+path paramter : its re routes to sub resource. IN jira ,helps u to found particular issue.
+query parameter : its helps u in filtering/driling down in existing result.Like getting comment of an issue.
+
+given().header("Content-Type","application/json").pathParam("key","10001")
+path parametr needs to be defines when we send some paramter inside path. when.post(rest/api/2/issue/{key}/attachments)
+when we send JSON as body then we define content-type as application/json.
+we send file using multipart("file",new File("json.txt")) method inside given tag .3 then header to be used is (Content-Type,application/multipart).
+
+josneditoronline to convert json into readable mode.
+
+HTTP Certification:	
+
+Twitter uses oAuth 1.0
+Authentication :
+1) Google Api : simple authentication using query parameter.
+2) JIRA API : Cookie bases authentication.
+3) oAuth2.0 : its a protocol for authorization.
+
+OAUTH Grant type : ways to implement OAUTH protocol.[2 famous are authorization_code & client credentials.you can say you have worked on authorization_code]
+
+OAUTH Benifit : No headache of storing & Protecting credentials.
+				Richer websites.
+
+1)First we need to get the code by signing into google/facebook autorization server.		
+scope[what detauls we want],auth url(google server authorization server url),client id(it generateds first time when bookmyshow do integration with google/facebook),	redirect_url(like bookmyshow),state(u provide any random string & make sure u are getting back the same .used in security testing)
+In this step we create Autorization server url.
+		
+2)For we need to get TOken with other required detaisl(first name,last name,mailid etc).SO to get the token we need to send request to google/facebook with multiple details like 
+code(generated in step 1),client id(it generateds first time when bookmyshow do integration with google/facebook),client secret id,rediret url,grant_type
+
+There are library used in POJO which are Jackson,Jackson2 ....
+Serialization: In rest assured ,Converting java object into Request body(Json/xmlPayload) with the help of POJO(Plain old java object) classes.
+Deserializtion :In rest assured , Converting Json response into java object with the help of pojo claass.
+In it we receive the response as Pojo class object instead of as String.Then we apply getter methods of pojo class on this pojo class object to get different elements.
+ 	GetCourse gc=given().queryParam("access_token", accessToken).expect().defaultParser(Parser.JSON)
+		.when()
+		.get("https://rahulshettyacademy.com/getCourse.php").as(GetCourse.class);
+		
+		System.out.println(gc.getLinkedIn());
+		System.out.println(gc.getInstructor());
+		System.out.println(gc.getCourses().getApi().get(1).getCourseTitle());
+		
+		
+RequestSpecBuilder: here we can build the basic part of request.
+req=new RequestSpecBuilder().setContentType(ContentType.Json).setBaseUri().setQueryParam().build();
+given.spec(req).when().post().....
+
+as some part is common in every request/response ,so we will make object for that part and use in our queries so it make code more clearer and reusable.
+
+ResponseSpecBuilder:		
+
+
+Framework :
+1)io.cucumber,cucumber-junit,rest-assured ,eclipse marketplace-natural [its definations.feature file editor].
+2)Define feature file inside inside features package,stepDefination file inside Definations package & TestRunner insiude cucumber-Options[its name should be this only] package
+3)Create pojo package [it will have all pojo classes (seralization/deserialization)]inside src/main/java
+4)
+5)
+6)
+7)//Scenario need to be changed to ScenarioOutline when provide data from this file.	
+8)Data driven testing using cucumber example feature [In it we need to change secnario ->scenario outline]
+9)Tags can be used if u want to run particular test case/cases. Need to mention tagging in TestRunner.java [@CucumberOptions(features="src/test/java/feature",glue= {"stepDefinations"}),tags= {"@DeletePlace"}]
+10)Hooks are used to set precodition or when u want to run somme code before(like Before tags in Testng).
+11)if u want to run tags from mvn. mvn test -Dcucumber.options="--tags @Addplace"
+12)hwml reporting can be done adding mvn plugin [maven cucumber reporting]https://github.com/damianszczepanik/maven-cucumber-reporting
+u first need to crete json report by adding plugin="josn:target/jsonReprots/cucumber-report.json"in TestRunner 
+
+=================================API Questions==========================================================
+===========================================================================================================
+API 
+> API stands for application programming interface which is set of routines ,protocol & tools which enables the communication b/w 2 s/w /hw components.api is a collections of sw fucntions
+which can be executed by other sw.
+> In API Testing our main focus will be on Business logic layer of the software architecture.API testing is a type of software testing that involves testing APIs directly and also as a part of integration testing to check whether the API meets expectations in terms of functionality, 
+reliability, performance, and security of an application.
+API testing is a kind of software testing which determines if the developed APIs meet expectations regarding the functionality, reliability, performance, and security of the application
+We check buisness logic .
+
+
+
+> Some of the protocols using in API Testing are as follows:
+HTTP
+REST
+SOAP
+JMS
+UDDI
+
+>Webservices is a kind of api which is access over net.All web services need to be exposed over web(HTTP).Web service uses only three styles of use: SOAP, REST and XML-RPC for communication
+API uses multiple ways for communication e.g. DLL files in C/C++, Jar files/ RMI in java, Interrupts in Linux kernel API etc.
+
+>What is Soap?
+SOAP stands for Simple Object Access Protocol. It is an XML based messaging protocol. It helps in exchanging information among computers.
+
+REST stands for Representational State Transfer. It is a set of functions helping developers in performing requests and receive responses. Interaction is made through HTTP Protocol in REST API.
+
+>What are some architectural styles for creating a Web API?
+This is one of the fundamental Web API interview questions. Bellows are four common Web API architectural styles:
+HTTP for client-server communication
+XML/JSON as formatting language
+Simple URI as the address for the services
+Stateless communication
+
+>Web API can be consumed by any clients which support HTTP verbs such as GET, PUT, DELETE, POST. Since Web API services do not require configuration, they can be easily used by any client.
+
+Core functionality of the system can be tested long before the GUI has developed.This will help detect the minor issues which can become bigger during the GUI testing.
+API testing usually is less time consuming than functional GUI testing. The web elements in GUI testing must be polled, which makes the testing process slower
+n API testing, data is exchanged using XML or JSON. These transfer modes are completely language-independent, allowing users to select any code language when adopting automation testing services for the project.
+
+
+13. What must be checked when performing API testing?
+During the API testing process, a request is raised to the API with the known data. This way you can analyze the validation response. While testing an API, you should consider:
+
+Accuracy of data
+Schema validation
+HTTP status codes
+Data type, validations, order and completeness
+Authorization checks
+Implementation of response timeout
+Error codes in case API returns[4XX,5XX]
+Non-functional testing like performance[response time] and security testing[checkd when we do authorization]
+ 
+17. What are differences between API Testing and UI Testing?
+API enables communication between two separate software systems. A software system implementing an API contains functions or subroutines that can be executed by another software system.
+On the other hand, UI ( User Interface) testing refers to testing graphical interface such as how users interact with the applications, testing application elements like fonts, images, layouts etc. UI testing basically focuses on look and feel of an application.
+
+API testing is now preferred over GUI testing and is considered as most suitable because:
+
+It verifies all the functional paths of the system under test very effectively.
+It provides the most stable interface.
+It is easier to maintain and provides fast feedback.
+
+21. What are common API errors that often founded?
+Missing module errors
+Documentation errors
+Parameter validation errors
+
+API documentation templates Swagger
+Swagger
+FlatDoc
+API blueprint
+RestDoc
+
+What is a “Resource” in REST?
+REST architecture treats any content as a resource, which can be either text files, HTML pages, images, videos or dynamic business information.
+REST Server gives access to resources and modifies them, where each resource is identified by URIs/ global IDs.
+
+34. What are the core components of an HTTP request?
+An HTTP request contains five key elements:
+
+An action showing HTTP methods like GET, PUT, POST, DELETE.
+Uniform Resource Identifier (URI), which is the identifier for the resource on the server.
+HTTP Version, which indicates HTTP version, for example-HTTP v1.1.
+Request Header, which carries metadata (as key-value pairs) for the HTTP Request message. Metadata could be a client (or browser) type, format supported by the client, format of a message body format, cache settings, and so on.
+Request Body, which indicates the message content or resource representation.
+
+37. Is there any difference between PUT and POST operations?
+PUT and POST operation are quite similar, except the terms of the result generated by them.
+
+PUT operation is idempotent, so you can cache the response while the responses to POST operation are not cacheable, and if you retry the request N times, you will end up having N resources with N different URIs created on server.
+The PUT method is idempotent. An idempotent method means that the result of a successful performed request is independent of the number of times it is executed.Apr 28, 2013
+
+OPTIONS is used to describe the communication options for the target resource.
+HEAD asks for a response identical to that of a GET request, but without the response body.
+URI stands for Uniform Resource Identifier. It is a string of characters designed for unambiguous identification of resources and extensibility via the URI scheme.
+
+The purpose of a URI is to locate a resource(s) on the server hosting of the web service.
+
+A URI’s format is <protocol>://<service-name>/<ResourceType>/<ResourceID>. 
+
+40. What is payload in RESTFul Web services?
+The “payload” is the data you are interested in transporting. This is differentiated from the things that wrap the data for transport like the HTTP/S Request/Response headers, authentication, etc.
+
+41. What is the upper limit for a payload to pass in the POST method?
+<GET> appends data to the service URL. But, its size shouldn’t exceed the maximum URL length. However, <POST> doesn’t have any such limit.
+
+So, theoretically, a user can pass unlimited data as the payload to POST method. But, if we consider a real use case, then sending POST with large payload will consume more bandwidth. It’ll take more time and present performance challenges to your server. Hence, a user should take action accordingly.
+
+
+
+Challenges in api testing
+how to test proper Flow ,output of request as input to other request.
+validation of input value is alwasys questionable
+different type of parameters validation
+parameter categarition
+
+
+Collection is a group of api request that can be store and arranged in logical order.		
+Rest Assured is an API which is used to automate rest service/rest apis.we can get status code,status line		
+
+API insures that request/response should be in a format that can be understand by both client & server.
+why we used it =>platform independent communications .using it 2 different application(different implementation)can exchanges information.
+for exaple c++ over window platform using mysql database =>communicating with application written in java on linux platform using oracle database
+01202400222 fortis 
+
+SOAP uses POST method for all type of request.Webservices are the services/api which is accessed over web.
+WSDL: web services disription language is an xml based interface/doucment which describes all the functionality of the web. its in xml because xml is machine readable.
+it describes different componnent,return type,data type,parameter of request and response ,internal architectur 
+
+UDDI : Universal description descovery & identifcation .Its a online directory where a service provider publishes its wsdl & consumer can query it & can get hold of the wsdl.
+client uses wsdl to use webservices.
+
+Webservices can be implemented in 2 ways which is REST And SOAP.
+SOAP Web Services: a webservices which complies SOAP web service specifications is called soap web service.
+these specifications are : SOAP,WSDL,UDDI
+All message/communication should be in XML language.XML have a defined format which is SOAP Message.SOAP Message connsist of Envelope,Header,Body.Header is optional.
+
+Rest : a web services that communicates/exchagnes information b/w 2 application using rest architrcture /principles is called Restful services.
+REST is architectural style or design principles. So unlike SOAP, Rest is not a protocol/specifications ,no strict guidelines
+
+Principles/constraints of Rest
+1)Uniform interface:
+a)Resource : in rest everything is a resource.	you can define any information,module as resource .there is no strict guidelines for it.
+b)URI : Any resource/data can be accessd by URI
+c)HTTP : make exxplicit use of HTTP methods .(CRUD)
+
+2)Statelessness : Server dosn't maintain any state.means no session .so every request which client sends should be complete in itself.no previous details is stored in server.
+3) caching : Caching occur at client side. server send the response with some meta data(in header by using cache control & last modified value) which tell client to store or not the response to improve the performance by
+reducing the  number of request for duplicate resource.	
+4)Layering : there can be multiple layers b/w client & server .these are HTTP mediaries. it can be cahcing layer. which will check if request resoruce dosn;t change then send the response 
+to client without sending request to the server.
+5) Code on demand : this is optional. some time server send code[java script code] also with response 
+Representational state transfer
+So a reosurce may have representation in xml/json format & whenever there is request from clint ,current state of resource is transferred. 
+
+
+====BDD,Cucumber,Gherkin==========
+
+Cucumber : Cucumber is a tool which is used for behaviour driven framework development. its generally used in acceptance testing in web application .it support Native Junit
+In cucumber,It allow automation of functional validation in easily readable & understandable format(like plain english lagnuage) so that it can be understand by any stakeholders management,Buiseness analyst
+,Developers & testers.	
+
+#1) Feature Files:
+
+Feature files are the essential part of cucumber which is used to write test automation steps or acceptance tests. This can be used as the live document.
+#2) Feature:
+
+This gives information about the high-level business functionality (Refer to the previous example) and the purpose of Application under test
+#3) Scenario:
+
+Basically, a scenario represents a particular functionality which is under test. By seeing the scenario user should be able to understand the intent behind the scenario and what the test is all about. Each scenario should follow given, when and then format. This language is called as “
+Given: As mentioned above, given specifies the pre-conditions. It is basically a known state.
+When: This is used when some action is to be performed. As in above example, we have seen when the user tries to log in using username and password, it becomes an action.
+Then: The expected outcome or result should be placed here. For Instance: verify the login is successful, successful page navigation.
+Background: Whenever any step is required to perform in each scenario then those steps need to be placed in Background. For Instance: If a user needs to clear database before each scenario then those steps can be put in a background.
+And: And is used to combine two or more same type of action.
+
+https://www.softwaretestinghelp.com/cucumber-bdd-tool-selenium-tutorial-30/
+5) Tags:
+
+Cucumber by default runs all scenarios in all the feature files. In real time projects, there could be hundreds of feature file which are not required to run at all times.
+Cucumber is a most favourite tool for many projects as it is easy to understand, readable and contains business functionality.
+
+feature file : basically describes behaviour.
+Behavior Driven Development gives us an opportunity to create test scripts from both the developer’s and the customer’s perspective as well. So in the beginning, developers, project managers, QAs, user acceptance testers and the product owner (stockholder), all get together and brainstorm about which test scenarios should be passed in order to call this software/application successful. This way they come up with a set of test scenarios. All these test scripts are in simple English language, so it serves the purpose of documentation also.
+
+we will need people from different community like developers, project managers, product owners, and testers while developing test scripts. As these people do not belong to the same category, there is a risk of not using the common language for test script conceptualizing. This was the evolution point for Gherkins.
+Gherkin provides the common set of keywords in English text, which can be used by people amongst the different community and yet get the same output in the form of test scripts.
+
+It is a Behavior Driven Development tool used to develop test cases for the behavior of software's functionality.It plays a supporting role in automated testing.
+===============POJO====
+POJO stands for Plain Old Java Object. It is an ordinary Java object, not bound by any special restriction other than those forced by the Java Language Specification and not requiring any class path. POJOs are used for increasing the readability and re-usability of a program. POJOs have gained most acceptance because they are easy to write and understand. 

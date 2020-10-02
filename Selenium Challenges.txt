@@ -1,0 +1,400 @@
+https://www.softwaretestingmaterial.com/selenium-interview-questions/
+
+Can not test window application,mobile application,Limited reporting ITestListner
+Captha handling,dynamic element handling,window bases popup,Handling page load,Bitmap comparison is not possible using Selenium WebDrive,We can not read bar code 
+
+What type of tests have you automated?
+Our main focus is to automate test cases to do Regression testing, Smoke testing, and  testing. 
+Sometimes based on the project and the test time estimation, we do focus on End to End testing.
+
+I have contributed in framework development.
+
+WHy do we write WebDriver driver=new ChromeDriver() instead of ChromeDriver driver=new ChromeDriver();
+becuase generally in realtime we work on multiple browsers ,so with WebDriver driver=new ChromeDriver(),this driver ref. variable can be used with other classes like IEDriver,GeckoDriver .because
+WebDriver interface is implemented by all of these browser drivers classes.
+SearchContext is topmost interface in Selenium. 
+
+If we want to run our automation scripts on the local machine’s browser then we can use any class (such as Firefoxdriver, iedriver, chromedriver, htmlunitdriver) except RemoteWebDriver. WebDriver will start up a web browser on the computer where the code instantiates it.
+If we want to run our automation scripts on the remote machine’s browser then we use RemoteWebDriver. RemoteWebDriver requires the Selenium Standalone Server to be running but to use other drivers Selenium Standalone Server is not required.
+If you want to work with Grid then you have to stick with RemoteWebDriver. The only requirement is that for a RemoteWebDriver to work, you would always have to have it pointing to the URL of a Grid.
+
+15. What is Selenium WebDriver?
+Selenium WebDriver AKA Selenium 2 is a browser automation framework that accepts commands and sends them to a browser. It is implemented through a browser-specific driver. 
+It controls the browser by directly communicating with it. Selenium WebDriver supports Java, C#, PHP, Python, Perl, Ruby.
+
+Assert vs Verify
+Assert are used to check condition & if that conditions fails then coded after that will be skipped. or you have to used assertion inside try-catch.
+Whereas in verify ,whether assertion gets fail or pass ,test will continue .generally we acheive this using if,else or using try catch.
+We used verify for non critical things,so that test don't step even test getting fail.
+Both Assert and Verify statements are used in the test suites for adding validations to the test methods. Testing frameworks like TestNG and JUnit are used with Selenium to provide assertions.
+The major difference between “Assert” and “Verify” commands is-
+In case of the “Assert” command, as soon as the validation fails the execution of that particular test method is stopped and the test method is marked as failed.
+Whereas, in case of “Verify”, the test method continues execution even after the failure of an assertion statement. Although the test method will still be marked as failed but the remaining statements of the test method will be executed normally. In TestNG, the “Verify” functionality is provided by means of “Soft Assertions” or “SoftAssert” class.
+
+36. What is the difference between setSpeed () and sleep () methods?
+Both sleep() and setSpeed() are used to delay the execution speed.
+setSpeed(): It set up speed that will apply a delay time before every Selenium operation.
+sleep(): It set up wait only for once when called in our Selenium script.
+
+43. What is WebElement selenium?
+WebElement in Selenium represents an HTML element. It basically represents a DOM element in a HTML document.
+
+Note: If you use geckodriver with Selenium, you must upgrade to Selenium 3.3. 
+
+Exceptions in Selenium
+ElementNotFoundException : when we write wrong xpath,Element may not yet be on the screen at the time of the find operation, (webpage is still loading) see selenium.webdriver.support.wait.WebDriverWait() for how to write a wait wrapper to wait for an element to appear
+)ElementNotVisibleException : when the element is present in dom but not visible or hidden so not interractable or size set to zero.
+When ur query findsout 2 or more element & one of them[first one] is hidden.
+StaleElementRefferenceException: when we have stored an element ,move to other page n come back then access the element,Dom changes,element deleted and creaetd again with same attribte,
+
+When a page loads on broser ,varios weblement may load at different time intervals,wait commands direct to pause for a certain time before throwing element not visible exception.
+
+The most frequent cause of this is that page that the element was part of has been refreshed, or the user has
+navigated away to another page and come back,switched to frame and then then accessing
+WebDriverException
+IllegalStateException
+TimeoutException
+NoAlertPresentException
+NoSuchWindowException
+NoSuchElementException: when wrong location is used
+
+InvalidSelectorException: invalid selector: Unable to locate an element with the xpath expression //[text()='ADD TO CART'] because of the following error:
+SyntaxError: Failed to execute 'evaluate' on 'Document': The string '//[text()='ADD TO CART']' is not a valid XPath expression.
+======================
+In Automation we generally have 2 component . Test tool and AUT. 
+So writing script in such a way that both matches each other speed.
+
+Uncondition wait :
+Thread.sleep(2000) : it is userful when interacting with 3rd party app. where we can provide the condition .
+Conditional wait :
+ 
+47. What is Implicit Wait In Selenium WebDriver?
+Implicit waits tell to the WebDriver to wait for a certain amount of time before it throws an exception. Once we set the time, WebDriver will wait for the element based on the time we set before it throws an exception[NoSuchElementException]. The default setting is 0 (zero). We need to set some wait time to make WebDriver to wait for the required time.
+
+Types of Explicit Waits:
+WebDriverWait
+FluentWait
+
+WebDriverWait is applied on a certain element with defined expected condition and time. This wait is only applied to the specified element. This wait can also throw an exception[ElementNotVisibleException] when an element is not found.
+WebDriverWait wait=new WebdriverWait(driver,20);
+wait.until(ExpectedConditions.visibilityOfElementLocatetd(el));elementToBeClickable();elementToBeSelected(),presenceOfElementLocated
+
+Default pooling period of explicit is 500ms.
+Selenium FluentWait:
+FluentWait can define the maximum amount of time to wait for a specific condition and frequency with which to check the condition before throwing an “ElementNotVisibleException” exception.
+To say in effortless manner, it tries to find the web element repeatedly at regular intervals of time until the timeout or till the object gets found.
+We use FluentWait commands mainly when we have web elements which sometimes visible in few seconds and some times take more time than usual. Mainly in Ajax applications. We could set the default pooling period based on our requirement. We could ignore any exception while polling an element.
+
+
+WebDriver wait=new FluentWait(driver).withTimeOut(50,TimeUnit.SECONDS).pollingEvery(3,TimeUnit.SECONDS).ignoring(NoSuchElementException.Class);
+WebElement clickseleniumlink = wait.until(new Function<WebDriver, WebElement>()
+{
+		public WebElement apply(WebDriver driver ) {
+			return driver.findElement(By.xpath("/html/body/div[1]/section/div[2]/div/div[1]/div/div[1]/div/div/div/div[2]/div[2]/div/div/div/div/div[1]/div/div/a/i"));
+		}
+		});
+
+WebElement element = wait.until(new Function<WebDriver, WebElement>() {
+public WebElement apply(WebDriver driver) {
+WebElement element = driver.findElement(By.xpath("//*[@id='softwareTestingMaterial']"));
+
+
+Throwable: Throwable is a parent class for error and exception. Generally, it is difficult to handle errors in java. If a programmer is not sure about the type of error and exception, then it is advised to use the Throwable class which can catch both error and exception.
+Example:
+try {
+   br = new BufferedReader(new FileReader("Data"));
+     } catch (Throwable t)
+     {
+       t.printStackTrace();
+     }
+=======================================================
+How to Login into any site if it is showing an Authentication Pop-Up for Username and Password?
+To do this we pass username and password with the URL
+
+http://username:password@url
+e.g. http://myUserName:myPassword@softwaretestingmaterial.com
+
+
+63. What happens if I run this command. driver.get(“www.softwaretestingmaterial.com”) ;
+If the URL doesn’t contain http or https prefix then an exception is thrown. So, we need to pass HTTP protocol within driver.get() method.
+driver.get("https://www.softwaretestingmaterial.com");
+
+
+What Is The Difference Between MaxSessions Vs. MaxInstances Properties in Selenium Grid?
+MaxInstances is the no. of browser instances of the same version of the browser that can run on the remote machine.
+
+Let’s see an example below:
+
+-browser browserName=InternetExplorer,version=6,maxInstances=2,platform=WINDOWS
+-browser browserName=firefox,version=11,maxInstances=2,platform=WINDOWS
+
+As per the above example, it will allow us to run 4 instances of both IE and Firefox at the same time (in parallel) in a remote machine.
+
+MaxSession says how many browsers, independent of the type & version, can run in parallel on the remote machine.
+
+It supersedes the “MaxInstances” setting.
+
+If maxSession=1 then no more than a single browser would run. If maxSession=2 then any of the below combinations can run at a time irrespective of what MaxInstances we have defined.
+2 Internet Explorer
+2 Firefox
+
+How can we handle Web-based Pop-ups or Alerts in Selenium?
+To handle Web-based alerts or popups, we need to do switch to the alert window and call Selenium WebDriver Alert API methods.
+
+dismiss(): To click on Cancel button.
+accept(): To Click on OK button.
+getText(): To get the text which is present on the Alert.
+sendKeys(): To enter the text into the alert box.
+
+We could handle windows based popups in Selenium using some third party tools such as AutoIT, Robot class etc.
+=====================================================================================
+We can handle hidden elements by using javaScript executor
+(JavascriptExecutor(driver)).executeScript("document.getElementsByClassName(ElementLocator).click();");
+
+A. WHEN THE ID OF THE HIDDEN ELEMENT IS KNOWN
+String jsCommand = “javascript:document.getElementById(“sample_id”).click();”;
+((JavascriptExecutor)driver).executeScript(jsCommand);
+
+B. WHEN XPATH OF THE HIDDEN ELEMENT IS KNOWN
+WebElement ele = driver.findElement(By.xpath(“xpath”)));
+((JavascriptExecutor)driver).executeScript(“arguments[0].click();”,ele); //element is hidden
+
+
+WebElement ele = driver.findElement(By.xpath(“xpath”)));//C. SCROLL WEB PAGE UNTIL IT IS VISIBLE
+((JavascriptExecutor)driver).executeScript(“arguments[0].scrollIntoView(true);”,ele);
+
+JS.executeScript("document.getElementById('User').value='SoftwareTestingMaterial.com';");
+
+85. How to read a JavaScript variable in Selenium WebDriver?
+By using JavascriptExecutor
+
+
+JavascriptExecutor JS = (JavascriptExecutor) webdriver;// To initialize the JS object.
+String title = (String)JS.executeScript("return document.title;");// To get the site title.
+System.out.println("Title of the webpage : " + title);
+
+Sometimes web controls don’t react well against selenium commands and we may face issues with the above statement (click()). 
+To overcome such kind of situation, we use JavaScriptExecutor interface.
+
+
+While automating the script, the tester has to take care that the page is loaded properly otherwise on performing some action execution will fail. 
+There are some ways defined below to make sure the page is loaded :
+While the page is loading there is a loading spinner on the web page, the tester can wait for the invisibility of that spinner
+(new WebDriverWait(webDriver, 120)).until(ExpectedConditions.invisibilityOfElementLocated(by));
+By using JavascriptExecutor : It is an interface which provides a mechanism to execute JavaScript through selenium web driver
+((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete");
+If the tester is sure that some element is always present on the web page then he/she can use wait for an element to be clickable.
+(new WebDriverWait(webDriver, 60)).until(ExpectedConditions.elementToBeClickable(element));
+
+
+static String pageLoadStatus = null;
+JavascriptExecutor js;
+public static void waitForPageLoad() {
+do {
+js = (JavascriptExecutor) driver;
+pageLoadStatus = (String)js.executeScript("return document.readyState");
+} while ( !pageLoadStatus.equals("complete") );
+System.out.println("Page Loaded.");
+}
+
+==============================================================================
+89. Can You Use Selenium For Rest API Testing Or Web Services Testing?
+Simple answer for this is Selenium is not a tool for API Testing. It automates web browsers. Rest API & Web Services contains no UI. So we cannot automate using Selenium.
+
+Object repository is a collection of objects. One of the ways to create Object Repository is to place all the locators in a separate file (i.e., properties file).
+ But the best way is to use Page Object Model. In the Page Object Model Design Pattern, each web page is represented as a class. 
+All the objects related to a particular page of a web application are stored in a class.
+
+
+How can you use the Recovery Scenario in Selenium WebDriver?
+By using “Try Catch Block” within Selenium WebDriver Java tests.
+
+try {
+     driver.get("www.softwaretestingmaterial.com");
+}catch(Exception e){
+     System.out.println(e.getMessage());
+}
+
+=============================================================
+9. How to Upload a file in Selenium WebDriver?
+There are two cases which are majorly used to upload a file in Selenium WebDriver such as using SendKeys Method and using AutoIT Script.
+a)Practical Example.
+	WebElement browse =driver.findElement(By.id("uploadfile")); //Locating 'browse' button 
+	//remember not to click on browse button in this case.
+	browse.sendKeys("D:\\SoftwareTestingMaterial\\UploadFile.txt"); //pass the path of the file to be uploaded using Sendkeys method
+ 
+ 
+b)Au3info tool[element identifier ,inside autoit] will helps us in getting the details of window object
+ControlFocus(" title "," text ",controlID ) //Sets input focus to a given control on a window.
+ControlSetText(" title "," text ",controlID ," File path which need to upload " ) // Sets text of a control.
+ControlClick(" title "," text ",controlID ) //Sends a mouse click command to a given control.
+
+title,class and instance will getfrom Au3info  
+controlId is combination of  class and instance.
+ 
+we will create scrpit using this details with tool Sci-	TE[inside autoit] which is fileupload.au3 file then will convert(compile using right click) into .exe file.
+Runtime.getRunTime().exec(.exe file path);
+
+button[class*='']
+
+
+File DOwnload
+u need to click on download button.
+then File f=new File(path where file will download)
+f.exist() ,returns true if file exists.
+f.delete(), if u want to delete the file.
+if u want to download file to current project then 
+String downloadPath=System.getProperty("user.dir");
+
+
+HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
+chromePrefs.put("profile.default_content_settings.popups", 0);
+chromePrefs.put("download.default_directory", downloadPath);
+ChromeOptions options=new ChromeOptions();
+options.setExperimentalOption("prefs", chromePrefs);
+File f=new File(downloadPath+"/converted.zip");
+WebDriver driver=new ChromeDriver(options);
+
+================================================================================================================================
+100. How to Download a file in Selenium WebDriver?
+By using AutoIT script, we could download a file in Selenium WebDriver.
+
+125. How to handle browser (chrome) notifications in Selenium?
+Notification Popup
+In Chrome, we can use ChromeOptions as shown below.
+ChromeOptions options = new ChromeOptions();
+options.addArguments("disable-infobars");
+WebDriver player = new ChromeDriver(options);
+
+
+
+==============================================
+Paje object pattren : POM 
+POM is a design pattern in which we make object repositories and store the elements related to different page in different class.
+page class is used to identiry elements and corresponding methods are kept there. 
+Easy to maintain,Easy to understand,readable,reusablity ,eleminate redundant pattern,
+
+
+By user99GuruName=By.name("uid");
+public void setUserName(String strUserName){
+        driver.findElement(user99GuruName).sendKeys(strUserName);
+    }
+
+	
+Page Factory : 
+It is used to initialize  the page objects.it is used to initialize elements without findElement method.Its a optimized approach.
+
+public HomePage()
+{
+PageFactory.initElements(new AppiumFieldDecorator(driver),this);
+}
+
+we can also initialize in other way.
+HomePage page=new HomePage(driver);
+PageFactory.initElements(driver,page);
+
+or HomePage page= PageFactory.initElements(driver,HomePage.class);
+
+@FindBy(how=How.NAME, using="username")
+private WebElement user_name;
+
+in selenium only driver need to pass. for Mobile we need to pass AppiumFieldDecorator to make it comp. with Android and IOS.
+@AndroidFindBY(xpath="")
+public WebElement perf;
+
+id,className similarly. if multiple elements then public List<WebElement> button;
+
+
+@FindBy(name="username")
+@CacheLookup
+private WebElement userName;
+What is @CacheLookup annotation in PageFactory?
+We will mark annotation @CacheLookup to WebElements to indicate that it never changes (that is, that the same instance in the DOM will always be used)
+CacheLookup attribute can be used to instruct the InitElements() method to cache the element once its located and so that it will not be searched over and over again	
+
+===================================================
+<Project>
+	<build>
+		<resources> 
+				-<resource>
+					<directory>src/main/java/resources</directory>  //listerner,loggers needs to be added here.[ITestListner,IReported corresponding classes] [and in testng listerner also.]
+					<filtering>true</filtering>
+				</resource>
+			
+		</resources>
+	
+		<profiels>
+		-<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-surefire-plugin</artifactId>
+			<version>3.0.0-M3</version>
+			-<configuration>
+			-<suiteXmlFiles>
+				<suiteXmlFile>testng.xml</suiteXmlFile>
+			</suiteXmlFiles>
+			</configuration>
+		</plugin>
+		</profiles>
+	</build>
+	
+	<dependencies>
+	<depenencies>
+
+</Project>
+if there is some property that is changing frequently than u can provide that from cmd prompt/jenkisn.
+mvn test -DdeviceName=emulator-555 
+============MySQl[mysqll connector java jar]===========================
+seleniu server standone jar for selenium/appium
+create database creditcard;
+use creditcard;
+create table employee(cardtype varchar(20),name varchar(20),pwd int,address varchar(20));
+describe employee;
+insert into employee('nayan',2334,'noida');
+Connection c=DriverManager.getConnection(url,username,pwd); //url="jdbc:mysql://"+localhost+":"+port+"/database";
+Statement stmnt=c.createStatement();
+ResultSet rs=stmnt.executeQuery("select * from employee where cardtype='zerobalance');
+while(rs.next())
+{
+System.out.printn(rs.getString("name"));
+System.out.printn(rs.getString("pwd"));
+}
+
+WebDriver drvier=new FirefoxDriver();
+driver.get("http://login.salesforce.com");
+driver.findElement(By.xpath("")).sendKeys(rs.getString("name"));
+
+
+=>	select distinct * from table; // to avoid duplicate data.
+=>	name var(10) means values inside this column will have 10 character.fixed length .[range 1-255]
+	name varhchar(10)   means values inside this column will have 10 character .1-10
+
+=>	These 2 are build in cmd on my_sql .
+	NOW() : show date and time on server.
+	CURRENT_DATE() : show date only
+
+=>Join cmd is used to make a connection( get data) between multiple table based on matchig column
+Select c.name,c.location,c.employee from Company as c join CompanyAddress as ca	on c.branchcode=ca.branchcode where c.employee<=120;
+	
+====================
+Shallow copy
+Whenever you try to create a copy of an object using the shallow copy, all fields of the original objects are copied exactly. But, if it contains any objects as fields then, only references to those objects are copied not the compete objects.
+
+This implies that, if you perform shallow copy on an object that contains any objects as fields, since only references are copied in a shallow copy, both the original and copied object points to the same reference internally and, if you do any changes to the data using the copied object, they are reflected in the original object too.
+https://www.tutorialspoint.com/what-is-shallow-copy-explain-with-an-example-in-java
+Student std2=(Student)stu1.clone()
+https://www.geeksforgeeks.org/deep-shallow-lazy-copy-java-examples/
+
+=============Avoiding statleElement Exception=====================
+https://www.selenium.dev/exceptions/
+1)Lazy initialization : When pageFactory do initElement its just load the element dosn't store the address of element.it takes latest address.
+so whenever an action need to be perform then it access the element . If element is not found then it throws NoSuchElementException.
+
+2)if u are getting stale element exception then u can use referesh page and try again for the element.
+3)get the element again when we come back to page.
+4) try to get the element in loop 2-3 times.
+5) ElementToBelocated inside webdriverwait.
+
+new WebDriverWait(driver, timeout).ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(By.id("checkoutLink")));
+
+=====Writing test test cases for websites===
+https://www.softwaretestinghelp.com/login-page-test-cases/#:~:text=Functional%20Test%20Cases%3A,-Sr.&text=Verify%20if%20a%20user%20will,valid%20username%20and%20valid%20password.&text=Verify%20if%20a%20user%20cannot,username%20and%20an%20invalid%20password.&text=Verify%20the%20login%20page%20for,and%20Submit%20button%20is%20clicked.&text=Verify%20the%20'Forgot%20Password'%20functionality.
